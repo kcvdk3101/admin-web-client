@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-if="!isLoggedIn">
     <div class="dashboard-page">
       <v-row no-gutters class="d-flex justify-space-between mt-10 mb-6">
         <h1 class="page-title">Dashboard</h1>
@@ -10,12 +10,12 @@
               v-on="on"
               color="secondary"
               class="text-capitalize button-shadow mr-1"
+              @click="getToken"
               >Latest Reports
             </v-btn>
           </template>
         </v-menu>
       </v-row>
-
       <v-row>
         <v-col lg="3" sm="6" md="5" cols="12">
           <v-card class="mx-1 mb-1">
@@ -75,7 +75,7 @@
                     {{ item.total }}
                   </div>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="4">
                   <div class="card-light-grey">Registrations</div>
                   <div
                     class="
@@ -88,7 +88,7 @@
                     {{ item.registrations.value }}
                   </div>
                 </v-col>
-                <v-col cols="4" xl="2">
+                <v-col cols="3" xl="2">
                   <div class="text-right card-light-grey">Rate</div>
                   <div
                     class="
@@ -564,8 +564,13 @@
 
         <v-col cols="12">
           <v-card class="support-requests mx-1 mb-1">
-            <v-card-title class="pa-6 pb-0">
-              <p>Basket Details</p>
+            <v-card-title class="pa-6 pb-0" color="info">
+              <span
+                class="font-weight-medium card-dark-grey"
+                style="font-size: 30px"
+                >Basket Details</span
+              >
+
               <v-spacer></v-spacer>
               <v-menu>
                 <template v-slot:activator="{ on, attrs }">
@@ -589,46 +594,51 @@
                 <template v-slot:default>
                   <thead class="pl-2">
                     <tr>
-                      <th class="text-left pa-6">UserId</th>
-                      <th class="text-left">BasketCode</th>
-                      <th class="text-left">ProductId</th>
-                      <th class="text-left">Name</th>
-                      <th class="text-left">Description</th>
-                      <th class="text-left">Quantity</th>
-                      <th class="text-left">Price</th>
-                      <th class="text-left">Status</th>
+                      <th class="text-center pa-6" style="font-size: 20px"></th>
+                      <th class="text-center" style="font-size: 20px">
+                        BasketId
+                      </th>
+                      <th class="text-center" style="font-size: 20px">
+                        ProductId
+                      </th>
+                      <th class="text-center" style="font-size: 20px">Name</th>
+                      <th class="text-center" style="font-size: 20px">
+                        Description
+                      </th>
+                      <th class="text-center" style="font-size: 20px">
+                        Quantity
+                      </th>
+                      <th class="text-center" style="font-size: 20px">Price</th>
+                      <th class="text-center" style="font-size: 20px">
+                        Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in products" :key="item.userId">
-                      <td>{{ item.userId }}</td>
-                      <td v-for="items in item.product" :key="items.basketId">
-                        {{ items.basketId }}
+                    <tr
+                      v-for="(item, i) in products"
+                      :key="i"
+                      class="text-center font-size:26px"
+                    >
+                      <td>
+                        <v-chip
+                          class="pa-6 ma-2 text-center"
+                          link
+                          style="font-size: 30px"
+                          color="success"
+                        >
+                          Id: {{ item.id }}
+                        </v-chip>
                       </td>
-                      <td v-for="items in item.product" :key="items.productId">
-                        {{ items.productId }}
-                      </td>
-                      <td v-for="items in item.product" :key="items.name">
-                        {{ items.name }}
-                      </td>
-                      <td
-                        v-for="items in item.product"
-                        :key="items.description"
-                      >
-                        {{ items.description }}
-                      </td>
-                      <td v-for="items in item.product" :key="items.quantity">
-                        {{ items.quantity }}
-                      </td>
-                      <td v-for="items in item.product" :key="items.price">
-                        {{ items.price }}
-                      </td>
-                      <td
-                        v-for="items in item.product"
-                        :key="items.isRegistered"
-                      >
-                        <v-chip link color="success" class="ma-2 ml-0">
-                          Sent
+                      <td>{{ item.basketId }}</td>
+                      <td>{{ item.productId }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.description }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.price }}</td>
+                      <td v-if="item.isRegistered === true">
+                        <v-chip link color="primary" class="ma-2 ml-0">
+                          Complete
                         </v-chip>
                       </td>
                     </tr>
@@ -648,17 +658,22 @@ import Trend from "vuetrend";
 import ApexChart from "vue-apexcharts";
 import mockData from "./mockData";
 import { mapActions, mapGetters } from "vuex";
+import AuthService from "../../service/AuthService";
 
 export default {
   name: "Dashboard",
   components: { Trend, ApexChart },
   data() {
     return {
+      authService: {},
+      userInfo: "",
       mockData,
       apexLoading: false,
       value: this.getRandomInt(10, 90),
       value2: this.getRandomInt(10, 90),
       mainApexAreaSelect: "Daily",
+      accessTokenExpired: false,
+      isLoggedIn: false,
     };
   },
   methods: {
@@ -682,15 +697,54 @@ export default {
       }
       return series;
     },
+    async signInMainView() {
+      await this.authService.signIn.mainWindow();
+    },
+
+    async signInPopView() {
+      await this.authService.signIn.popup();
+    },
+
+    async signInSilent() {
+      await this.authService.signIn.silent();
+    },
+
+    async signInCallBack() {
+      await this.authService.signInCallBack.callBack();
+    },
+
+    async getUserInfo() {
+      const res = await this.authService.resource.user();
+      this.userInfo = res;
+    },
+
+    async signOutPop() {
+      await this.authService.signOut.popup();
+    },
+
+    async getToken() {
+      await this.authService.token.getAccessToken();
+    },
   },
   mounted() {
     setTimeout(() => {
       this.apexLoading = true;
     });
+    this.authService.resource.user().then((user) => {
+      if (user) {
+        this.userInfo = user.id;
+        this.accessTokenExpired = user.expired;
+        this.isLoggedIn = user !== null && !user.expired;
+      }
+    });
+    this.authService.token.getAccessToken();
   },
-  computed: mapGetters(["products"]),
+  computed: {
+    ...mapGetters(["products"]),
+  },
   created() {
     this.getProducts();
+    this.authService = new AuthService();
   },
 };
 </script>

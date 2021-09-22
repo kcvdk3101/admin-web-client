@@ -31,9 +31,15 @@
 
 <script>
 import colorConfig from "../../colorConfig";
+import AuthService from "../../service/AuthService";
+
 export default {
   name: "Footer",
   data: () => ({
+    authService: {},
+    userInfo: "",
+    accessTokenExpired: false,
+    isLoggedIn: false,
     colorConfig,
     icons: [
       { icon: "mdi-facebook", link: "https://twitter.com/flatlogic/" },
@@ -46,6 +52,18 @@ export default {
       { text: "Blog", link: "https://flatlogic.com/blog" },
     ],
   }),
+  mounted() {
+    this.authService.resource.user().then((user) => {
+      if (user) {
+        this.userInfo = user;
+        this.accessTokenExpired = user.expired;
+        this.isLoggedIn = user !== null && !user.expired;
+      }
+    });
+  },
+  created() {
+    this.authService = new AuthService();
+  },
 };
 </script>
 

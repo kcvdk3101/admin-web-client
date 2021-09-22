@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   namespace: true,
+  strict: true,
 
   state: { drawer: true, products: [] },
   getters: {
@@ -28,7 +29,7 @@ export default new Vuex.Store({
     async getProducts({ commit }) {
       try {
         const response = await axios.get(
-          "http://localhost:3000/baskets?userId=a1"
+          "http://localhost:3002/baskets?userId=a1"
         );
         commit("GET_PRODUCTS", response.data);
       } catch (error) {

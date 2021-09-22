@@ -91,52 +91,57 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import AuthService from "../../service/AuthService";
+
 export default {
   props: { source: String },
   data() {
     return {
+      accessTokenExpired: false,
+      isLoggedIn: false,
       items: [
         { title: "Dashboard", icon: "mdi-home", link: "/dashboard" },
-        { title: "Typography", icon: "mdi-format-size", link: "/typography" },
-        { title: "Tables", icon: "mdi-grid-large", link: "/tables" },
+        // { title: "Product", icon: "mdi-format-size", link: "/product" },
+        // { title: "Order", icon: "mdi-grid-large", link: "/order" },
+        // {
+        //   title: "Notifications",
+        //   icon: "mdi-bell-outline",
+        //   link: "/notifications",
+        // },
+
         {
-          title: "Notifications",
-          icon: "mdi-bell-outline",
-          link: "/notifications",
-        },
-        {
-          title: "UI Elements",
+          title: "E-commerce",
           icon: "mdi-image-filter-none",
           link: "/icons",
           model: false,
           children: [
-            { title: "Icons", icon: "mdi-circle-small", link: "/icons" },
-            { title: "Charts", icon: "mdi-circle-small", link: "/charts" },
-            { title: "Maps", icon: "mdi-circle-small", link: "/maps" },
+            { title: "User", icon: "mdi-circle-small", link: "/user" },
+            { title: "Product", icon: "mdi-circle-small", link: "/product" },
+            { title: "Order", icon: "mdi-circle-small", link: "/order" },
           ],
         },
-        { divider: true },
-        { heading: "HELP" },
-        {
-          title: "Library",
-          icon: "mdi-book-variant-multiple",
-          href: "https://flatlogic.com/templates",
-        },
-        {
-          title: "Support",
-          icon: "mdi-forum",
-          href: "https://flatlogic.com/forum/",
-        },
-        {
-          title: "FAQ",
-          icon: "mdi-help-circle-outline",
-          href: "https://flatlogic.com/templates/vue-material-template",
-        },
-        { divider: true },
-        { heading: "PROJECTS" },
-        { title: "My recent", icon: "mdi-circle-medium", color: "warning" },
-        { title: "Starred", icon: "mdi-circle-medium", color: "primary" },
-        { title: "Background", icon: "mdi-circle-medium", color: "error" },
+        // { divider: true },
+        // { heading: "HELP" },
+        // {
+        //   title: "Library",
+        //   icon: "mdi-book-variant-multiple",
+        //   href: "https://flatlogic.com/templates",
+        // },
+        // {
+        //   title: "Support",
+        //   icon: "mdi-forum",
+        //   href: "https://flatlogic.com/forum/",
+        // },
+        // {
+        //   title: "FAQ",
+        //   icon: "mdi-help-circle-outline",
+        //   href: "https://flatlogic.com/templates/vue-material-template",
+        // },
+        // { divider: true },
+        // { heading: "PROJECTS" },
+        // { title: "My recent", icon: "mdi-circle-medium", color: "warning" },
+        // { title: "Starred", icon: "mdi-circle-medium", color: "primary" },
+        // { title: "Background", icon: "mdi-circle-medium", color: "error" },
       ],
       sidebarWidth: 240,
       sidebarMinWidth: 96,
@@ -156,6 +161,18 @@ export default {
   },
   methods: {
     ...mapActions(["TOGGLE_DRAWER"]),
+  },
+  created() {
+    this.authService = new AuthService();
+  },
+  mounted() {
+    this.authService.resource.user().then((user) => {
+      if (user) {
+        this.userInfo = user;
+        this.accessTokenExpired = user.expired;
+        this.isLoggedIn = user !== null && !user.expired;
+      }
+    });
   },
 };
 </script>

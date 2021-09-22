@@ -16,13 +16,31 @@
 
 <script>
 import colorConfig from "../../colorConfig";
+import AuthService from "../../service/AuthService";
+
 export default {
   name: "Search",
   data() {
     return {
       colorConfig,
       state: "close",
+      userInfo: "",
+      accessTokenExpired: false,
+      isLoggedIn: false,
+      authService: {},
     };
+  },
+  mounted() {
+    this.authService.resource.user().then((user) => {
+      if (user) {
+        this.userInfo = user;
+        this.accessTokenExpired = user.expired;
+        this.isLoggedIn = user !== null && !user.expired;
+      }
+    });
+  },
+  created() {
+    this.authService = new AuthService();
   },
 };
 </script>
