@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="!isLoggedIn">
+  <v-container fluid>
     <div class="dashboard-page">
       <v-row no-gutters class="d-flex justify-space-between mt-10 mb-6">
         <h1 class="page-title">Dashboard</h1>
@@ -10,7 +10,6 @@
               v-on="on"
               color="secondary"
               class="text-capitalize button-shadow mr-1"
-              @click="getToken"
               >Latest Reports
             </v-btn>
           </template>
@@ -658,22 +657,16 @@ import Trend from "vuetrend";
 import ApexChart from "vue-apexcharts";
 import mockData from "./mockData";
 import { mapActions, mapGetters } from "vuex";
-import AuthService from "../../service/AuthService";
-
 export default {
   name: "Dashboard",
   components: { Trend, ApexChart },
   data() {
     return {
-      authService: {},
-      userInfo: "",
       mockData,
       apexLoading: false,
       value: this.getRandomInt(10, 90),
       value2: this.getRandomInt(10, 90),
       mainApexAreaSelect: "Daily",
-      accessTokenExpired: false,
-      isLoggedIn: false,
     };
   },
   methods: {
@@ -697,54 +690,17 @@ export default {
       }
       return series;
     },
-    async signInMainView() {
-      await this.authService.signIn.mainWindow();
-    },
-
-    async signInPopView() {
-      await this.authService.signIn.popup();
-    },
-
-    async signInSilent() {
-      await this.authService.signIn.silent();
-    },
-
-    async signInCallBack() {
-      await this.authService.signInCallBack.callBack();
-    },
-
-    async getUserInfo() {
-      const res = await this.authService.resource.user();
-      this.userInfo = res;
-    },
-
-    async signOutPop() {
-      await this.authService.signOut.popup();
-    },
-
-    async getToken() {
-      await this.authService.token.getAccessToken();
-    },
   },
   mounted() {
     setTimeout(() => {
       this.apexLoading = true;
     });
-    this.authService.resource.user().then((user) => {
-      if (user) {
-        this.userInfo = user.id;
-        this.accessTokenExpired = user.expired;
-        this.isLoggedIn = user !== null && !user.expired;
-      }
-    });
-    this.authService.token.getAccessToken();
   },
   computed: {
     ...mapGetters(["products"]),
   },
   created() {
     this.getProducts();
-    this.authService = new AuthService();
   },
 };
 </script>

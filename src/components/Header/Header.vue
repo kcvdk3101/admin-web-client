@@ -17,8 +17,8 @@
       class="d-none d-sm-flex mr-5"
       outlined
       color="error"
-      to="/login"
-      :disabled="!isLoggedIn"
+      @click="login"
+      v-if="!$auth.isAuthenticated && !$auth.loading"
       >login</v-btn
     >
 
@@ -26,7 +26,7 @@
     <Search />
 
     <!-- /**NOTIFICATION */ -->
-    <v-menu :disabled="isLoggedIn" offset-y bottom nudge-bottom="10" left>
+    <v-menu \offset-y bottom nudge-bottom="10" left>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           @click="
@@ -37,7 +37,6 @@
           style="font-size: 28px"
           icon
           class="mr-2"
-          :disabled="!isLoggedIn"
         >
           <v-badge
             :value="notificationsBadge"
@@ -66,14 +65,7 @@
     </v-menu>
 
     <!-- /**MESSAGING */ -->
-    <v-menu
-      :disabled="!isLoggedIn"
-      max-width="280"
-      offset-y
-      bottom
-      nudge-bottom="10"
-      left
-    >
+    <v-menu max-width="280" offset-y bottom nudge-bottom="10" left>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           @click="messageBadge ? (messageBadge = !messageBadge) : ''"
@@ -82,7 +74,6 @@
           style="font-size: 28px"
           icon
           class="mr-2"
-          :disabled="!isLoggedIn"
         >
           <v-badge :value="messageBadge" color="warning" content="3" overlap>
             <v-icon
@@ -141,7 +132,6 @@
     </v-menu>
 
     <!-- /**PROFILE */ -->
-    <!-- :disabled="!isLoggedIn" -->
     <v-menu min-width="180" offset-y bottom left nudge-bottom="10">
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="mr-0" icon v-bind="attrs" v-on="on">
@@ -190,7 +180,6 @@
 import { mapState, mapActions } from "vuex";
 import Search from "../Search/Search.vue";
 import colorConfig from "../../colorConfig";
-import AuthService from "../../service/AuthService";
 
 export default {
   name: "Header",
@@ -257,11 +246,6 @@ export default {
     messageBadge: true,
     colorConfig,
     searchCollapse: true,
-
-    accessTokenExpired: false,
-    isLoggedIn: false,
-    authService: {},
-    userInfo: "",
   }),
   computed: {
     ...mapState(["drawer"]),
@@ -274,27 +258,16 @@ export default {
   methods: {
     ...mapActions(["TOGGLE_DRAWER"]),
 
+    login() {
+      this.$router.push({ path: "/login" });
+    },
     logOut: async function () {
-      const res = await this.authService.signOutCallBack.redirect();
-      if (res) {
-        window.localStorage.setItem("authenticated", false);
-        this.$router.push("/login");
-      }
+      this.$auth.logout();
+      window.localStorage.setItem("authenticated", false);
     },
   },
-  async mounted() {
-    await this.authService.resource.user().then((user) => {
-      if (user) {
-        console.log(user);
-        this.userInfo = user;
-        this.accessTokenExpired = user.expired;
-        this.isLoggedIn = user !== null && !user.expired;
-      }
-    });
-  },
-  created() {
-    this.authService = new AuthService();
-  },
+  async mounted() {},
+  created() {},
 };
 </script>
 

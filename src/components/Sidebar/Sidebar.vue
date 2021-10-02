@@ -91,14 +91,11 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import AuthService from "../../service/AuthService";
 
 export default {
   props: { source: String },
   data() {
     return {
-      accessTokenExpired: false,
-      isLoggedIn: false,
       items: [
         { title: "Dashboard", icon: "mdi-home", link: "/dashboard" },
         // { title: "Product", icon: "mdi-format-size", link: "/product" },
@@ -162,18 +159,8 @@ export default {
   methods: {
     ...mapActions(["TOGGLE_DRAWER"]),
   },
-  created() {
-    this.authService = new AuthService();
-  },
-  mounted() {
-    this.authService.resource.user().then((user) => {
-      if (user) {
-        this.userInfo = user;
-        this.accessTokenExpired = user.expired;
-        this.isLoggedIn = user !== null && !user.expired;
-      }
-    });
-  },
+  created() {},
+  mounted() {},
 };
 </script>
 

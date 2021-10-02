@@ -92,6 +92,7 @@
                                   password.length === 0 || email.length === 0
                                 "
                                 color="primary"
+                                @click.prevent="signInMainView"
                                 >Login</v-btn
                               >
                               <v-btn
@@ -220,14 +221,10 @@
 </template>
 
 <script>
-import AuthService from "../../service/AuthService";
-
 export default {
   name: "Login",
   data() {
     return {
-      authService: {},
-      userInfo: "",
       email: "admin@flatlogic.com",
       emailRules: [
         (v) => !!v || "E-mail is required",
@@ -246,13 +243,12 @@ export default {
   },
   methods: {
     async signInMainView() {
-      await this.authService.signIn.mainWindow();
+      this.$auth.loginWithRedirect();
       window.localStorage.setItem("authenticated", true);
       this.$router.push("/dashboard");
     },
   },
   created() {
-    this.authService = new AuthService();
     if (window.localStorage.getItem("authenticated") === "true") {
       this.$router.push("/dashboard");
     }

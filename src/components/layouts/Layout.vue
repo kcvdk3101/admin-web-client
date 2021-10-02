@@ -1,8 +1,10 @@
 <template>
   <v-app class="pa-6">
-    <Header />
-    <Sidebar />
-    <v-main class="content"> <router-view /> <Footer /></v-main>
+    <Header v-if="!$auth.loading" />
+    <Sidebar v-if="!$auth.loading" />
+    <v-main class="content" v-if="!$auth.loading">
+      <router-view /> <Footer
+    /></v-main>
   </v-app>
 </template>
 
