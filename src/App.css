@@ -1,0 +1,10 @@
+.app-header {
+  font-size: calc(10px + 2vmin);
+}
+
+button {
+  background-color: dodgerblue;
+  padding: 10px 30px;
+  border-radius: 50px;
+  font-size: calc(10px + 2vmin);
+}
