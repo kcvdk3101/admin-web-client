@@ -1,9 +1,10 @@
+import { Category } from "../models";
 import axiosClient from "./axiosClient";
 
 const categoriesApi = {
   getAllCategories() {
     const url = "/categories";
-    return axiosClient.get(url);
+    return axiosClient.get<Category[]>(url);
   },
 };
 
