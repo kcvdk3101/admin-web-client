@@ -6,14 +6,15 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Configs } from "./helpers/Configs";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Auth0Provider
-          domain="dev-914wvn2h.us.auth0.com"
-          clientId="VGzEh584lLHFeWHg6xaQm5btI193d8VS"
+          domain={Configs.AUTH0_DOMAIN}
+          clientId={Configs.AUTH0_CLIENT_ID}
           redirectUri={window.location.origin}
         >
           <App />

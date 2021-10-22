@@ -1,3 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+  .btn-link {
+    @apply block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700  dark:hover:bg-green-400;
+  }
+  input:checked ~ .dot {
+    @apply bg-green-400;
+    transform: translateX(100%);
+  }
+}
