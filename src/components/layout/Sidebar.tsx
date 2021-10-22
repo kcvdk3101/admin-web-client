@@ -7,27 +7,31 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
-  const [toggle, setToggle] = useState<string>();
+  const [toggle, setToggle] = useState<boolean>(false);
   const { logout } = useAuth0();
 
-  const handleTranslateX = () => {
-    setToggle("-translate-x-full");
+  const handleToggle = () => {
+    setToggle(!toggle);
   };
+
+  console.log(`sidebar ${toggle}`);
 
   return (
     <>
-      <div className="bg-gray-700 text-gray-100 flex justify-between md:hidden">
-        <Link to="/admin/dashboard" className="block p-4 text-white font-bold">
+      <div className="bg-blue-600 text-gray-100 flex justify-between md:hidden dark:bg-gray-700">
+        <Link
+          to="/admin/dashboard"
+          className="block p-4 text-white font-bold dark:text-green-500"
+        >
           eShop Administration
         </Link>
 
         <button
-          className="mobile-menu-button p-4 focus:outline-none focus:bg-gray-700"
-          onClick={handleTranslateX}
+          className="mobile-menu-button p-4 focus:outline-none dark:text-green-500"
+          onClick={handleToggle}
         >
           <svg
             className="h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -42,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
         </button>
       </div>
 
-      <div className="sidebar bg-blue-600 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out dark:bg-gray-700">
+      <div className={toggle ? "sidebar -translate-x-px" : "sidebar"}>
         <Link
           to="/admin/dashboard"
           className="text-white flex items-center space-x-2 px-4 dark:text-green-500"
