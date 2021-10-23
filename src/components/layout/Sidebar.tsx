@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
         </button>
       </div>
 
-      <div className={toggle ? "sidebar -translate-x-px" : "sidebar"}>
+      <div className={toggle ? "sidebar-md" : "sidebar"}>
         <Link
           to="/admin/dashboard"
           className="text-white flex items-center space-x-2 px-4 dark:text-green-500"

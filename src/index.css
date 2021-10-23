@@ -12,16 +12,6 @@
   @apply bg-white;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  @apply bg-blue-500 dark:bg-green-500;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-blue-400 dark:bg-green-400;
-}
-
 input:checked ~ .dot {
   @apply bg-green-400;
   transform: translateX(100%);
@@ -31,8 +21,16 @@ input:checked ~ .dot {
   @apply bg-blue-600 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out dark:bg-gray-700;
 }
 
+.sidebar-md {
+  @apply bg-blue-600 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform  md:relative md:translate-x-0 transition duration-200 ease-in-out dark:bg-gray-700 translate-x-0;
+}
+
 .btn-link {
   @apply block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 dark:hover:bg-green-400;
+}
+
+.btn-add {
+  @apply cursor-pointer text-2xl md:text-4xl text-white hover:text-blue-500 dark:text-green-500 dark:hover:text-green-600 transition;
 }
 
 .category-first-depth {

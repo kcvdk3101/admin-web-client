@@ -16,6 +16,6 @@ export interface ChilrenCategory extends CategoryAttribute {
 }
 
 export interface Category extends CategoryAttribute {
-  children: ChilrenCategory[];
+  children?: ChilrenCategory[];
   images: Images[];
 }

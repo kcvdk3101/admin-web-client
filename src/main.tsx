@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { Configs } from "./helpers/Configs";
+import { Configs } from "./helpers/configs";
 
 ReactDOM.render(
   <React.StrictMode>

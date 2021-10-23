@@ -4,11 +4,12 @@ import { Redirect, Route, Switch } from "react-router";
 import { Link } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
 import Analysis from "./features/analysis/Analysis";
-import { Categories } from "./features/categories/Categories";
+import Categories from "./features/categories/Categories";
 import Dashboard from "./features/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import Vendors from "./features/vendors/Vendors";
 import Coupon from "./features/coupon/Coupon";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   const { isAuthenticated, isLoading, logout } = useAuth0();
@@ -40,6 +41,17 @@ const App: React.FC = () => {
             <Route exact path="/admin/coupon" component={Coupon} />
             <Route exact path="/admin/analysis" component={Analysis} />
           </Switch>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       )}
     </>
