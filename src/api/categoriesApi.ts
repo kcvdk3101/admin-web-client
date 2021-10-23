@@ -4,7 +4,7 @@ import axiosClient from "./axiosClient";
 const categoriesApi = {
   getAllCategories() {
     const url = "/categories";
-    return axiosClient.get<Category[]>(url);
+    return axiosClient.get<Category[], any>(url);
   },
 };
 

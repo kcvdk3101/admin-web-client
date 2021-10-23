@@ -3,7 +3,13 @@ import { AxiosResponse } from "axios";
 import categoriesApi from "../../api/categoriesApi";
 import { Category } from "../../models";
 
-const categoriesInitialState: Category[] = [];
+export interface CategoriesSliceState {
+  categories: Category[];
+}
+
+const initialState: CategoriesSliceState = {
+  categories: [],
+};
 
 export const getAllCategories = createAsyncThunk(
   "categories/getAllCategories",
@@ -15,11 +21,18 @@ export const getAllCategories = createAsyncThunk(
 
 export const categoriesSlice = createSlice({
   name: "categories",
-  initialState: { categoriesInitialState },
+  initialState,
   reducers: {},
-  // extraReducers: (builder) => {
-  //   builder.addCase(getAllCategories.fulfilled, (state, action) => {
-  //     state.categoriesInitialState = action.payload;
-  //   });
-  // },
+  extraReducers: (builder) => {
+    builder.addCase(
+      getAllCategories.fulfilled,
+      (state, action: PayloadAction<Category[]>) => {
+        state.categories = action.payload;
+      }
+    );
+  },
 });
+
+export const {} = categoriesSlice.actions;
+
+export default categoriesSlice.reducer;

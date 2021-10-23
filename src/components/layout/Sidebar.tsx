@@ -14,8 +14,6 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
     setToggle(!toggle);
   };
 
-  console.log(`sidebar ${toggle}`);
-
   return (
     <>
       <div className="bg-blue-600 text-gray-100 flex justify-between md:hidden dark:bg-gray-700">
