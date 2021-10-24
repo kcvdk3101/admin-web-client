@@ -58,11 +58,11 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
           <Link to="/admin/categories" className="btn-link">
             Categories
           </Link>
+          <Link to="/admin/coupon" className="btn-link">
+            Discount
+          </Link>
           <Link to="/admin/vendors" className="btn-link">
             Vendors
-          </Link>
-          <Link to="/admin/coupon" className="btn-link">
-            Coupon
           </Link>
           <Link to="/admin/analysis" className="btn-link">
             Analysis

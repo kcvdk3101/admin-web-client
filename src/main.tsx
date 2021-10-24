@@ -7,7 +7,7 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { Configs } from "./helpers/configs";
+import { Configs } from "./helpers/configs/index";
 
 ReactDOM.render(
   <React.StrictMode>

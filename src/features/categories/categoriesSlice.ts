@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
 import categoriesApi from "../../api/categoriesApi";
 import { Category } from "../../models";
 

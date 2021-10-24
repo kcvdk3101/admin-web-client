@@ -1,2 +1,3 @@
-export * from "./categories/index";
-export * from "./vendors/index";
+export * from "./category/index";
+export * from "./vendor/index";
+export * from "./coupon/index";

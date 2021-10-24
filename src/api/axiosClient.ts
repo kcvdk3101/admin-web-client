@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { Configs } from "../helpers/configs";
+import { Configs } from "../helpers/configs/index";
 
 const axiosClient = axios.create({
   baseURL: Configs.API_BASE_URL,

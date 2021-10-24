@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { IoArrowForward, IoAddCircleSharp } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ParentCategory from "../../components/form/ParentCategory";
 import { getAllCategories } from "./categoriesSlice";
@@ -37,17 +36,28 @@ const Categories: React.FC = () => {
 
   return (
     <main className="w-full p-4 flex flex-col justify-center items-center dark:bg-gray-600">
-      <h1 className="mb-4 text-2xl md:text-4xl dark:text-white dark:font-bold">
-        Categories
-      </h1>
+      <div className="flex justify-between w-full mb-4 font-bold text-2xl md:text-4xl dark:text-white dark:font-bold">
+        <h1>Categories</h1>
+        <div className="flex">
+          <button
+            type="button"
+            className="cursor-pointer px-2 text-center text-md md:text-lg dark:text-green-600"
+            onClick={handleFirstCategoryForm}
+          >
+            Add parent category
+          </button>
+          <button
+            className="px-2 text-center text-md md:text-lg dark:text-green-600"
+            onClick={handleFirstCategoryForm}
+          >
+            Add child category
+          </button>
+        </div>
+      </div>
       <section className=" w-full h-screen md:h-full flex">
         <div className="category-first-depth">
-          <p className="flex justify-between items-center px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">
+          <p className="px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">
             First Depth
-            <IoAddCircleSharp
-              className="btn-add"
-              onClick={handleFirstCategoryForm}
-            />
           </p>
           <div className="overflow-x-hidden overflow-y-auto h-screen px-3">
             {categories.map((category) => (
@@ -57,15 +67,27 @@ const Categories: React.FC = () => {
                 onClick={() => handleSelectSecondCategory(category.id)}
               >
                 {category.name}
-                <IoArrowForward />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
               </p>
             ))}
           </div>
         </div>
         <div className="category-second-depth ">
-          <p className="flex justify-between items-center px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">
+          <p className="px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">
             Second Depth
-            <IoAddCircleSharp className="btn-add" />
           </p>
           <div className="overflow-x-hidden overflow-y-auto h-screen px-3">
             {secondCategory?.children?.map((category) => (
@@ -75,7 +97,20 @@ const Categories: React.FC = () => {
                 onClick={() => handleSelectThirdCategory(category.id)}
               >
                 {category.name}
-                <IoArrowForward />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
               </p>
             ))}
           </div>

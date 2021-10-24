@@ -1,15 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
-import { Redirect, Route, Switch } from "react-router";
-import { Link } from "react-router-dom";
+import { Route, Switch } from "react-router";
+import { ToastContainer } from "react-toastify";
 import Sidebar from "./components/layout/Sidebar";
+import Login from "./components/login/Login";
 import Analysis from "./features/analysis/Analysis";
 import Categories from "./features/categories/Categories";
+import CouponComponent from "./features/coupon/Coupon";
 import Dashboard from "./features/dashboard/Dashboard";
-import Login from "./components/login/Login";
 import Vendors from "./features/vendors/Vendors";
-import Coupon from "./features/coupon/Coupon";
-import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   const { isAuthenticated, isLoading, logout } = useAuth0();
@@ -38,7 +37,7 @@ const App: React.FC = () => {
             <Route exact path="/admin/dashboard" component={Dashboard} />
             <Route exact path="/admin/categories" component={Categories} />
             <Route exact path="/admin/vendors" component={Vendors} />
-            <Route exact path="/admin/coupon" component={Coupon} />
+            <Route exact path="/admin/coupon" component={CouponComponent} />
             <Route exact path="/admin/analysis" component={Analysis} />
           </Switch>
           <ToastContainer
