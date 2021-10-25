@@ -44,4 +44,50 @@ export const mockCoupons = [
     image:
       "https://media.istockphoto.com/photos/shopping-online-concept-parcel-or-paper-cartons-with-a-shopping-cart-picture-id1249219777",
   },
+
+  {
+    couponName: "Big sale 1",
+    couponType: "percentage",
+    description: "This coupon for email has 200 point",
+    modifier: 45,
+    amount: 300000,
+    unit: "VND",
+    usage: 5,
+    limit: 10,
+    pointAchieve: 200,
+    startTime: "2021-11-20 01:14:42",
+    endTime: "2021-11-30 01:14:42",
+    image:
+      "https://media.istockphoto.com/photos/shopping-online-concept-parcel-or-paper-cartons-with-a-shopping-cart-picture-id1249219777",
+  },
+  {
+    couponName: "Big sale 2",
+    couponType: "percentage",
+    description: "This coupon for email has 200 point",
+    modifier: 20,
+    amount: 300000,
+    unit: "VND",
+    usage: 5,
+    limit: 10,
+    pointAchieve: 200,
+    startTime: "2021-11-20 01:14:42",
+    endTime: "2021-11-30 01:14:42",
+    image:
+      "https://media.istockphoto.com/photos/shopping-online-concept-parcel-or-paper-cartons-with-a-shopping-cart-picture-id1249219777",
+  },
+  {
+    couponName: "Big sale 3",
+    couponType: "percentage",
+    description: "This coupon for email has 200 point",
+    modifier: 10,
+    amount: 300000,
+    unit: "VND",
+    usage: 5,
+    limit: 10,
+    pointAchieve: 200,
+    startTime: "2021-11-20 01:14:42",
+    endTime: "2021-11-30 01:14:42",
+    image:
+      "https://media.istockphoto.com/photos/shopping-online-concept-parcel-or-paper-cartons-with-a-shopping-cart-picture-id1249219777",
+  },
 ];

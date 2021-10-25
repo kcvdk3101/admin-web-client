@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export interface ParentCategoryProps {
-  handleFirstCategoryForm: () => void;
-}
+interface Props {}
 
-const ParentCategory: React.FC<ParentCategoryProps> = ({
-  handleFirstCategoryForm,
-}) => {
+const ChildCategory = (props: Props) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState<undefined | unknown | any>();
   const [imagePreview, setImagePreview] = useState<
@@ -51,7 +47,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
       return;
     }
 
-    handleFirstCategoryForm();
+    // handleFirstCategoryForm();
     toast.success(`Add ${name} success`);
 
     // const formData = new FormData();
@@ -64,7 +60,6 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
     //   toast.error(error as any);
     // }
   };
-
   return (
     <div className="relative my-6 mx-auto max-w-3xl w-1/2">
       <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -140,7 +135,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
               <button
                 className="bg-transparent text-gray-500 font-bold uppercase text-xs px-4 py-2  outline-none mr-1 mb-1 ease-linear transition-all duration-150 dark:bg-white "
                 type="button"
-                onClick={handleFirstCategoryForm}
+                // onClick={handleFirstCategoryForm}
               >
                 Close
               </button>
@@ -158,4 +153,4 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
   );
 };
 
-export default ParentCategory;
+export default ChildCategory;

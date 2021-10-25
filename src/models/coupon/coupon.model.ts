@@ -1,6 +1,6 @@
 export interface Coupon {
-  name: string;
-  type: "percentage" | "cash" | string;
+  couponName: string;
+  couponType: string;
   description?: string;
   modifier: number;
   amount: number;
