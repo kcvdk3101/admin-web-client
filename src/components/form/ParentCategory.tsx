@@ -1,5 +1,20 @@
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+type FormValues = {
+  name: string;
+  files: File | FileList;
+};
+
+const ParentCategoryFormSchema = yup
+  .object({
+    name: yup.string().required(),
+    files: yup.mixed().required("This field is required"),
+  })
+  .required();
 
 export interface ParentCategoryProps {
   handleFirstCategoryForm: () => void;
@@ -8,61 +23,31 @@ export interface ParentCategoryProps {
 const ParentCategory: React.FC<ParentCategoryProps> = ({
   handleFirstCategoryForm,
 }) => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState<undefined | unknown | any>();
-  const [imagePreview, setImagePreview] = useState<
-    string | undefined | null | ArrayBuffer
-  >();
-  const [helpText, setHelpText] = useState({ helperText: "", error: false });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(ParentCategoryFormSchema),
+  });
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value !== "") {
-      setName(event.target.value.trim());
-      setHelpText({ helperText: "", error: false });
-    } else {
-      setName("");
-      setHelpText({ helperText: "Invalid format", error: true });
-    }
+  const [image, setImage] = useState<File>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    handleFirstCategoryForm();
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("files", image as Blob);
+    console.log(image);
+    console.log(formData.get("files"));
+    toast.success(`Add ${formData.get("name")} success`);
   };
 
-  const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let fileElement: any = event.target.files;
-
-    if (!fileElement || fileElement.length === 0) return;
-    const files = Array.from(fileElement);
-    setImage(undefined);
-    setImagePreview(undefined);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState !== 2) return;
-        setImage(fileElement[0]);
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file as any);
-    });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (name === "") {
-      setName("");
-      setHelpText({ helperText: "Invalid format", error: true });
+  const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setImage(undefined);
       return;
     }
-
-    handleFirstCategoryForm();
-    toast.success(`Add ${name} success`);
-
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("files", image);
-
-    // try {
-    //   await addParentCategory(formData);
-    // } catch (error) {
-    //   toast.error(error as any);
-    // }
+    setImage(e.target.files[0]);
   };
 
   return (
@@ -72,70 +57,64 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
           Add new category
         </h3>
         <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
-          <form className="relative p-6 flex-auto" onSubmit={handleSubmit}>
+          <form
+            className="relative p-6 flex-auto"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="flex flex-col mb-4">
-              <label
-                className={`${
-                  helpText.error && "text-red-500"
-                } mb-2 text-base text-gray-900`}
-                htmlFor="first_name"
-              >
+              <label htmlFor="name" className="mb-2 text-base text-gray-900">
                 Name
               </label>
               <input
-                className={`${
-                  helpText.error && "border-red-500"
-                } border py-2 px-3 text-grey-800 outline-none`}
-                type="text"
-                name="first_name"
-                id="first_name"
-                onChange={onChange}
+                id="name"
+                className="border py-2 px-3 text-grey-800 outline-none"
+                {...register("name")}
               />
-              <p className="text-red-500">
-                {helpText.helperText && helpText.helperText}
-              </p>
+              {errors.name && (
+                <p className="text-red-500">This field is required</p>
+              )}
             </div>
+
             <div className="flex flex-col mb-4">
               <input
                 accept="image/*"
-                id="contained-button-file"
-                multiple
+                id="files"
                 type="file"
                 style={{ display: "none" }}
-                required
+                {...register("files")}
                 onChange={onChangeImage}
               />
-              {imagePreview !== undefined ? (
-                <label
-                  htmlFor="contained-button-file"
-                  className="cursor-pointer"
-                >
+              {image ? (
+                <label htmlFor="files" className="cursor-pointer  w-1/6">
                   <img
-                    src={imagePreview as string}
+                    src={URL.createObjectURL(image)}
                     alt="Image"
                     className="h-32 w-32 shadow-md"
                   />
                 </label>
               ) : (
                 <label
-                  htmlFor="contained-button-file"
-                  className="w-40 flex justify-start items-center text-base text-gray-900 cursor-pointer"
+                  htmlFor="files"
+                  className=" flex flex-col items-center w-1/6 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-base cursor-pointer"
                 >
-                  Choose image
                   <svg
-                    className="h-10 w-10 ml-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                    className="h-10 w-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                      clipRule="evenodd"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                     />
                   </svg>
+                  Choose image
                 </label>
               )}
             </div>
+
             <div className="flex items-center justify-end p-6">
               <button
                 className="bg-transparent text-gray-500 font-bold uppercase text-xs px-4 py-2  outline-none mr-1 mb-1 ease-linear transition-all duration-150 dark:bg-white "

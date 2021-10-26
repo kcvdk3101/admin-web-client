@@ -8,16 +8,17 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
-    "@popperjs/core": "^2.10.2",
+    "@hookform/resolvers": "^2.8.2",
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.23.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-popper": "^2.2.5",
+    "react-hook-form": "^7.17.5",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-toastify": "^8.0.3",
-    "recharts": "^2.1.5"
+    "recharts": "^2.1.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

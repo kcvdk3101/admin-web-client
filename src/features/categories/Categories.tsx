@@ -41,13 +41,13 @@ const Categories: React.FC = () => {
         <div className="flex">
           <button
             type="button"
-            className="cursor-pointer px-2 text-center text-md md:text-lg dark:text-green-600"
+            className="cursor-pointer rounded px-3 text-center text-md md:text-lg hover:bg-blue-500 hover:text-white dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150"
             onClick={handleFirstCategoryForm}
           >
             Add parent category
           </button>
           <button
-            className="px-2 text-center text-md md:text-lg dark:text-green-600"
+            className="cursor-pointer rounded px-3 text-center text-md md:text-lg hover:bg-blue-500 hover:text-white dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150 ml-2"
             onClick={handleFirstCategoryForm}
           >
             Add child category
@@ -116,7 +116,7 @@ const Categories: React.FC = () => {
           </div>
         </div>
         <div className="category-third-depth">
-          <p className="text-left font-bold text-lg md:text-xl dark:text-green-600">
+          <p className="text-center font-bold text-lg md:text-xl dark:text-green-600">
             Third Depth
           </p>
           <div className="overflow-x-hidden overflow-y-auto h-screen px-3"></div>

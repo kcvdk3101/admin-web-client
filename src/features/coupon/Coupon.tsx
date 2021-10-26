@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import NewCoupon from "../../components/form/NewCoupon";
 import { typesOfCoupon } from "../../constant";
 import { mockCoupons } from "../../db/mockCoupons";
 import { Utilities } from "../../helpers/utils/index";
@@ -76,10 +77,15 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
 const CouponComponent: React.FC = () => {
   const [coupons, setCoupons] = useState<Coupon[]>(mockCoupons);
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+  const [openCouponForm, setOpenCouponForm] = useState<boolean>(false);
   const [typeOfCoupon, setTypeOfCoupon] = useState<string>("");
 
   const handleOpenDropdown = () => {
     setOpenDropdown(!openDropdown);
+  };
+
+  const handleOpenCouponForm = () => {
+    setOpenCouponForm(!openCouponForm);
   };
 
   function handleChangeType(type: string) {
@@ -119,7 +125,10 @@ const CouponComponent: React.FC = () => {
           </div>
         </div>
         <div>
-          <button className="py-1.5 px-3 md:py-2 md:px-4 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500">
+          <button
+            className="py-1.5 px-3 md:py-2 md:px-4 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500"
+            onClick={handleOpenCouponForm}
+          >
             Add new
           </button>
         </div>
@@ -142,6 +151,15 @@ const CouponComponent: React.FC = () => {
             handleDeleteCard={handleDeleteCoupon}
           />
         ))}
+      </div>
+      <div
+        className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
+          openCouponForm
+            ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
+            : "hidden"
+        }`}
+      >
+        <NewCoupon handleOpenCouponForm={handleOpenCouponForm} />
       </div>
     </div>
   );
