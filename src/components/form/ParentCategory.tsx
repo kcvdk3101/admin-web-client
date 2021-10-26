@@ -19,11 +19,11 @@ const ParentCategoryFormSchema = yup
   .required();
 
 export interface ParentCategoryProps {
-  handleFirstCategoryForm: () => void;
+  handleParentCategoryForm: () => void;
 }
 
 const ParentCategory: React.FC<ParentCategoryProps> = ({
-  handleFirstCategoryForm,
+  handleParentCategoryForm,
 }) => {
   const {
     register,
@@ -43,7 +43,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
 
     try {
       dispatch(addParentCategory(formData));
-      handleFirstCategoryForm();
+      handleParentCategoryForm();
       toast.success("Succeed");
     } catch (error) {
       throw error;
@@ -60,11 +60,9 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
 
   return (
     <div className="relative my-6 mx-auto max-w-3xl w-1/2">
-      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-        <h3 className="text-xl md:text-2xl font-semibold p-5">
-          Add new category
-        </h3>
-        <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
+      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-200">
+        <h3 className="text-xl md:text-2xl font-bold p-5">Add new category</h3>
+        <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none dark:bg-gray-200">
           <form
             className="relative p-6 flex-auto"
             onSubmit={handleSubmit(onSubmit)}
@@ -106,7 +104,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
                   className=" flex flex-col items-center w-1/6 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-base cursor-pointer"
                 >
                   <svg
-                    className="h-10 w-10"
+                    className="h-8 w-8"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -125,14 +123,14 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
 
             <div className="flex items-center justify-end p-6">
               <button
-                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-4 py-2  outline-none mr-1 mb-1 ease-linear transition-all duration-150 dark:bg-white "
+                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
                 type="button"
-                onClick={handleFirstCategoryForm}
+                onClick={handleParentCategoryForm}
               >
                 Close
               </button>
               <button
-                className="bg-blue-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
+                className="bg-blue-500 font-bold uppercase text-sm px-4 py-2 ml-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
                 type="submit"
               >
                 Add

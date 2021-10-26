@@ -1,21 +1,20 @@
-export interface CategoryAttribute {
-  id: string;
-  name: string;
-  slug: string;
-  depth: number;
-}
-
 export interface Images {
   id: string;
   ownerId: string;
   url: string;
 }
 
-export interface ChilrenCategory extends CategoryAttribute {
-  parentId: string;
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  depth: number;
+  children?: ChilrenCategory[];
+  images: Images[];
 }
 
-export interface Category extends CategoryAttribute {
+export interface ChilrenCategory extends Category {
+  parentId: string;
   children?: ChilrenCategory[];
   images: Images[];
 }

@@ -1,146 +1,182 @@
-import React, { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import * as yup from "yup";
+import axiosClient from "../../api/axiosClient";
+import { useAppDispatch } from "../../app/hooks";
+import { addChildCategory } from "../../features/categories/categoriesSlice";
+import { Configs } from "../../helpers/configs";
 
-interface Props {}
+type FormValues = {
+  name: string;
+  file: File | FileList;
+};
 
-const ChildCategory = (props: Props) => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState<undefined | unknown | any>();
-  const [imagePreview, setImagePreview] = useState<
-    string | undefined | null | ArrayBuffer
-  >();
-  const [helpText, setHelpText] = useState({ helperText: "", error: false });
+type ParentNameProps = {
+  name: string;
+  depth: number;
+};
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value !== "") {
-      setName(event.target.value.trim());
-      setHelpText({ helperText: "", error: false });
-    } else {
-      setName("");
-      setHelpText({ helperText: "Invalid format", error: true });
-    }
+export interface ChildCategoryProps {
+  handleChildCategoryForm: () => void;
+}
+
+const ChildCategoryFormSchema = yup
+  .object({
+    name: yup.string().required(),
+    file: yup.mixed().required("This field is required"),
+  })
+  .required();
+
+const ChildCategory: React.FC<ChildCategoryProps> = ({
+  handleChildCategoryForm,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(ChildCategoryFormSchema),
+  });
+  const dispatch = useAppDispatch();
+
+  const [imageChild, setImageChild] = useState<File>();
+  const [arrayParentName, setArrayParentName] = useState<ParentNameProps[]>([]);
+  const [parentName, setParentName] = useState("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setParentName(event.target.value);
   };
 
-  const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let fileElement: any = event.target.files;
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axiosClient.get<any, []>(
+          `${Configs.API_BASE_URL}/categories/name`
+        );
+        setArrayParentName(response);
+      } catch (error) {}
+    })();
+  }, [arrayParentName]);
 
-    if (!fileElement || fileElement.length === 0) return;
-    const files = Array.from(fileElement);
-    setImage(undefined);
-    setImagePreview(undefined);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState !== 2) return;
-        setImage(fileElement[0]);
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file as any);
-    });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (name === "") {
-      setName("");
-      setHelpText({ helperText: "Invalid format", error: true });
+  const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setImageChild(undefined);
       return;
     }
+    setImageChild(e.target.files[0]);
+  };
 
-    // handleFirstCategoryForm();
-    toast.success(`Add ${name} success`);
-
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("files", image);
-
-    // try {
-    //   await addParentCategory(formData);
-    // } catch (error) {
-    //   toast.error(error as any);
-    // }
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("parentName", parentName);
+    formData.append("files", imageChild as Blob);
+    try {
+      dispatch(addChildCategory(formData));
+      handleChildCategoryForm();
+      toast.success("Succeed");
+    } catch (error) {
+      throw error;
+    }
   };
   return (
     <div className="relative my-6 mx-auto max-w-3xl w-1/2">
       <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
         <h3 className="text-xl md:text-2xl font-semibold p-5">
-          Add new category
+          Add child category
         </h3>
         <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
-          <form className="relative p-6 flex-auto" onSubmit={handleSubmit}>
-            <div className="flex flex-col mb-4">
-              <label
-                className={`${
-                  helpText.error && "text-red-500"
-                } mb-2 text-base text-gray-900`}
-                htmlFor="first_name"
-              >
-                Name
-              </label>
-              <input
-                className={`${
-                  helpText.error && "border-red-500"
-                } border py-2 px-3 text-grey-800 outline-none`}
-                type="text"
-                name="first_name"
-                id="first_name"
-                onChange={onChange}
-              />
-              <p className="text-red-500">
-                {helpText.helperText && helpText.helperText}
-              </p>
+          <form
+            className="relative p-6 flex-auto"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-col w-full mr-2">
+                <label
+                  htmlFor="parentName"
+                  className="mb-2 text-base text-gray-900"
+                >
+                  Parent name
+                </label>
+                <select
+                  className="border py-3 px-1 text-grey-800 outline-none rounded"
+                  onChange={handleChange}
+                >
+                  <option value="">Please choose parent name</option>
+                  {arrayParentName.map((parent, index) => (
+                    <option key={index} value={parent.name}>
+                      {parent.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col w-full">
+                <label htmlFor="name" className="mb-2 text-base text-gray-900">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  className="border p-3 text-grey-800 outline-none rounded"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-red-500">This field is required</p>
+                )}
+              </div>
             </div>
+
             <div className="flex flex-col mb-4">
               <input
                 accept="image/*"
-                id="contained-button-file"
-                multiple
+                id="file"
                 type="file"
                 style={{ display: "none" }}
-                required
+                {...register("file")}
                 onChange={onChangeImage}
               />
-              {imagePreview !== undefined ? (
-                <label
-                  htmlFor="contained-button-file"
-                  className="cursor-pointer"
-                >
+              {imageChild ? (
+                <label htmlFor="file" className="cursor-pointer w-1/6">
                   <img
-                    src={imagePreview as string}
+                    src={URL.createObjectURL(imageChild)}
                     alt="Image"
                     className="h-32 w-32 shadow-md"
                   />
                 </label>
               ) : (
                 <label
-                  htmlFor="contained-button-file"
-                  className="w-40 flex justify-start items-center text-base text-gray-900 cursor-pointer"
+                  htmlFor="file"
+                  className=" flex flex-col items-center w-1/6 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-base cursor-pointer"
                 >
-                  Choose image
                   <svg
-                    className="h-10 w-10 ml-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                      clipRule="evenodd"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                     />
                   </svg>
+                  Choose image
                 </label>
               )}
             </div>
+
             <div className="flex items-center justify-end p-6">
               <button
-                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-4 py-2  outline-none mr-1 mb-1 ease-linear transition-all duration-150 dark:bg-white "
+                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
                 type="button"
-                // onClick={handleFirstCategoryForm}
+                onClick={handleChildCategoryForm}
               >
                 Close
               </button>
               <button
-                className="bg-blue-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
+                className="bg-blue-500 font-bold uppercase text-sm px-4 py-2 ml-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
                 type="submit"
               >
                 Add

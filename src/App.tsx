@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
@@ -39,10 +39,12 @@ const App: React.FC = () => {
             <Route exact path="/admin/vendors" component={Vendors} />
             <Route exact path="/admin/coupon" component={CouponComponent} />
             <Route exact path="/admin/analysis" component={Analysis} />
+            <Redirect from="/" to="/admin/dashboard" />
           </Switch>
+
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
