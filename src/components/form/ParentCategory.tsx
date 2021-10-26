@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useAppDispatch } from "../../app/hooks";
+import { addParentCategory } from "../../features/categories/categoriesSlice";
 
 type FormValues = {
   name: string;
@@ -30,16 +32,22 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
   } = useForm<FormValues>({
     resolver: yupResolver(ParentCategoryFormSchema),
   });
+  const dispatch = useAppDispatch();
 
   const [image, setImage] = useState<File>();
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    handleFirstCategoryForm();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("files", image as Blob);
-    console.log(image);
-    console.log(formData.get("files"));
-    toast.success(`Add ${formData.get("name")} success`);
+
+    try {
+      dispatch(addParentCategory(formData));
+      handleFirstCategoryForm();
+      toast.success("Succeed");
+    } catch (error) {
+      throw error;
+    }
   };
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {

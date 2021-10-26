@@ -1,10 +1,14 @@
 import { Category } from "../models";
 import axiosClient from "./axiosClient";
 
+const url = "/categories";
+
 const categoriesApi = {
   getAllCategories() {
-    const url = "/categories";
     return axiosClient.get<Category[], any>(url);
+  },
+  addParent(data: FormData) {
+    return axiosClient.post<Category, Category>(url, data);
   },
 };
 

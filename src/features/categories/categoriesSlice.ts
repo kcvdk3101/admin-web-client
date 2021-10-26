@@ -18,6 +18,14 @@ export const getAllCategories = createAsyncThunk(
   }
 );
 
+export const addParentCategory = createAsyncThunk(
+  "categories/addParent",
+  async (data: FormData) => {
+    const parentCategory = await categoriesApi.addParent(data);
+    return parentCategory;
+  }
+);
+
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
@@ -27,6 +35,12 @@ export const categoriesSlice = createSlice({
       getAllCategories.fulfilled,
       (state, action: PayloadAction<Category[]>) => {
         state.categories = action.payload;
+      }
+    );
+    builder.addCase(
+      addParentCategory.fulfilled,
+      (state, action: PayloadAction<Category>) => {
+        state.categories = [...state.categories, action.payload];
       }
     );
   },
