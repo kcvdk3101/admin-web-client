@@ -54,11 +54,6 @@ export const categoriesSlice = createSlice({
     builder.addCase(
       addChildCategory.fulfilled,
       (state, action: PayloadAction<ChilrenCategory>) => {
-        console.log(
-          state.categories
-            .find((category) => category.id === action.payload.parentId)
-            ?.children?.push(action.payload)
-        );
         state.categories
           .find((category) => category.id === action.payload.parentId)
           ?.children?.push(action.payload);

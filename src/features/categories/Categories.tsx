@@ -40,16 +40,16 @@ const Categories: React.FC = () => {
 
   return (
     <main className="w-full p-4 flex flex-col justify-center items-center dark:bg-gray-600">
-      <div className="flex justify-end w-full mb-4 font-bold text-2xl md:text-4xl dark:text-white dark:font-bold">
+      <div className="flex justify-start w-full mb-4 font-bold text-2xl md:text-4xl dark:text-white dark:font-bold">
         <button
           type="button"
-          className="cursor-pointer rounded p-2 text-center text-md md:text-lg hover:bg-blue-500 hover:text-white dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150"
+          className="cursor-pointer rounded p-2 text-center text-md md:text-lg bg-blue-500 text-white hover:shadow-md dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150"
           onClick={handleParentCategoryForm}
         >
           Add parent category
         </button>
         <button
-          className="cursor-pointer rounded p-2 text-center text-md md:text-lg hover:bg-blue-500 hover:text-white dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150 ml-2"
+          className="cursor-pointer rounded p-2 text-center text-md md:text-lg bg-blue-500 text-white hover:shadow-md dark:text-green-600 dark:bg-white dark:hover:bg-green-400 dark:hover:text-white transition duration-150 ml-2"
           onClick={handleChildCategoryForm}
         >
           Add child category

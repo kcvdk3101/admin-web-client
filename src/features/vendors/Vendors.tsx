@@ -87,7 +87,7 @@ const Vendors = () => {
                       : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {vendor.isActive ? "Authorized" : "Unauthorized"}
+                  {vendor.isActive ? "Activated" : "Inactivated"}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
