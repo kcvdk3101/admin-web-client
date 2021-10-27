@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
+import NotFound from "./components/common/NotFound";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import Analysis from "./features/analysis/Analysis";
@@ -40,6 +41,7 @@ const App: React.FC = () => {
             <Route exact path="/admin/coupon" component={CouponComponent} />
             <Route exact path="/admin/analysis" component={Analysis} />
             <Redirect from="/" to="/admin/dashboard" />
+            <Route path="*" component={NotFound} />
           </Switch>
 
           <ToastContainer

@@ -152,7 +152,7 @@ const CouponComponent: React.FC = () => {
           />
         ))}
       </div>
-      <div
+      {/* <div
         className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
           openCouponForm
             ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
@@ -160,7 +160,7 @@ const CouponComponent: React.FC = () => {
         }`}
       >
         <NewCoupon handleOpenCouponForm={handleOpenCouponForm} />
-      </div>
+      </div> */}
     </div>
   );
 };

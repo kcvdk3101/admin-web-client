@@ -1,9 +1,11 @@
+import { Vendor } from "../models";
 import axiosClient from "./axiosClient";
+
+const url = "/vendors";
 
 const vendorsApi = {
   getAllVendors() {
-    const url = "/vendors";
-    return axiosClient.get(url);
+    return axiosClient.get<any, Vendor[]>(url);
   },
 };
 
