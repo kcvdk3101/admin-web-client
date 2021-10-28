@@ -7,6 +7,9 @@ import axiosClient from "../../api/axiosClient";
 import { useAppDispatch } from "../../app/hooks";
 import { addChildCategory } from "../../features/categories/categoriesSlice";
 import { Configs } from "../../helpers/configs";
+import ButtonsAction from "../common/ButtonsAction";
+import VerticalImageInput from "../common/VerticalImageInput";
+import VerticalLabelInput from "../common/VerticalLabelInput";
 
 type FormValues = {
   name: string;
@@ -92,8 +95,8 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
             className="relative p-6 flex-auto"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex flex-col w-full mr-2">
+            <div className="flex items-center mb-4">
+              <div className="flex flex-col mb-4 flex-1 mr-2">
                 <label
                   htmlFor="parentName"
                   className="mb-2 text-base text-gray-900"
@@ -101,7 +104,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
                   Parent name
                 </label>
                 <select
-                  className="border py-3 px-1 text-grey-800 outline-none rounded"
+                  className="border py-2 px-3 text-grey-800 outline-none rounded"
                   onChange={handleChange}
                 >
                   <option value="">Please choose parent name</option>
@@ -112,76 +115,26 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
                   ))}
                 </select>
               </div>
-              <div className="flex flex-col w-full">
-                <label htmlFor="name" className="mb-2 text-base text-gray-900">
-                  Name
-                </label>
-                <input
-                  id="name"
-                  className="border p-3 text-grey-800 outline-none rounded"
-                  {...register("name")}
-                />
-                {errors.name && (
-                  <p className="text-red-500">This field is required</p>
-                )}
-              </div>
-            </div>
 
-            <div className="flex flex-col mb-4">
-              <input
-                accept="image/*"
-                id="file"
-                type="file"
-                style={{ display: "none" }}
-                {...register("file")}
-                onChange={onChangeImage}
+              <VerticalLabelInput
+                label="Name"
+                inputName="name"
+                register={register}
+                errors={errors}
               />
-              {imageChild ? (
-                <label htmlFor="file" className="cursor-pointer w-1/6">
-                  <img
-                    src={URL.createObjectURL(imageChild)}
-                    alt="Image"
-                    className="h-32 w-32 shadow-md"
-                  />
-                </label>
-              ) : (
-                <label
-                  htmlFor="file"
-                  className=" flex flex-col items-center w-1/6 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-base cursor-pointer"
-                >
-                  <svg
-                    className="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  Choose image
-                </label>
-              )}
             </div>
 
-            <div className="flex items-center justify-end p-6">
-              <button
-                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
-                type="button"
-                onClick={handleChildCategoryForm}
-              >
-                Close
-              </button>
-              <button
-                className="bg-blue-500 font-bold uppercase text-sm px-4 py-2 ml-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
-                type="submit"
-              >
-                Add
-              </button>
-            </div>
+            <VerticalImageInput
+              widthImage="1/3"
+              image={imageChild}
+              label="Choose image"
+              inputName="file"
+              register={register}
+              errors={errors}
+              onChangeImage={onChangeImage}
+            />
+
+            <ButtonsAction title="Add" handleAction={handleChildCategoryForm} />
           </form>
         </div>
       </div>

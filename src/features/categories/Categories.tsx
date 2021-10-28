@@ -36,7 +36,7 @@ const Categories: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, [dispatch]);
+  }, []);
 
   return (
     <main className="w-full p-4 flex flex-col justify-center items-center dark:bg-gray-600">
@@ -146,15 +146,10 @@ const Categories: React.FC = () => {
           </div>
         </div>
       </section>
-      <div
-        className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
-          openParentCategoryForm
-            ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
-            : "hidden"
-        }`}
-      >
-        <ParentCategory handleParentCategoryForm={handleParentCategoryForm} />
-      </div>
+      <ParentCategory
+        openParentCategoryForm={openParentCategoryForm}
+        handleParentCategoryForm={handleParentCategoryForm}
+      />
       <div
         className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
           openChildCategoryForm

@@ -1,7 +1,10 @@
+import { Image } from "..";
+
 export interface Coupon {
   couponName: string;
   couponType: string;
   description?: string;
+  isUnlimited: boolean;
   modifier: number;
   amount: number;
   unit: string;
@@ -10,5 +13,5 @@ export interface Coupon {
   pointAchieve: number;
   startTime: Date | string;
   endTime: Date | string;
-  image: string;
+  image: Image[];
 }

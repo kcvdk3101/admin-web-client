@@ -20,6 +20,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   couponName,
   couponType,
   modifier,
+  isUnlimited,
   amount,
   unit,
   usage,
@@ -38,7 +39,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   return (
     <div className="rounded">
       <img
-        src={image}
+        src={image[0].url}
         alt=" random imgee"
         className="w-full object-cover object-center rounded-lg shadow-md"
       />
@@ -61,9 +62,27 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             This coupon card changes {pointAchieve} points
           </p>
           <div className="flex justify-between items-center mt-4">
-            <p className={`text-xs lg:text-base ${isAlertWhenUsedUp}`}>
-              {usage}/{limit} card been used
-            </p>
+            {isUnlimited ? (
+              <div className="flex justify-center items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <p className="ml-2">Unlimited usage</p>
+              </div>
+            ) : (
+              <p className="text-xs text-blue-700 dark:text-green-400 lg:text-base">
+                {usage}/{limit} card been used
+              </p>
+            )}
             <button className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md">
               Delete
             </button>
@@ -141,6 +160,7 @@ const CouponComponent: React.FC = () => {
             couponType={coupon.couponType}
             modifier={coupon.modifier}
             amount={coupon.amount}
+            isUnlimited={coupon.isUnlimited}
             unit={coupon.unit}
             usage={coupon.usage}
             limit={coupon.limit}
@@ -152,15 +172,10 @@ const CouponComponent: React.FC = () => {
           />
         ))}
       </div>
-      {/* <div
-        className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
-          openCouponForm
-            ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
-            : "hidden"
-        }`}
-      >
-        <NewCoupon handleOpenCouponForm={handleOpenCouponForm} />
-      </div> */}
+      <NewCoupon
+        openCouponForm={openCouponForm}
+        handleOpenCouponForm={handleOpenCouponForm}
+      />
     </div>
   );
 };

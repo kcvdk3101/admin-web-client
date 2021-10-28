@@ -1,8 +1,4 @@
-export interface Images {
-  id: string;
-  ownerId: string;
-  url: string;
-}
+import { Image } from "..";
 
 export interface Category {
   id: string;
@@ -10,11 +6,11 @@ export interface Category {
   slug: string;
   depth: number;
   children?: ChilrenCategory[];
-  images: Images[];
+  images: Image[];
 }
 
 export interface ChilrenCategory extends Category {
   parentId: string;
   children?: ChilrenCategory[];
-  images: Images[];
+  images: Image[];
 }
