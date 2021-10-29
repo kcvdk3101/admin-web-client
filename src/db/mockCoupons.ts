@@ -25,7 +25,7 @@ export const mockCoupons = [
     couponType: "cash",
     description: "This coupon for email has 100 point",
     modifier: 0,
-    amount: 300000,
+    amount: 3000000,
     isUnlimited: true,
     unit: "VND",
     usage: 10,

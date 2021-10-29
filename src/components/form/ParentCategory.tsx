@@ -83,6 +83,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
               cols={6}
               label="Name"
               inputName="name"
+              type="text"
               register={register}
               errors={errors}
             />
@@ -91,7 +92,9 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
               cols={6}
               image={image}
               label="Choose image"
+              widthImage="1/2"
               inputName="files"
+              type="file"
               register={register}
               onChangeImage={onChangeImage}
             />

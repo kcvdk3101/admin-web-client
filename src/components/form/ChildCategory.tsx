@@ -120,6 +120,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
               cols={3}
               label="Name"
               inputName="name"
+              type="text"
               register={register}
               errors={errors}
             />
@@ -128,7 +129,9 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
               cols={6}
               image={imageChild}
               label="Choose image"
+              widthImage="1/2"
               inputName="file"
+              type="file"
               register={register}
               onChangeImage={onChangeImage}
             />

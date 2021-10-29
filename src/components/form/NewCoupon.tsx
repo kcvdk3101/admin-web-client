@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import ButtonsAction from "../common/ButtonsAction";
+import VerticalCurrenciesSelect from "../common/VerticalCurrenciesSelect";
 import VerticalDateTimeInput from "../common/VerticalDateTimeInput";
 import VerticalImageInput from "../common/VerticalImageInput";
 import VerticalLabelInput from "../common/VerticalLabelInput";
 
 type FormValues = {
   couponName: string;
-  couponType: string;
-  isUnlimited: boolean;
+  description: string;
   modifier: number;
   amount: number;
   unit: string;
@@ -32,7 +32,14 @@ const NewCouponFormSchema = yup
       .string()
       .min(1, "Please enter more than 1 character")
       .required("This field is required"),
-    limit: yup.number().positive().required(),
+    limit: yup.number().positive(),
+    modifier: yup.number().positive(),
+    amount: yup.number().positive(),
+    pointAchieve: yup.number().positive().required(),
+    startTime: yup.date().required("Start time cannot be empty"),
+    endTime: yup.date().required("End time cannot be empty"),
+    // startTime: yup.string().required("Start time cannot be empty"),
+    // endTime: yup.string().required("End time cannot be empty"),
     files: yup.mixed().required("This field is required"),
   })
   .required();
@@ -51,14 +58,17 @@ const NewCoupon: React.FC<NewCouponProps> = ({
 
   const [image, setImage] = useState<File>();
   const [isUnlimited, setIsUnlimited] = useState(true);
-  const [couponType, setCouponType] = useState<string>("Percentage");
+  const [couponAttribute, setCouponAttribute] = useState({
+    couponType: "Percentage",
+    unit: "AED",
+  });
 
   const handleChangeUnlimited = () => {
     setIsUnlimited(!isUnlimited);
   };
 
-  const handleCouponType = (e: any) => {
-    setCouponType(e.target.value);
+  const handleChangeCouponAttribute = (e: any) => {
+    setCouponAttribute({ ...couponAttribute, [e.target.name]: e.target.value });
   };
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,39 +79,49 @@ const NewCoupon: React.FC<NewCouponProps> = ({
     setImage(e.target.files[0]);
   };
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    //  const formData = new FormData();
-    //  formData.append("name", data.name);
-    //  formData.append("files", image as Blob);
-    //  try {
-    //    dispatch(addParentCategory(formData));
-    //    handleParentCategoryForm();
-    //    toast.success("Succeed");
-    //  } catch (error) {
-    //    throw error;
-    //  }
-  };
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const limit = data.limit === undefined ? 0 : data.limit;
+    const amount = data.amount === undefined ? 0 : data.amount;
 
-  console.log(couponType);
+    console.log({
+      couponName: data.couponName,
+      couponType: couponAttribute.couponType,
+      description: data.description,
+      isUnlimited,
+      modifier: data.modifier,
+      amount,
+      unit: couponAttribute.unit,
+      usage: 0,
+      limit,
+      pointAcheive: data.pointAchieve,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      files: data.files,
+    });
+  };
 
   return (
     <div
-      className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
+      className={`overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
         openCouponForm
           ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
           : "hidden"
       }`}
     >
-      <div className="relative mt-60  mx-auto max-w-3xl w-1/2">
+      <div className="relative mt-96 mx-auto max-w-5xl w-1/2">
         <div className="border-0 rounded-lg shadow-lg flex flex-col bg-white outline-none focus:outline-none">
           <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
             Coupon Form
           </h3>
-          <form className="grid grid-cols-6 gap-6 p-6">
+          <form
+            className="grid grid-cols-6 gap-6 p-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <VerticalLabelInput
               cols={6}
               label="Coupon Name"
               inputName="couponName"
+              type="text"
               register={register}
               errors={errors}
             />
@@ -113,8 +133,8 @@ const NewCoupon: React.FC<NewCouponProps> = ({
               <button
                 className={`${
                   isUnlimited
-                    ? "bg-blue-400 text-white"
-                    : "bg-white text-blue-400"
+                    ? "bg-blue-400 text-white dark:bg-green-400"
+                    : "bg-white text-blue-400 dark:text-green-400"
                 } py-2 px-3 rounded transition duration-150`}
                 type="button"
                 onClick={handleChangeUnlimited}
@@ -124,8 +144,8 @@ const NewCoupon: React.FC<NewCouponProps> = ({
               <button
                 className={`${
                   !isUnlimited
-                    ? "bg-blue-400 text-white"
-                    : "bg-white text-blue-400"
+                    ? "bg-blue-400 text-white dark:bg-green-400"
+                    : "bg-white text-blue-400 dark:text-green-400"
                 } py-2 px-3 rounded transition duration-150 ml-2`}
                 type="button"
                 onClick={handleChangeUnlimited}
@@ -145,14 +165,19 @@ const NewCoupon: React.FC<NewCouponProps> = ({
               >
                 Total number of coupons
               </label>
-              <input
-                type="number"
-                name="limit"
-                id="limit"
-                className={`${
-                  !isUnlimited ? "animate-fade-in-opacity" : "hidden"
-                } mt-2 p-3 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md`}
-              />
+              {!isUnlimited && (
+                <input
+                  type="number"
+                  id="limit"
+                  className={`${
+                    !isUnlimited ? "animate-fade-in-opacity" : "hidden"
+                  } mt-2 p-3 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md`}
+                  {...register("limit")}
+                />
+              )}
+              {!isUnlimited && errors.limit && (
+                <p className="text-red-500">{errors.limit.message}</p>
+              )}
             </div>
 
             <div className="col-span-6">
@@ -166,23 +191,49 @@ const NewCoupon: React.FC<NewCouponProps> = ({
                 className="mt-2 p-3 block w-full text-sm sm:text-base border border-gray-500 rounded-md"
                 rows={4}
                 cols={50}
-                name="description"
                 id="description"
+                {...register("description")}
               />
+              {errors.description && (
+                <p className="text-red-500">{errors.description.message}</p>
+              )}
             </div>
 
-            <VerticalDateTimeInput cols={3} label="Start event" />
-            <VerticalDateTimeInput cols={3} label="End event" />
+            <VerticalDateTimeInput
+              cols={3}
+              label="Start time"
+              inputName="startTime"
+              register={register}
+              errors={errors}
+            />
+            <VerticalDateTimeInput
+              cols={3}
+              label="End time"
+              inputName="endTime"
+              register={register}
+              errors={errors}
+            />
 
             <hr className="col-span-6" />
             <p className="col-span-6 text-lg md:text-xl font-semibold ">
               Coupon Details
             </p>
 
+            <VerticalLabelInput
+              cols={3}
+              label="Point achievement"
+              inputName="pointAchieve"
+              type="number"
+              register={register}
+              errors={errors}
+            />
+
+            <div className="col-span-3"></div>
+
             <div className="col-span-3">
               <label
                 htmlFor="couponType"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm sm:text-base font-medium text-gray-700"
               >
                 Coupon type
               </label>
@@ -190,7 +241,7 @@ const NewCoupon: React.FC<NewCouponProps> = ({
                 className="mt-2 py-2.5 px-1 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md"
                 name="couponType"
                 id="couponType"
-                onChange={handleCouponType}
+                onChange={handleChangeCouponAttribute}
               >
                 {["Percentage", "Cash"].map((t, index) => (
                   <option className="capitalize" key={index} value={t}>
@@ -201,16 +252,24 @@ const NewCoupon: React.FC<NewCouponProps> = ({
             </div>
 
             <div className="col-span-3">
-              {couponType === "Percentage" ? (
-                <>
-                  <h1>Percentage</h1>
-                  {(2500).toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })}
-                </>
+              {couponAttribute.couponType === "Percentage" ? (
+                <VerticalLabelInput
+                  cols={3}
+                  label="Percentage"
+                  inputName="modifier"
+                  type="number"
+                  register={register}
+                  errors={errors}
+                />
               ) : (
-                <h1>Cash</h1>
+                <VerticalCurrenciesSelect
+                  label="Cash"
+                  inputName="unit"
+                  register={register}
+                  errors={errors}
+                  type={couponAttribute.couponType}
+                  handleChangeCouponAttribute={handleChangeCouponAttribute}
+                />
               )}
             </div>
 
@@ -219,6 +278,8 @@ const NewCoupon: React.FC<NewCouponProps> = ({
               image={image}
               label="Choose image"
               inputName="files"
+              type="file"
+              widthImage="3/5"
               register={register}
               onChangeImage={onChangeImage}
             />

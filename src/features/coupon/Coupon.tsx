@@ -53,7 +53,9 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             </p>
           </div>
           <h4 className="mt-1 text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold uppercase truncate text-blue-600 dark:text-green-500">
-            {couponType === "cash" ? amount : modifier}
+            {couponType === "cash"
+              ? Utilities.convertToCurrency(amount)
+              : modifier}
             <span className="lowercase text-xl text-gray-500 ml-1 dark:text-gray-500">
               {couponType === "cash" ? unit : "%"}
             </span>
@@ -130,7 +132,7 @@ const CouponComponent: React.FC = () => {
           <div
             className={`${
               openDropdown ? "block" : "hidden"
-            } bg-white absolute  animate-fade-in-down text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1`}
+            } bg-white absolute animate-fade-in-down text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1`}
           >
             {typesOfCoupon.map((type, index) => (
               <p

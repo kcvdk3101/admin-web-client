@@ -4,7 +4,9 @@ interface VerticalImageInputProps {
   cols: number;
   image: File | undefined;
   label: string;
+  widthImage: string;
   inputName: string;
+  type: string;
   register: any;
   onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -13,7 +15,9 @@ const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
   cols,
   image,
   label,
+  widthImage,
   inputName,
+  type,
   register,
   onChangeImage,
 }) => {
@@ -23,7 +27,7 @@ const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
         id={inputName}
         className="hidden"
         accept="image/*"
-        type="file"
+        type={type}
         {...register(`${inputName}`)}
         onChange={onChangeImage}
       />
@@ -33,7 +37,7 @@ const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
           <img
             src={URL.createObjectURL(image)}
             alt="Image"
-            className="shadow-md mt-2 w-1/2"
+            className={`shadow-md mt-2 w-${widthImage}`}
           />
         </label>
       ) : (
