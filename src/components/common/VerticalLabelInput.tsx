@@ -1,6 +1,7 @@
 import React from "react";
 
 interface VerticalLabelInputProps {
+  cols: number;
   label: string;
   inputName: string;
   register: any;
@@ -8,22 +9,29 @@ interface VerticalLabelInputProps {
 }
 
 const VerticalLabelInput: React.FC<VerticalLabelInputProps> = ({
+  cols,
   label,
   inputName,
   register,
   errors,
 }) => {
   return (
-    <div className="flex flex-col flex-1 mb-4">
-      <label htmlFor={inputName} className="mb-2 text-base text-gray-900">
+    <div className={`col-span-${cols}`}>
+      <label
+        htmlFor={inputName}
+        className="block text-sm font-medium text-gray-700"
+      >
         {label}
       </label>
       <input
         id={inputName}
-        className="border py-2 px-3 text-grey-800 outline-none"
+        className="mt-2 p-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
+        type="text"
         {...register(`${inputName}`)}
       />
-      {errors.name && <p className="text-red-500">This field is required</p>}
+      {errors?.[inputName] && (
+        <p className="text-red-500">This field is required</p>
+      )}
     </div>
   );
 };

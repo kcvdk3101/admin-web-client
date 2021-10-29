@@ -1,15 +1,17 @@
 import React from "react";
 
 interface VerticalDateTimeInputProps {
+  cols: number;
   label: string;
 }
 
 const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
+  cols,
   label,
 }) => {
   return (
-    <div className="flex flex-col flex-1 mb-4 mx-2">
-      <label htmlFor="date" className="mb-2 text-base text-gray-900">
+    <div className={`col-span-${cols}`}>
+      <label htmlFor="date" className="block text-sm font-medium text-gray-700">
         {label}
       </label>
       <input
@@ -17,7 +19,7 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
         id="date"
         name="date"
         placeholder="date"
-        className="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 text-gray-600 placeholder-gray-400 outline-none"
+        className="mt-2 p-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
       />
     </div>
   );

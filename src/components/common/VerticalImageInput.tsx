@@ -1,41 +1,39 @@
 import React from "react";
 
 interface VerticalImageInputProps {
-  widthImage: string;
+  cols: number;
   image: File | undefined;
   label: string;
   inputName: string;
   register: any;
-  errors: any;
   onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
-  widthImage,
+  cols,
   image,
   label,
   inputName,
   register,
-  errors,
   onChangeImage,
 }) => {
   return (
-    <div className="flex flex-col mb-4">
+    <div className={`col-span-${cols}`}>
       <input
-        accept="image/*"
         id={inputName}
+        className="hidden"
+        accept="image/*"
         type="file"
-        style={{ display: "none" }}
         {...register(`${inputName}`)}
         onChange={onChangeImage}
       />
       {image ? (
-        <label htmlFor={inputName} className={`cursor-pointer w-${widthImage}`}>
+        <label htmlFor={inputName} className="cursor-pointer">
           {label}
           <img
             src={URL.createObjectURL(image)}
             alt="Image"
-            className="w-full shadow-md mt-2"
+            className="shadow-md mt-2 w-1/2"
           />
         </label>
       ) : (

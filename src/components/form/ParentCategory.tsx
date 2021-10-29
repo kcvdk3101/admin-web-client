@@ -75,34 +75,33 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
           <h3 className="text-xl md:text-2xl font-bold p-5">
             Add new category
           </h3>
-          <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none dark:bg-gray-200">
-            <form
-              className="relative p-6 flex-auto"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <VerticalLabelInput
-                label="Name"
-                inputName="name"
-                register={register}
-                errors={errors}
-              />
+          <form
+            className="grid grid-cols-6 gap-6 p-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <VerticalLabelInput
+              cols={6}
+              label="Name"
+              inputName="name"
+              register={register}
+              errors={errors}
+            />
 
-              <VerticalImageInput
-                widthImage="1/3"
-                image={image}
-                label="Choose image"
-                inputName="files"
-                register={register}
-                errors={errors}
-                onChangeImage={onChangeImage}
-              />
+            <VerticalImageInput
+              cols={6}
+              image={image}
+              label="Choose image"
+              inputName="files"
+              register={register}
+              onChangeImage={onChangeImage}
+            />
 
-              <ButtonsAction
-                title="Add"
-                handleAction={handleParentCategoryForm}
-              />
-            </form>
-          </div>
+            <ButtonsAction
+              cols={6}
+              title="Add"
+              handleAction={handleParentCategoryForm}
+            />
+          </form>
         </div>
       </div>
     </div>

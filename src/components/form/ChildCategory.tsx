@@ -93,49 +93,51 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
         </h3>
         <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
           <form
-            className="relative p-6 flex-auto"
+            className="grid grid-cols-6 gap-6 p-6"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="flex items-center mb-4">
-              <div className="flex flex-col mb-4 flex-1 mr-2">
-                <label
-                  htmlFor="parentName"
-                  className="mb-2 text-base text-gray-900"
-                >
-                  Parent name
-                </label>
-                <select
-                  className="border py-2 px-3 text-grey-800 outline-none rounded"
-                  onChange={handleChange}
-                >
-                  <option value="">Please choose parent name</option>
-                  {arrayParentName.map((parent, index) => (
-                    <option key={index} value={parent.name}>
-                      {parent.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <VerticalLabelInput
-                label="Name"
-                inputName="name"
-                register={register}
-                errors={errors}
-              />
+            <div className="col-span-3">
+              <label
+                htmlFor="parentName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Parent name
+              </label>
+              <select
+                className="mt-2 py-3 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
+                onChange={handleChange}
+              >
+                <option value="">Please choose parent name</option>
+                {arrayParentName.map((parent, index) => (
+                  <option key={index} value={parent.name}>
+                    {parent.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
+            <VerticalLabelInput
+              cols={3}
+              label="Name"
+              inputName="name"
+              register={register}
+              errors={errors}
+            />
+
             <VerticalImageInput
-              widthImage="1/3"
+              cols={6}
               image={imageChild}
               label="Choose image"
               inputName="file"
               register={register}
-              errors={errors}
               onChangeImage={onChangeImage}
             />
 
-            <ButtonsAction title="Add" handleAction={handleChildCategoryForm} />
+            <ButtonsAction
+              cols={6}
+              title="Add"
+              handleAction={handleChildCategoryForm}
+            />
           </form>
         </div>
       </div>

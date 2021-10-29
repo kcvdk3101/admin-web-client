@@ -81,85 +81,111 @@ const NewCoupon: React.FC<NewCouponProps> = ({
           : "hidden"
       }`}
     >
-      <div className="relative my-6 mx-auto max-w-3xl w-1/2">
-        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-          <h3 className="text-xl md:text-2xl font-semibold p-5">Coupon Form</h3>
-          <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
-            <form
-              className="relative p-6 flex-auto"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <div className="flex">
-                <VerticalLabelInput
-                  label="Name"
-                  inputName="couponName"
-                  register={register}
-                  errors={errors}
-                />
-                <div className="flex-1 flex flex-col">
-                  <label
-                    className="ml-2 mb-2 text-base text-gray-900"
-                    htmlFor="couponType"
-                  >
-                    Type of coupon
-                  </label>
-                  <select
-                    className="border py-2 px-3 text-grey-800 outline-none ml-2"
-                    name="couponType"
-                    id="couponType"
-                  >
-                    {["Percetage", "Cash"].map((t, index) => (
-                      <option className="capitalize" key={index} value={t}>
-                        {t}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="flex">
-                <div>
-                  <button>Unlimited</button>
-                  <button>Limited</button>
-                </div>
-              </div>
+      <div className="relative mt-60  mx-auto max-w-3xl w-1/2">
+        <div className="border-0 rounded-lg shadow-lg flex flex-col bg-white outline-none focus:outline-none">
+          <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
+            Coupon Form
+          </h3>
+          <form className="grid grid-cols-6 gap-6 p-6">
+            <VerticalLabelInput
+              cols={6}
+              label="Coupon Name"
+              inputName="couponName"
+              register={register}
+              errors={errors}
+            />
 
-              <div className="flex flex-col mb-4">
-                <label
-                  className={` mb-2 text-base text-gray-900`}
-                  htmlFor="description"
-                >
-                  Description
-                </label>
-                <textarea
-                  className="border py-2 px-3 text-grey-800 outline-none"
-                  rows={4}
-                  cols={50}
-                  name="description"
-                  id="description"
-                />
-              </div>
-
-              <div className="flex">
-                <VerticalDateTimeInput label="Start event" />
-                <VerticalDateTimeInput label="End event" />
-              </div>
-
-              <VerticalImageInput
-                widthImage="1/3"
-                image={image}
-                label="Choose image"
-                inputName="files"
-                register={register}
-                errors={errors}
-                onChangeImage={onChangeImage}
+            <div className="col-span-3">
+              <label
+                htmlFor="email-address"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
+              <input
+                type="text"
+                name="email-address"
+                id="email-address"
+                autoComplete="email"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
+            </div>
 
-              <ButtonsAction
-                title="Create"
-                handleAction={handleOpenCouponForm}
+            <div className="col-span-3">
+              <label
+                htmlFor="email-address"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
+              <input
+                type="text"
+                name="email-address"
+                id="email-address"
+                autoComplete="email"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
-            </form>
-          </div>
+            </div>
+
+            <div className="col-span-6">
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="description"
+              >
+                Description
+              </label>
+              <textarea
+                className="mt-2 p-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
+                rows={4}
+                cols={50}
+                name="description"
+                id="description"
+              />
+            </div>
+
+            <VerticalDateTimeInput cols={3} label="Start event" />
+            <VerticalDateTimeInput cols={3} label="End event" />
+
+            <hr className="col-span-6" />
+            <h3 className="col-span-6 text-lg md:text-xl font-semibold ">
+              Coupon Details
+            </h3>
+
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="couponType"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Type of coupon
+              </label>
+              <select
+                className="mt-1 block w-full py-2 px-1 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                name="couponType"
+                id="couponType"
+              >
+                {["Percetage", "Cash"].map((t, index) => (
+                  <option className="capitalize" key={index} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <VerticalImageInput
+              cols={6}
+              image={image}
+              label="Choose image"
+              inputName="files"
+              register={register}
+              onChangeImage={onChangeImage}
+            />
+
+            <ButtonsAction
+              cols={6}
+              title="Create"
+              handleAction={handleOpenCouponForm}
+            />
+          </form>
         </div>
       </div>
     </div>

@@ -1,16 +1,18 @@
 import React from "react";
 
 interface ButtonsActionProps {
+  cols: number;
   title: string;
   handleAction: () => void;
 }
 
 const ButtonsAction: React.FC<ButtonsActionProps> = ({
+  cols,
   title,
   handleAction,
 }) => {
   return (
-    <div className="flex items-center justify-end p-6">
+    <div className={`col-span-${cols} ml-auto`}>
       <button
         className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
         type="button"
