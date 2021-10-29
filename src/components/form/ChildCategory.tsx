@@ -6,7 +6,8 @@ import * as yup from "yup";
 import axiosClient from "../../api/axiosClient";
 import { useAppDispatch } from "../../app/hooks";
 import { addChildCategory } from "../../features/categories/categoriesSlice";
-import { Configs } from "../../helpers/configs";
+import { API_BASE_URL } from "../../helpers/configs";
+// import { Configs } from "../../helpers/configs";
 import ButtonsAction from "../common/ButtonsAction";
 import VerticalImageInput from "../common/VerticalImageInput";
 import VerticalLabelInput from "../common/VerticalLabelInput";
@@ -56,7 +57,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
     (async function () {
       try {
         const response = await axiosClient.get<any, []>(
-          `${Configs.API_BASE_URL}/categories/name`
+          `${API_BASE_URL}/categories/name`
         );
         setArrayParentName(response);
       } catch (error) {}
