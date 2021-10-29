@@ -50,7 +50,7 @@ module.exports = {
         }
       },
       animation: {
-        'fade-in-opacity': 'fade-in-opacity 0.5s ease-in',
+        'fade-in-opacity': 'fade-in-opacity 0.2s ease-in',
         'fade-in-down': 'fade-in-down 0.2s ease-in',
         'fade-out-down': 'fade-out-down 0.5s ease-out',
         'fade-in-up': 'fade-in-up 0.5s ease-out',

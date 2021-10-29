@@ -19,13 +19,13 @@ const VerticalLabelInput: React.FC<VerticalLabelInputProps> = ({
     <div className={`col-span-${cols}`}>
       <label
         htmlFor={inputName}
-        className="block text-sm font-medium text-gray-700"
+        className="block text-sm sm:text-base font-medium text-gray-700"
       >
         {label}
       </label>
       <input
         id={inputName}
-        className="mt-2 p-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
+        className="mt-2 p-2 block w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md"
         type="text"
         {...register(`${inputName}`)}
       />

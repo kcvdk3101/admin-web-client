@@ -99,12 +99,12 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
             <div className="col-span-3">
               <label
                 htmlFor="parentName"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm sm:text-base font-medium text-gray-700"
               >
                 Parent name
               </label>
               <select
-                className="mt-2 py-3 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300"
+                className="mt-2 py-2.5 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md"
                 onChange={handleChange}
               >
                 <option value="">Please choose parent name</option>
