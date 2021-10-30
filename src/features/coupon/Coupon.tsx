@@ -3,10 +3,21 @@ import { toast } from "react-toastify";
 import NewCoupon from "../../components/form/NewCoupon";
 import { typesOfCoupon } from "../../constant";
 import { mockCoupons } from "../../db/mockCoupons";
+import { mockCurrencies } from "../../db/mockCurrencies";
 import { Utilities } from "../../helpers/utils/index";
 import { Coupon } from "../../models";
 
-function filterCoupons(coupons: Coupon[], typeOfCoupon: string) {
+function filterCouponsByUnit(coupons: Coupon[], unitOfCoupon: string) {
+  if (unitOfCoupon === "" || unitOfCoupon === "All") return coupons;
+  console.log(
+    coupons.filter((coupon) => coupon.unit === unitOfCoupon && { ...coupon })
+  );
+  return coupons.filter(
+    (coupon) => coupon.unit === unitOfCoupon && { ...coupon }
+  );
+}
+
+function filterCouponsByType(coupons: Coupon[], typeOfCoupon: string) {
   if (typeOfCoupon === "" || typeOfCoupon === "All") return coupons;
   return coupons.filter(
     (coupon) => coupon.couponType === typeOfCoupon.toLowerCase()
@@ -51,7 +62,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             {couponType === "cash"
               ? Utilities.convertToCurrency(amount)
               : modifier}
-            <span className="lowercase text-xl text-gray-500 ml-1 dark:text-gray-500">
+            <span className="uppercase text-lg text-gray-500 ml-1 dark:text-gray-500">
               {couponType === "cash" ? unit : "%"}
             </span>
           </h4>
@@ -98,6 +109,7 @@ const CouponComponent: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [openCouponForm, setOpenCouponForm] = useState<boolean>(false);
   const [typeOfCoupon, setTypeOfCoupon] = useState<string>("");
+  const [unitOfCoupon, setUnitOfCoupon] = useState<string>("");
 
   const handleOpenDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -108,8 +120,15 @@ const CouponComponent: React.FC = () => {
   };
 
   function handleChangeType(type: string) {
+    if (type === "All") {
+      setUnitOfCoupon("");
+    }
     setTypeOfCoupon(type);
     setOpenDropdown(false);
+  }
+
+  function handleChangeUnit(e: any) {
+    setUnitOfCoupon(e.target.value);
   }
 
   const handleDeleteCoupon = () => {
@@ -117,20 +136,38 @@ const CouponComponent: React.FC = () => {
   };
 
   return (
-    <div className="p-5 md:p-7 lg:p-10 dark:bg-gray-600">
-      <div className="flex justify-between items-center w-full my-2 md:my-5">
-        <div className="relative">
+    <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600">
+      <div className="grid grid-cols-12 my-2 md:my-5 ">
+        <div className="relative col-span-10 grid grid-cols-12">
           <button
-            className="flex items-center text-blue-500 capitalize text-base md:text-lg xl:text-2xl font-bold px-4 py-2 hover:shadow-sm outline-none focus:outline-none dark:text-green-500"
+            className="col-span-1 text-blue-500 capitalize text-base md:text-lg xl:text-xl font-bold hover:shadow-sm outline-none focus:outline-none dark:text-green-500"
             type="button"
             onClick={handleOpenDropdown}
           >
-            Filter
+            Sort by
           </button>
+          {typeOfCoupon === "Cash" && (
+            <div className="flex items-center ml-10 animate-fade-in-down">
+              <p className="text-sm md:text-base mr-3 text-blue-500 font-bold dark:text-green-500">
+                Unit
+              </p>
+              <select
+                className="block px-1 py-3 shadow-sm sm:text-sm border border-blue-500 rounded-md focus:outline-none focus:border-blue-500 dark:border-green-500 dark:bg-gray-200 dark:focus:border-green-500"
+                onChange={handleChangeUnit}
+              >
+                <option value="">All</option>
+                {mockCurrencies.map((c, index) => (
+                  <option key={index} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div
             className={`${
               openDropdown ? "block" : "hidden"
-            } bg-white absolute animate-fade-in-down text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1`}
+            } bg-white absolute animate-fade-in-down text-base top-12 z-50 py-2 list-none text-left rounded shadow-lg`}
           >
             {typesOfCoupon.map((type, index) => (
               <p
@@ -143,9 +180,9 @@ const CouponComponent: React.FC = () => {
             ))}
           </div>
         </div>
-        <div>
+        <div className="col-start-12">
           <button
-            className="py-1.5 px-3 md:py-2 md:px-4 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500"
+            className="py-1.5 px-3 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500"
             onClick={handleOpenCouponForm}
           >
             Add new
@@ -153,24 +190,34 @@ const CouponComponent: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 animate-fade-in-down">
-        {filterCoupons(coupons, typeOfCoupon).map((coupon, index) => (
-          <CardCouponView
-            key={index}
-            couponName={coupon.couponName}
-            couponType={coupon.couponType}
-            modifier={coupon.modifier}
-            amount={coupon.amount}
-            isUnlimited={coupon.isUnlimited}
-            unit={coupon.unit}
-            usage={coupon.usage}
-            limit={coupon.limit}
-            pointToAchieve={coupon.pointToAchieve}
-            startTime={coupon.startTime}
-            endTime={coupon.endTime}
-            image={coupon.image}
-            handleDeleteCard={handleDeleteCoupon}
-          />
-        ))}
+        {filterCouponsByUnit(
+          filterCouponsByType(coupons, typeOfCoupon),
+          unitOfCoupon
+        ).length === 0 ? (
+          <h1 className="text-2xl dark:text-white">Result is empty</h1>
+        ) : (
+          filterCouponsByUnit(
+            filterCouponsByType(coupons, typeOfCoupon),
+            unitOfCoupon
+          ).map((coupon, index) => (
+            <CardCouponView
+              key={index}
+              couponName={coupon.couponName}
+              couponType={coupon.couponType}
+              modifier={coupon.modifier}
+              amount={coupon.amount}
+              isUnlimited={coupon.isUnlimited}
+              unit={coupon.unit}
+              usage={coupon.usage}
+              limit={coupon.limit}
+              pointToAchieve={coupon.pointToAchieve}
+              startTime={coupon.startTime}
+              endTime={coupon.endTime}
+              image={coupon.image}
+              handleDeleteCard={handleDeleteCoupon}
+            />
+          ))
+        )}
       </div>
       <NewCoupon
         openCouponForm={openCouponForm}
