@@ -4,6 +4,10 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
+        'spinner': {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
         'fade-in-opacity': {
           "0%": { opacity: 0 },
           "100%": { opacity: 1 }
@@ -50,6 +54,7 @@ module.exports = {
         }
       },
       animation: {
+        "spinner": "spinner 1.5s linear infinite",
         'fade-in-opacity': 'fade-in-opacity 0.2s ease-in',
         'fade-in-down': 'fade-in-down 0.2s ease-in',
         'fade-out-down': 'fade-out-down 0.5s ease-out',

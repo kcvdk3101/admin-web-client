@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
+import LoadingProgress from "./components/common/LoadingProgress";
 import NotFound from "./components/common/NotFound";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
@@ -22,7 +23,7 @@ const App: React.FC = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Loading</h1>
+        <LoadingProgress />
       ) : !isAuthenticated ? (
         <Login />
       ) : (

@@ -12,6 +12,10 @@
   @apply bg-white;
 }
 
+.loader {
+  border-top-color: #3498db;
+}
+
 input:checked ~ .dot {
   @apply bg-green-400;
   transform: translateX(100%);

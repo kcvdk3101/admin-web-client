@@ -1,1 +1,1 @@
-export const typesOfCoupon = ["All", "Percentage", "Cash"];
+export const typesOfCoupon = ["all", "percentage", "cash"];

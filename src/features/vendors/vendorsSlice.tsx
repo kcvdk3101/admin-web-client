@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axiosClient from "../../api/axiosClient";
-import categoriesApi from "../../api/categoriesApi";
 import vendorsApi from "../../api/vendorsApi";
-import { Category, ChilrenCategory, Vendor } from "../../models";
+import { Vendor } from "../../models";
 
 export interface VendorsSliceState {
   vendors: Vendor[];
