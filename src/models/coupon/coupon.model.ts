@@ -10,7 +10,7 @@ export interface Coupon {
   unit: string;
   usage: number;
   limit: number;
-  pointAchieve: number;
+  pointToAchieve: number;
   startTime: Date | string;
   endTime: Date | string;
   image: Image[];

@@ -3,13 +3,13 @@ export const mockCoupons = [
     couponName: "BIG SALE FOR LEADER",
     couponType: "percentage",
     description: "This coupon for email has 100 point",
-    isUnlimited: true,
+    isUnlimited: false,
     modifier: 30,
     amount: 0,
     unit: "VND",
-    usage: 0,
+    usage: 10,
     limit: 10,
-    pointAchieve: 100,
+    pointToAchieve: 100,
     startTime: "2021-10-01 01:14:42",
     endTime: "2021-11-05 23:42:10",
     image: [
@@ -30,7 +30,7 @@ export const mockCoupons = [
     unit: "VND",
     usage: 10,
     limit: 10,
-    pointAchieve: 100,
+    pointToAchieve: 100,
     startTime: "2021-10-01 01:14:42",
     endTime: "2021-11-05 23:42:10",
     image: [
@@ -51,7 +51,7 @@ export const mockCoupons = [
     unit: "VND",
     usage: 5,
     limit: 10,
-    pointAchieve: 200,
+    pointToAchieve: 200,
     startTime: "2021-11-20 01:14:42",
     endTime: "2021-11-30 01:14:42",
     image: [
@@ -73,7 +73,7 @@ export const mockCoupons = [
     unit: "VND",
     usage: 5,
     limit: 10,
-    pointAchieve: 200,
+    pointToAchieve: 200,
     startTime: "2021-11-20 01:14:42",
     endTime: "2021-11-30 01:14:42",
     image: [
@@ -94,7 +94,7 @@ export const mockCoupons = [
     unit: "VND",
     usage: 5,
     limit: 10,
-    pointAchieve: 200,
+    pointToAchieve: 200,
     startTime: "2021-11-20 01:14:42",
     endTime: "2021-11-30 01:14:42",
     image: [
@@ -115,7 +115,7 @@ export const mockCoupons = [
     unit: "VND",
     usage: 5,
     limit: 10,
-    pointAchieve: 200,
+    pointToAchieve: 200,
     startTime: "2021-11-20 01:14:42",
     endTime: "2021-11-30 01:14:42",
     image: [

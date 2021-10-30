@@ -13,17 +13,14 @@ const VendorActivaion: React.FC<Props> = ({
   handleOpenDialog,
 }) => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleVendorActivation = async () => {
-    setLoading(true);
     try {
       dispatch(activateVendorById(selectedVendorId));
       toast.success("Succeed");
     } catch (error) {
       throw error;
     } finally {
-      setLoading(false);
       handleOpenDialog();
     }
   };
@@ -41,7 +38,6 @@ const VendorActivaion: React.FC<Props> = ({
               className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
               type="button"
               onClick={handleOpenDialog}
-              disabled={loading}
             >
               Close
             </button>
@@ -49,9 +45,8 @@ const VendorActivaion: React.FC<Props> = ({
               className="bg-blue-500 font-bold uppercase text-sm px-4 py-2 ml-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
               type="button"
               onClick={handleVendorActivation}
-              disabled={loading}
             >
-              {loading ? "Activating..." : "Activate"}
+              Activate
             </button>
           </div>
         </div>

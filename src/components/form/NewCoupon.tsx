@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { Utilities } from "../../helpers/utils";
 import ButtonsAction from "../common/ButtonsAction";
 import VerticalCurrenciesSelect from "../common/VerticalCurrenciesSelect";
 import VerticalDateTimeInput from "../common/VerticalDateTimeInput";
@@ -15,7 +16,7 @@ type FormValues = {
   amount: number;
   unit: string;
   limit: number;
-  pointAchieve: number;
+  pointToAchieve: number;
   startTime: Date | string;
   endTime: Date | string;
   files: File | FileList;
@@ -25,24 +26,28 @@ export interface NewCouponProps {
   handleOpenCouponForm: () => void;
 }
 
-const NewCouponFormSchema = yup
-  .object({
-    couponName: yup.string().required(),
-    description: yup
-      .string()
-      .min(1, "Please enter more than 1 character")
-      .required("This field is required"),
-    limit: yup.number().positive(),
-    modifier: yup.number().positive(),
-    amount: yup.number().positive(),
-    pointAchieve: yup.number().positive().required(),
-    startTime: yup.date().required("Start time cannot be empty"),
-    endTime: yup.date().required("End time cannot be empty"),
-    // startTime: yup.string().required("Start time cannot be empty"),
-    // endTime: yup.string().required("End time cannot be empty"),
-    files: yup.mixed().required("This field is required"),
-  })
-  .required();
+const NewCouponFormSchema = yup.object({
+  couponName: yup.string().required("This field is required"),
+  description: yup
+    .string()
+    .min(1, "Please enter more than 1 character")
+    .required("This field is required"),
+  limit: yup.number().positive(),
+  modifier: yup.number().positive(),
+  amount: yup.number().positive(),
+  pointToAchieve: yup.number().positive().required("This field is required"),
+  startTime: yup
+    .date()
+    .min(
+      new Date().toLocaleDateString(),
+      `Must be later than ${new Date().toLocaleDateString()}`
+    )
+    .required("Start time cannot be empty"),
+  endTime: yup
+    .date()
+    .min(yup.ref("startTime"), "End date can't be before start date"),
+  files: yup.mixed().required("This field is required"),
+});
 
 const NewCoupon: React.FC<NewCouponProps> = ({
   openCouponForm,
@@ -57,7 +62,7 @@ const NewCoupon: React.FC<NewCouponProps> = ({
   });
 
   const [image, setImage] = useState<File>();
-  const [isUnlimited, setIsUnlimited] = useState(true);
+  const [isUnlimited, setIsUnlimited] = useState<boolean>(true);
   const [couponAttribute, setCouponAttribute] = useState({
     couponType: "Percentage",
     unit: "AED",
@@ -79,26 +84,23 @@ const NewCoupon: React.FC<NewCouponProps> = ({
     setImage(e.target.files[0]);
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    const limit = data.limit === undefined ? 0 : data.limit;
-    const amount = data.amount === undefined ? 0 : data.amount;
-
+  const onSubmit = handleSubmit((data) => {
     console.log({
       couponName: data.couponName,
       couponType: couponAttribute.couponType,
       description: data.description,
       isUnlimited,
       modifier: data.modifier,
-      amount,
+      amount: data.amount,
       unit: couponAttribute.unit,
       usage: 0,
-      limit,
-      pointAcheive: data.pointAchieve,
+      limit: data.limit,
+      pointToAchieve: data.pointToAchieve,
       startTime: data.startTime,
       endTime: data.endTime,
-      files: data.files,
+      files: image,
     });
-  };
+  });
 
   return (
     <div
@@ -113,10 +115,7 @@ const NewCoupon: React.FC<NewCouponProps> = ({
           <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
             Coupon Form
           </h3>
-          <form
-            className="grid grid-cols-6 gap-6 p-6"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="grid grid-cols-6 gap-3 p-6" onSubmit={onSubmit}>
             <VerticalLabelInput
               cols={6}
               label="Coupon Name"
@@ -189,8 +188,8 @@ const NewCoupon: React.FC<NewCouponProps> = ({
               </label>
               <textarea
                 className="mt-2 p-3 block w-full text-sm sm:text-base border border-gray-500 rounded-md"
-                rows={4}
-                cols={50}
+                rows={2}
+                cols={10}
                 id="description"
                 {...register("description")}
               />
@@ -215,14 +214,14 @@ const NewCoupon: React.FC<NewCouponProps> = ({
             />
 
             <hr className="col-span-6" />
-            <p className="col-span-6 text-lg md:text-xl font-semibold ">
+            <p className="col-span-6 text-base md:text-lg font-semibold ">
               Coupon Details
             </p>
 
             <VerticalLabelInput
               cols={3}
-              label="Point achievement"
-              inputName="pointAchieve"
+              label="Point to achieve"
+              inputName="pointToAchieve"
               type="number"
               register={register}
               errors={errors}

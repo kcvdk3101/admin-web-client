@@ -7,11 +7,26 @@ export class Utilities {
     return number.toLocaleString("it-IT");
   }
 
-  static disablePastDate() {
-    const today = new Date();
-    const dd = String(today.getDate() + 1).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const yyyy = today.getFullYear();
-    return yyyy + "-" + mm + "-" + dd;
+  static fillCouponInformation(
+    data: any,
+    couponAttribute: any,
+    isUnlimited: boolean,
+    image: File | undefined
+  ) {
+    const formData = new FormData();
+    formData.append("couponName", data.couponName);
+    formData.append("couponType", couponAttribute.couponType);
+    formData.append("description", data.description);
+    formData.append("isUnlimited", JSON.stringify(isUnlimited));
+    formData.append("modifier", data.modifier);
+    formData.append("amount", data.amount);
+    formData.append("unit", couponAttribute.unit);
+    formData.append("limit", data.limit);
+    formData.append("pointToAchieve", data.pointToAchieve);
+    formData.append("startTime", data.startTime);
+    formData.append("endTime", data.endTime);
+    formData.append("files", image as Blob);
+
+    return formData;
   }
 }

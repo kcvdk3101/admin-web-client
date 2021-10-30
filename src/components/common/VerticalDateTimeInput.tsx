@@ -27,11 +27,10 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
         {label}
       </label>
       <input
-        type="date"
+        type="datetime-local"
         id={inputName}
         name={inputName}
         className="mt-2 p-3 w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md"
-        min={Utilities.disablePastDate()}
         {...register(`${inputName}`)}
       />
       {errors?.[inputName] && (

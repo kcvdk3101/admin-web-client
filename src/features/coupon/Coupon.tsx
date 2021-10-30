@@ -25,17 +25,12 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   unit,
   usage,
   limit,
-  pointAchieve,
+  pointToAchieve,
   startTime,
   endTime,
   image,
   handleDeleteCard,
 }) => {
-  const isAlertWhenUsedUp =
-    usage === limit
-      ? "text-red-500 dark:text-red-500"
-      : "text-blue-800 dark:text-green-400";
-
   return (
     <div className="rounded">
       <img
@@ -61,7 +56,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             </span>
           </h4>
           <p className="mt-1 text-xs lg:text-base text-gray-400">
-            This coupon card changes {pointAchieve} points
+            This coupon card changes {pointToAchieve} points
           </p>
           <div className="flex justify-between items-center mt-4">
             {isUnlimited ? (
@@ -85,7 +80,10 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
                 {usage}/{limit} card been used
               </p>
             )}
-            <button className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md">
+            <button
+              className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
+              onClick={handleDeleteCard}
+            >
               Delete
             </button>
           </div>
@@ -166,7 +164,7 @@ const CouponComponent: React.FC = () => {
             unit={coupon.unit}
             usage={coupon.usage}
             limit={coupon.limit}
-            pointAchieve={coupon.pointAchieve}
+            pointToAchieve={coupon.pointToAchieve}
             startTime={coupon.startTime}
             endTime={coupon.endTime}
             image={coupon.image}
