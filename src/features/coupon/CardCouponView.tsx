@@ -3,10 +3,12 @@ import { Utilities } from "../../helpers/utils";
 import { Coupon } from "../../models";
 
 interface CardCouponViewProps extends Coupon {
-  handleDeleteCard?: () => void;
+  handleDeleteCoupon: (id: string) => void;
+  handleEditCoupon?: () => void;
 }
 
 const CardCouponView: React.FC<CardCouponViewProps> = ({
+  id,
   couponName,
   couponType,
   modifier,
@@ -19,7 +21,8 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   startTime,
   endTime,
   image,
-  handleDeleteCard,
+  handleDeleteCoupon,
+  handleEditCoupon,
 }) => {
   return (
     <div className="rounded">
@@ -72,7 +75,13 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             )}
             <button
               className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
-              onClick={handleDeleteCard}
+              onClick={handleEditCoupon}
+            >
+              Delete
+            </button>
+            <button
+              className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
+              onClick={() => handleDeleteCoupon(id)}
             >
               Delete
             </button>

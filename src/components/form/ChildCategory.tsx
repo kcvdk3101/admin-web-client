@@ -23,6 +23,7 @@ type ParentNameProps = {
 };
 
 export interface ChildCategoryProps {
+  openChildCategoryForm: boolean;
   handleChildCategoryForm: () => void;
 }
 
@@ -34,6 +35,7 @@ const ChildCategoryFormSchema = yup
   .required();
 
 const ChildCategory: React.FC<ChildCategoryProps> = ({
+  openChildCategoryForm,
   handleChildCategoryForm,
 }) => {
   const {
@@ -86,17 +88,23 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
     }
   };
   return (
-    <div className="relative my-6 mx-auto max-w-3xl w-1/2">
-      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-        <h3 className="text-xl md:text-2xl font-semibold p-5">
-          Add child category
-        </h3>
-        <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
+    <div
+      className={
+        openChildCategoryForm
+          ? "category-form category-form-opening"
+          : "category-form hidden"
+      }
+    >
+      <div className="relative my-6 mx-auto max-w-3xl w-3/4 md:w-1/2">
+        <div className="relative flex flex-col w-full rounded-lg shadow-lg bg-white dark:bg-gray-200">
+          <h3 className="text-lg md:text-xl lg:text-2xl font-bold px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
+            Add child category
+          </h3>
           <form
-            className="grid grid-cols-6 gap-6 p-6"
+            className="grid grid-cols-6 gap-4 md:gap-5 lg:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="col-span-3">
+            <div className="col-span-6 lg:col-span-3 animate-fade-in-down">
               <label
                 htmlFor="parentName"
                 className="block text-sm sm:text-base font-medium text-gray-700"
@@ -104,10 +112,12 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
                 Parent name
               </label>
               <select
-                className="mt-2 py-2.5 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md"
+                className="mt-2 p-2 block w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md animate-fade-in-down"
                 onChange={handleChange}
               >
-                <option value="">Please choose parent name</option>
+                <option value="" className="text-sm md:text-base">
+                  Please choose parent name
+                </option>
                 {arrayParentName.map((parent, index) => (
                   <option key={index} value={parent.name}>
                     {parent.name}
@@ -117,7 +127,8 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
             </div>
 
             <VerticalLabelInput
-              cols={3}
+              cols={6}
+              colsResponsive={3}
               label="Name"
               inputName="name"
               type="text"

@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { sidebarItems } from "../../constant";
 
 interface SidebarProps {
   handleDarkMode: () => void;
@@ -49,24 +50,16 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
           to="/admin/dashboard"
           className="text-white flex items-center space-x-2 px-4 dark:text-green-500"
         >
-          <span className="text-2xl font-extrabold">eShop Administration</span>
+          <span className="text-lg  md:text-xl font-extrabold">
+            eShop Administration
+          </span>
         </Link>
         <nav>
-          <Link to="/admin/dashboard" className="btn-link">
-            Dashboard
-          </Link>
-          <Link to="/admin/categories" className="btn-link">
-            Categories
-          </Link>
-          <Link to="/admin/coupon" className="btn-link">
-            Discount
-          </Link>
-          <Link to="/admin/vendors" className="btn-link">
-            Vendors
-          </Link>
-          <Link to="/admin/analysis" className="btn-link">
-            Analysis
-          </Link>
+          {sidebarItems.map((item, index) => (
+            <Link key={index} to={`/admin/${item.path}`} className="btn-link">
+              {item.label}
+            </Link>
+          ))}
           <button
             className="btn-link w-full text-left"
             onClick={() => logout({ returnTo: window.location.origin })}

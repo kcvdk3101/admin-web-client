@@ -1,5 +1,6 @@
 export const mockCoupons = [
   {
+    id: "1-1",
     couponName: "BIG SALE FOR LEADER",
     couponType: "percentage",
     description: "This coupon for email has 100 point",
@@ -21,6 +22,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-2",
     couponName: "SALE FOR DEV",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -42,6 +44,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-3",
     couponName: "SALE FOR CLOUD MANAGER",
     couponType: "percentage",
     description: "This coupon for email has 200 point",
@@ -62,8 +65,8 @@ export const mockCoupons = [
       },
     ],
   },
-
   {
+    id: "1-4",
     couponName: "Big sale 1",
     couponType: "percentage",
     description: "This coupon for email has 200 point",
@@ -85,6 +88,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-5",
     couponName: "Big sale 2",
     couponType: "percentage",
     description: "This coupon for email has 200 point",
@@ -106,6 +110,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-6",
     couponName: "Big sale 3",
     couponType: "percentage",
     description: "This coupon for email has 200 point",
@@ -127,6 +132,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-7",
     couponName: "SALE FOR DEV CAD",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -148,6 +154,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-8",
     couponName: "SALE FOR DEV AOA",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -169,6 +176,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-9",
     couponName: "SALE FOR DEV BTC",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -190,6 +198,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-10",
     couponName: "SALE FOR DEV CZK",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -211,6 +220,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-11",
     couponName: "SALE FOR DEV HUF",
     couponType: "cash",
     description: "This coupon for email has 100 point",
@@ -232,6 +242,7 @@ export const mockCoupons = [
     ],
   },
   {
+    id: "1-12",
     couponName: "SALE FOR DEV MAD",
     couponType: "cash",
     description: "This coupon for email has 100 point",

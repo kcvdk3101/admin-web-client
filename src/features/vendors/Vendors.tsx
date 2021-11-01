@@ -59,7 +59,7 @@ const Vendors = () => {
   }, [dispatch]);
 
   return (
-    <main className="w-full  p-4 flex flex-col justify-start items-center dark:bg-gray-600">
+    <main className="main-each-page">
       <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
         <TableHeader />
         <tbody className="bg-white divide-y divide-gray-200">

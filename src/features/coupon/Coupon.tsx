@@ -43,8 +43,12 @@ const CouponComponent: React.FC = () => {
   function handleChangeUnit(e: React.ChangeEvent<HTMLSelectElement>) {
     setUnitOfCoupon(e.target.value);
   }
-  const handleDeleteCoupon = () => {
+  const handleDeleteCoupon = (id: string) => {
     toast.success("Coupon deleted!");
+  };
+
+  const handleEditCoupon = () => {
+    toast.success("Coupon edit!");
   };
 
   return (
@@ -70,6 +74,7 @@ const CouponComponent: React.FC = () => {
           ).map((coupon, index) => (
             <CardCouponView
               key={index}
+              id={coupon.id}
               couponName={coupon.couponName}
               couponType={coupon.couponType}
               modifier={coupon.modifier}
@@ -82,7 +87,8 @@ const CouponComponent: React.FC = () => {
               startTime={coupon.startTime}
               endTime={coupon.endTime}
               image={coupon.image}
-              handleDeleteCard={handleDeleteCoupon}
+              handleDeleteCoupon={handleDeleteCoupon}
+              handleEditCoupon={handleEditCoupon}
             />
           ))
         )}

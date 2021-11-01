@@ -64,19 +64,19 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
 
   return (
     <div
-      className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
+      className={
         openParentCategoryForm
-          ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
-          : "hidden"
-      }`}
+          ? "category-form category-form-opening"
+          : "category-form hidden"
+      }
     >
-      <div className="relative my-6 mx-auto max-w-3xl w-1/2">
-        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-200">
-          <h3 className="text-xl md:text-2xl font-bold p-5">
+      <div className="relative my-6 mx-auto max-w-3xl w-3/4 md:w-1/2">
+        <div className="relative flex flex-col w-full rounded-lg shadow-lg bg-white dark:bg-gray-200">
+          <h3 className="text-lg md:text-xl lg:text-2xl font-bold px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
             Add new category
           </h3>
           <form
-            className="grid grid-cols-6 gap-6 p-6"
+            className="grid grid-cols-6 gap-2 sm:gap-4 md:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5"
             onSubmit={handleSubmit(onSubmit)}
           >
             <VerticalLabelInput

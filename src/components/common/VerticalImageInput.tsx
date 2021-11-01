@@ -32,7 +32,10 @@ const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
         onChange={onChangeImage}
       />
       {image ? (
-        <label htmlFor={inputName} className="cursor-pointer">
+        <label
+          htmlFor={inputName}
+          className="cursor-pointer text-xs sm:text-sm md:text-base lg:text-xl"
+        >
           {label}
           <img
             src={URL.createObjectURL(image)}
@@ -43,10 +46,10 @@ const VerticalImageInput: React.FC<VerticalImageInputProps> = ({
       ) : (
         <label
           htmlFor={inputName}
-          className=" flex flex-col items-center w-1/6 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-sm sm:text-base cursor-pointer"
+          className="cursor-pointer flex flex-col items-center w-28 md:w-36 lg:w-40 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-xs sm:text-base"
         >
           <svg
-            className="h-8 w-8"
+            className="h-6 w-6 md:h-8 md:w-8"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

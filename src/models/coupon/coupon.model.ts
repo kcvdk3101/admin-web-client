@@ -1,6 +1,7 @@
 import { Image } from "..";
 
 export interface Coupon {
+  id: string;
   couponName: string;
   couponType: string;
   description?: string;

@@ -2,6 +2,7 @@ import React from "react";
 
 interface VerticalLabelInputProps {
   cols: number;
+  colsResponsive?: number;
   label: string;
   inputName: string;
   type: string;
@@ -10,6 +11,7 @@ interface VerticalLabelInputProps {
 }
 
 const VerticalLabelInput: React.FC<VerticalLabelInputProps> = ({
+  colsResponsive,
   cols,
   label,
   inputName,
@@ -18,7 +20,9 @@ const VerticalLabelInput: React.FC<VerticalLabelInputProps> = ({
   errors,
 }) => {
   return (
-    <div className={`col-span-${cols} animate-fade-in-down`}>
+    <div
+      className={`col-span-${cols} lg:col-span-${colsResponsive} animate-fade-in-down`}
+    >
       <label
         htmlFor={inputName}
         className="block text-sm sm:text-base font-medium text-gray-700"
