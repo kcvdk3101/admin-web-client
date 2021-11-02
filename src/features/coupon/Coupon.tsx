@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import Pagination from "../../components/common/Pagination";
 import NewCoupon from "../../components/form/NewCoupon/NewCouponManagement";
 import { mockCoupons } from "../../db/mockCoupons";
 import { Coupon } from "../../models";
@@ -51,6 +52,28 @@ const CouponComponent: React.FC = () => {
     toast.success("Coupon edit!");
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalArray = filterCouponsByUnit(
+    filterCouponsByType(coupons, typeOfCoupon),
+    unitOfCoupon
+  ).length;
+
+  const couponsPerPage = totalArray < 6 ? totalArray : 6;
+
+  // Get current posts
+  const indexOfLast = currentPage * couponsPerPage;
+  const indexOfFirst = indexOfLast - couponsPerPage;
+
+  const currentArray = filterCouponsByUnit(
+    filterCouponsByType(coupons, typeOfCoupon),
+    unitOfCoupon
+  ).slice(indexOfFirst, indexOfLast);
+
+  // Change page
+  const paginateFront = () => setCurrentPage(currentPage + 1);
+  const paginateBack = () => setCurrentPage(currentPage - 1);
+
   return (
     <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600">
       <SortCouponNavigation
@@ -69,7 +92,7 @@ const CouponComponent: React.FC = () => {
           <h1 className="text-2xl dark:text-white">Result is empty</h1>
         ) : (
           filterCouponsByUnit(
-            filterCouponsByType(coupons, typeOfCoupon),
+            filterCouponsByType(currentArray, typeOfCoupon),
             unitOfCoupon
           ).map((coupon, index) => (
             <CardCouponView
@@ -93,6 +116,13 @@ const CouponComponent: React.FC = () => {
           ))
         )}
       </div>
+      <Pagination
+        arrayPerPage={couponsPerPage}
+        totalArray={totalArray}
+        paginateBack={paginateBack}
+        paginateFront={paginateFront}
+        currentPage={currentPage}
+      />
       <NewCoupon
         openCouponForm={openCouponForm}
         handleOpenCouponForm={handleOpenCouponForm}

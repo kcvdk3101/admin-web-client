@@ -91,8 +91,8 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
     <div
       className={
         openChildCategoryForm
-          ? "category-form category-form-opening"
-          : "category-form hidden"
+          ? "category-container-form category-container-form-opening"
+          : "category-container-form hidden"
       }
     >
       <div className="relative my-6 mx-auto max-w-3xl w-3/4 md:w-1/2">
@@ -100,10 +100,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
           <h3 className="text-lg md:text-xl lg:text-2xl font-bold px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
             Add child category
           </h3>
-          <form
-            className="grid grid-cols-6 gap-4 md:gap-5 lg:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="category-form" onSubmit={handleSubmit(onSubmit)}>
             <div className="col-span-6 lg:col-span-3 animate-fade-in-down">
               <label
                 htmlFor="parentName"

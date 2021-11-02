@@ -66,8 +66,8 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
     <div
       className={
         openParentCategoryForm
-          ? "category-form category-form-opening"
-          : "category-form hidden"
+          ? "category-container-form category-container-form-opening"
+          : "category-container-form hidden"
       }
     >
       <div className="relative my-6 mx-auto max-w-3xl w-3/4 md:w-1/2">
@@ -75,10 +75,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
           <h3 className="text-lg md:text-xl lg:text-2xl font-bold px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
             Add new category
           </h3>
-          <form
-            className="grid grid-cols-6 gap-2 sm:gap-4 md:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="category-form" onSubmit={handleSubmit(onSubmit)}>
             <VerticalLabelInput
               cols={6}
               label="Name"

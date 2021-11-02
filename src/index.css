@@ -56,16 +56,20 @@ input:checked ~ .dot {
     @apply cursor-pointer truncate animate-fade-in-down flex justify-between items-center bg-gray-50 py-3 px-4 my-2 rounded-full text-black text-sm md:text-base transform hover:scale-105 focus:bg-gray-800 transition-all delay-75 ease-in select-none dark:text-green-700;
   }
 
-  .category-form {
+  .category-container-form {
     @apply overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center;
   }
 
-  .category-form-opening {
+  .category-container-form-opening {
     @apply backdrop-filter backdrop-blur-sm flex animate-fade-in-down;
   }
 
+  .category-form {
+    @apply grid grid-cols-6 gap-2 sm:gap-4 md:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5;
+  }
+
   .btn-close-form {
-    @apply bg-transparent outline-none ease-linear transition-all duration-150 text-gray-500 font-bold uppercase text-xs lg:text-sm py-1 px-3 lg:px-3 hover:shadow-md dark:bg-gray-50;
+    @apply bg-transparent outline-none ease-linear transition-all duration-150 text-gray-500 font-bold uppercase text-xs md:text-sm py-1 px-3 lg:px-3 hover:shadow-md dark:bg-gray-50;
   }
 
   .btn-action-form {

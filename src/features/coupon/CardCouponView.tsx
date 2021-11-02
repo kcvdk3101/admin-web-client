@@ -73,18 +73,20 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
                 {usage}/{limit} card been used
               </p>
             )}
-            <button
-              className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
-              onClick={handleEditCoupon}
-            >
-              Delete
-            </button>
-            <button
-              className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
-              onClick={() => handleDeleteCoupon(id)}
-            >
-              Delete
-            </button>
+            <div>
+              <button
+                className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-yellow-500 hover:text-white hover:shadow-md"
+                onClick={handleEditCoupon}
+              >
+                Edit
+              </button>
+              <button
+                className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
+                onClick={() => handleDeleteCoupon(id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>

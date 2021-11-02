@@ -6,7 +6,7 @@ export interface CategoriesSliceState {
   categories: Category[];
 }
 
-const initialState: CategoriesSliceState = {
+export const initialState: CategoriesSliceState = {
   categories: [],
 };
 
