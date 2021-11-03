@@ -25,7 +25,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   handleEditCoupon,
 }) => {
   return (
-    <div className="rounded">
+    <div className="rounded animate-fade-in-down">
       <img
         src={image[0].url}
         alt="random imgee"

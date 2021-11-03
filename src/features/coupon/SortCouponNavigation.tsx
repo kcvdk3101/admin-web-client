@@ -38,7 +38,7 @@ const SortCouponNavigation: React.FC<SortCouponNavigationProps> = ({
               className="block px-1 py-3 shadow-sm sm:text-sm border border-blue-500 rounded-md focus:outline-none focus:border-blue-500 dark:border-green-500 dark:bg-gray-200 dark:focus:border-green-500"
               onChange={handleChangeUnit}
             >
-              <option value="">all</option>
+              <option value="all">All</option>
               {mockCurrencies.map((c, index) => (
                 <option key={index} value={c}>
                   {c}

@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import Pagination from "../../components/common/Pagination";
+import PaginationNumberedList from "../../components/common/PaginationNumberedList";
 import NewCoupon from "../../components/form/NewCoupon/NewCouponManagement";
 import { mockCoupons } from "../../db/mockCoupons";
 import { Coupon } from "../../models";
 import CardCouponView from "./CardCouponView";
 import SortCouponNavigation from "./SortCouponNavigation";
 
+function isShowAllTypeOfCoupon(type: string) {
+  return type === "" || type === "all";
+}
+
 function filterCouponsByUnit(coupons: Coupon[], unitOfCoupon: string) {
-  if (unitOfCoupon === "" || unitOfCoupon === "all") return coupons;
+  if (isShowAllTypeOfCoupon(unitOfCoupon)) return coupons;
   return coupons.filter(
     (coupon) => coupon.unit === unitOfCoupon && { ...coupon }
   );
 }
 
 function filterCouponsByType(coupons: Coupon[], typeOfCoupon: string) {
-  if (typeOfCoupon === "" || typeOfCoupon === "all") return coupons;
+  if (isShowAllTypeOfCoupon(typeOfCoupon)) return coupons;
   return coupons.filter(
     (coupon) => coupon.couponType === typeOfCoupon.toLowerCase()
   );
@@ -27,41 +31,14 @@ const CouponComponent: React.FC = () => {
   const [openCouponForm, setOpenCouponForm] = useState<boolean>(false);
   const [typeOfCoupon, setTypeOfCoupon] = useState<string>("");
   const [unitOfCoupon, setUnitOfCoupon] = useState<string>("");
-
-  const handleOpenDropdown = () => {
-    setOpenDropdown(!openDropdown);
-  };
-  const handleOpenCouponForm = () => {
-    setOpenCouponForm(!openCouponForm);
-  };
-  function handleChangeType(type: string) {
-    if (type === "All") {
-      setUnitOfCoupon("");
-    }
-    setTypeOfCoupon(type);
-    setOpenDropdown(false);
-  }
-  function handleChangeUnit(e: React.ChangeEvent<HTMLSelectElement>) {
-    setUnitOfCoupon(e.target.value);
-  }
-  const handleDeleteCoupon = (id: string) => {
-    toast.success("Coupon deleted!");
-  };
-
-  const handleEditCoupon = () => {
-    toast.success("Coupon edit!");
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalArray = filterCouponsByUnit(
     filterCouponsByType(coupons, typeOfCoupon),
     unitOfCoupon
   ).length;
-
   const couponsPerPage = totalArray < 6 ? totalArray : 6;
 
-  // Get current posts
   const indexOfLast = currentPage * couponsPerPage;
   const indexOfFirst = indexOfLast - couponsPerPage;
 
@@ -70,9 +47,35 @@ const CouponComponent: React.FC = () => {
     unitOfCoupon
   ).slice(indexOfFirst, indexOfLast);
 
-  // Change page
-  const paginateFront = () => setCurrentPage(currentPage + 1);
-  const paginateBack = () => setCurrentPage(currentPage - 1);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const handleOpenDropdown = () => {
+    setOpenDropdown(!openDropdown);
+  };
+  const handleOpenCouponForm = () => {
+    setOpenCouponForm(!openCouponForm);
+  };
+
+  function handleChangeType(type: string) {
+    if (type === "all") {
+      setUnitOfCoupon("all");
+    }
+    setTypeOfCoupon(type);
+    setOpenDropdown(false);
+    setCurrentPage(1);
+  }
+  function handleChangeUnit(e: React.ChangeEvent<HTMLSelectElement>) {
+    setUnitOfCoupon(e.target.value);
+    setCurrentPage(1);
+  }
+
+  const handleDeleteCoupon = (id: string) => {
+    toast.success("Coupon deleted!");
+  };
+
+  const handleEditCoupon = () => {
+    toast.success("Coupon edit!");
+  };
 
   return (
     <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600">
@@ -86,10 +89,10 @@ const CouponComponent: React.FC = () => {
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 animate-fade-in-down">
         {filterCouponsByUnit(
-          filterCouponsByType(coupons, typeOfCoupon),
+          filterCouponsByType(currentArray, typeOfCoupon),
           unitOfCoupon
         ).length === 0 ? (
-          <h1 className="text-2xl dark:text-white">Result is empty</h1>
+          <h1 className="text-2xl dark:text-white">Result is empty.</h1>
         ) : (
           filterCouponsByUnit(
             filterCouponsByType(currentArray, typeOfCoupon),
@@ -116,12 +119,11 @@ const CouponComponent: React.FC = () => {
           ))
         )}
       </div>
-      <Pagination
+      <PaginationNumberedList
+        currentPage={currentPage}
         arrayPerPage={couponsPerPage}
         totalArray={totalArray}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        currentPage={currentPage}
+        paginate={paginate}
       />
       <NewCoupon
         openCouponForm={openCouponForm}
