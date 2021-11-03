@@ -57,7 +57,7 @@ const CouponComponent: React.FC = () => {
   };
 
   function handleChangeType(type: string) {
-    if (type === "all") {
+    if (type === "all" || type === "percentage") {
       setUnitOfCoupon("all");
     }
     setTypeOfCoupon(type);

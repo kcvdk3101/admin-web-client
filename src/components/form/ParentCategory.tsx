@@ -71,7 +71,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({
       }
     >
       <div className="relative my-6 mx-auto max-w-3xl w-3/4 md:w-1/2">
-        <div className="relative flex flex-col w-full rounded-lg shadow-lg bg-white dark:bg-gray-200">
+        <div className="relative flex flex-col w-full rounded-lg shadow-lg bg-white">
           <h3 className="text-lg md:text-xl lg:text-2xl font-bold px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
             Add new category
           </h3>
