@@ -23,7 +23,6 @@ export const getAllVendors = createAsyncThunk(
   "vendors/getAllVendors",
   async (offset: number) => {
     const response = await vendorsApi.getAllVendors(offset);
-    console.log(response);
     return { ...response };
   }
 );

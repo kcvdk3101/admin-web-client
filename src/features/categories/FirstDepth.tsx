@@ -5,17 +5,15 @@ import CategorySkeleton from "./CategorySkeleton";
 
 interface FirstDepthProps {
   categories: Category[];
+  fectchingCategories: boolean;
   handleSelectSecondCategory: (id: string) => void;
 }
 
 const FirstDepth: React.FC<FirstDepthProps> = ({
   categories,
+  fectchingCategories,
   handleSelectSecondCategory,
 }) => {
-  const fectchingCategories = useAppSelector(
-    (state) => state.categories.fetchingCategories
-  );
-
   return (
     <div className="category-first-depth">
       <p className="px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">

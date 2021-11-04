@@ -69,7 +69,7 @@ const Vendors: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllVendors(0));
-  }, [dispatch]);
+  }, []);
 
   const handleOpenDialog = () => {
     setOpenDialog(!openDialog);

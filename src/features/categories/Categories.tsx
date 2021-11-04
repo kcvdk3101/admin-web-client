@@ -31,7 +31,9 @@ const ButtonGroup: React.FC<{
 const Categories: React.FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector((state) => state.categories.categories);
-
+  const fectchingCategories = useAppSelector(
+    (state) => state.categories.fetchingCategories
+  );
   const [selectedSecondCategory, setSelectedSecondCategory] =
     useState<string>();
   const [selectedThirdCategory, setSelectedThirdCategory] = useState<string>();
@@ -60,7 +62,9 @@ const Categories: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, [dispatch]);
+  }, []);
+
+  console.log(categories);
 
   return (
     <main className="main-each-page">
@@ -71,6 +75,7 @@ const Categories: React.FC = () => {
       <section className="flex w-full h-screen md:h-full">
         <FirstDepth
           categories={categories}
+          fectchingCategories={fectchingCategories}
           handleSelectSecondCategory={handleSelectSecondCategory}
         />
         <SecondDepth

@@ -60,14 +60,36 @@ export const categoriesSlice = createSlice({
         state.categories = [...state.categories, action.payload];
       }
     );
+    builder.addCase(addChildCategory.pending, (state, action) => {
+      state.fetchingCategories = true;
+    });
     builder.addCase(
       addChildCategory.fulfilled,
       (state, action: PayloadAction<ChilrenCategory>) => {
-        state.categories
-          .find((category) => category.id === action.payload.parentId)
-          ?.children?.push(action.payload);
+        (state.fetchingCategories = false),
+          state.categories.find((category) =>
+            category.id === action.payload.parentId
+              ? category.children?.push(action.payload)
+              : category.children?.find(
+                  (child) =>
+                    child.id === action.payload.parentId &&
+                    child.children?.push(action.payload)
+                )
+          );
+        console.log(state.categories);
       }
     );
+    // ?.children?.push(action.payload);
+    // {
+    //     ...leaf,
+    //     value: leaf.value,
+    //     fetchedChildren: action.payload.fetchedChildren.map( child => {
+    //         return {
+    //         ...child,
+    //         value: child.value
+    //         }
+    //     })
+    //     } : leaf
   },
 });
 

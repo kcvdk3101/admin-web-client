@@ -62,9 +62,11 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
           `${url}/categories/name`
         );
         setArrayParentName(response);
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     })();
-  }, [arrayParentName]);
+  }, []);
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -75,6 +77,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(parentName);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("parentName", parentName);
