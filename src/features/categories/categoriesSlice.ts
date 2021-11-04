@@ -4,10 +4,12 @@ import { Category, ChilrenCategory } from "../../models";
 
 export interface CategoriesSliceState {
   categories: Category[];
+  fetchingCategories: boolean;
 }
 
 export const initialState: CategoriesSliceState = {
   categories: [],
+  fetchingCategories: false,
 };
 
 export const getAllCategories = createAsyncThunk(
@@ -39,12 +41,19 @@ export const categoriesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllCategories.pending, (state, action) => {
+      state.fetchingCategories = true;
+    });
     builder.addCase(
       getAllCategories.fulfilled,
       (state, action: PayloadAction<Category[]>) => {
+        state.fetchingCategories = false;
         state.categories = action.payload;
       }
     );
+    builder.addCase(getAllCategories.rejected, (state, action) => {
+      state.fetchingCategories = false;
+    });
     builder.addCase(
       addParentCategory.fulfilled,
       (state, action: PayloadAction<Category>) => {

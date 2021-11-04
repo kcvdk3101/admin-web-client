@@ -6,7 +6,6 @@ import PaginationNumberedList from "../../components/common/PaginationNumberedLi
 import VendorActivaion from "../../components/form/VendorActivaion";
 import { Utilities } from "../../helpers/utils";
 import { getAllVendors } from "./vendorsSlice";
-import { push } from "connected-react-router";
 import VendorsSkeleton from "./VendorsSkeleton";
 
 const TableHeader = () => {
@@ -59,11 +58,12 @@ const Vendors: React.FC = () => {
     (state) => state.vendors.pagination.total
   );
 
+  const history = useHistory();
   const { search } = useLocation();
   let paginationQuery = queryString.parse(search);
   const limit = paginationQuery.limit ? +paginationQuery.limit : 0;
+  const offset = paginationQuery.offset ? +paginationQuery.offset : 0;
 
-  const [offset, set0ffset] = useState(0);
   const [selectedVendorId, setSelectedVendorId] = useState<string>("");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -76,7 +76,10 @@ const Vendors: React.FC = () => {
   };
 
   const paginate = (pageNumber: number) => {
-    // set0ffset(pageNumber - 1);
+    history.push({
+      pathname: "/admin/vendors",
+      search: `?limit=${limit}&offset=${pageNumber - 1}`,
+    });
     dispatch(getAllVendors(pageNumber - 1));
   };
 

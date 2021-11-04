@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import ChildCategory from "../../components/form/ChildCategory";
 import ParentCategory from "../../components/form/ParentCategory";
 import { getAllCategories } from "./categoriesSlice";
+import CategorySkeleton from "./CategorySkeleton";
 import FirstDepth from "./FirstDepth";
 import SecondDepth from "./SecondDepth";
 import ThirdDepth from "./ThirdDepth";
@@ -59,7 +60,7 @@ const Categories: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className="main-each-page">

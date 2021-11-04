@@ -14,7 +14,7 @@ export const sidebarItems = [
     label: "Discount",
   },
   {
-    path: "vendors?limit=8",
+    path: "vendors?limit=8&offset=0",
     label: "Vendors",
   },
   {
