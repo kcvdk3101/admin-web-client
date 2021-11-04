@@ -79,17 +79,6 @@ export const categoriesSlice = createSlice({
         console.log(state.categories);
       }
     );
-    // ?.children?.push(action.payload);
-    // {
-    //     ...leaf,
-    //     value: leaf.value,
-    //     fetchedChildren: action.payload.fetchedChildren.map( child => {
-    //         return {
-    //         ...child,
-    //         value: child.value
-    //         }
-    //     })
-    //     } : leaf
   },
 });
 
