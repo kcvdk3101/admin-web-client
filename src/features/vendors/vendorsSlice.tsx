@@ -4,18 +4,26 @@ import vendorsApi from "../../api/vendorsApi";
 import { Vendor } from "../../models";
 
 export interface VendorsSliceState {
+  fetchingVendor: boolean;
   vendors: Vendor[];
+  pagination: VendorPagination;
+}
+
+export interface VendorPagination {
+  total: number;
 }
 
 const initialState: VendorsSliceState = {
   vendors: [],
+  fetchingVendor: false,
+  pagination: { total: 0 },
 };
 
 export const getAllVendors = createAsyncThunk(
   "vendors/getAllVendors",
-  async () => {
-    const { data } = await vendorsApi.getAllVendors();
-    return data;
+  async (offset: number) => {
+    const response = await vendorsApi.getAllVendors(offset);
+    return { ...response };
   }
 );
 
@@ -37,12 +45,24 @@ export const vendorsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllVendors.pending, (state, action) => {
+      state.fetchingVendor = true;
+    });
+
     builder.addCase(
       getAllVendors.fulfilled,
-      (state, action: PayloadAction<Vendor[]>) => {
-        state.vendors = action.payload;
+      (
+        state,
+        action: PayloadAction<{ data: Vendor[]; pagination: VendorPagination }>
+      ) => {
+        state.fetchingVendor = false;
+        state.vendors = action.payload.data;
+        state.pagination.total = action.payload.pagination.total;
       }
     );
+    builder.addCase(getAllVendors.rejected, (state, action) => {
+      state.fetchingVendor = false;
+    });
     builder.addCase(
       activateVendorById.fulfilled,
       (state, action: PayloadAction<Vendor>) => {

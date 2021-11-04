@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import queryString from "query-string";
+import PaginationNumberedList from "../../components/common/PaginationNumberedList";
 import VendorActivaion from "../../components/form/VendorActivaion";
 import { Utilities } from "../../helpers/utils";
 import { getAllVendors } from "./vendorsSlice";
+import { push } from "connected-react-router";
+import VendorsSkeleton from "./VendorsSkeleton";
 
 const TableHeader = () => {
   return (
@@ -44,84 +49,108 @@ const TableHeader = () => {
   );
 };
 
-const Vendors = () => {
+const Vendors: React.FC = () => {
   const dispatch = useAppDispatch();
+  const fetchingVendor = useAppSelector(
+    (state) => state.vendors.fetchingVendor
+  );
   const vendors = useAppSelector((state) => state.vendors.vendors);
+  const totalVendors = useAppSelector(
+    (state) => state.vendors.pagination.total
+  );
+
+  const { search } = useLocation();
+  let paginationQuery = queryString.parse(search);
+  const limit = paginationQuery.limit ? +paginationQuery.limit : 0;
+
+  const [offset, set0ffset] = useState(0);
   const [selectedVendorId, setSelectedVendorId] = useState<string>("");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(getAllVendors(0));
+  }, [dispatch]);
 
   const handleOpenDialog = () => {
     setOpenDialog(!openDialog);
   };
 
-  useEffect(() => {
-    dispatch(getAllVendors());
-  }, [dispatch]);
+  const paginate = (pageNumber: number) => {
+    set0ffset(pageNumber - 1);
+    dispatch(getAllVendors(pageNumber - 1));
+  };
 
   return (
     <main className="main-each-page">
-      <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
-        <TableHeader />
-        <tbody className="bg-white divide-y divide-gray-200">
-          {vendors.map((vendor) => (
-            <tr key={vendor.id}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex flex-col justify-center items-start">
-                  <h4 className="text-sm font-medium text-gray-900">
-                    {vendor.name}
-                  </h4>
-                  <p className="text-sm text-gray-500">{vendor.email}</p>
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <p className="text-sm text-gray-500">{vendor.hotline}</p>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {Utilities.convertDateString(vendor.registeredAt)}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full  ${
-                    vendor.isActive
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {vendor.isActive ? "Activated" : "Inactivated"}
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                <button
-                  className={`${
-                    vendor.isActive
-                      ? "cursor-not-allowed bg-gray-500 dark:bg-gray-500"
-                      : "bg-blue-600 dark:bg-green-600"
-                  } text-white py-2 px-4 rounded hover:shadow-md transition-all duration-150 outline-none`}
-                  onClick={() => {
-                    setSelectedVendorId(vendor.id);
-                    handleOpenDialog();
-                  }}
-                  disabled={vendor.isActive}
-                >
-                  Activate
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div
-        className={`overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
-          openDialog
-            ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
-            : "hidden"
-        }`}
-      >
-        <VendorActivaion
-          selectedVendorId={selectedVendorId}
-          handleOpenDialog={handleOpenDialog}
-        />
-      </div>
+      {fetchingVendor ? (
+        <h1>Loading</h1>
+      ) : (
+        <>
+          <VendorsSkeleton />
+          {/* <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
+            <TableHeader />
+            <tbody className="bg-white divide-y divide-gray-200">
+              {vendors.map((vendor) => (
+                <tr key={vendor.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-col justify-center items-start">
+                      <h4 className="text-sm font-medium text-gray-900">
+                        {vendor.name}
+                      </h4>
+                      <p className="text-sm text-gray-500">{vendor.email}</p>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <p className="text-sm text-gray-500">{vendor.hotline}</p>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {Utilities.convertDateString(vendor.registeredAt)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full  ${
+                        vendor.isActive
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {vendor.isActive ? "Activated" : "Inactivated"}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                    <button
+                      className={`${
+                        vendor.isActive
+                          ? "cursor-not-allowed bg-gray-500 dark:bg-gray-500"
+                          : "bg-blue-600 dark:bg-green-600"
+                      } text-white py-2 px-4 rounded hover:shadow-md transition-all duration-150 outline-none`}
+                      onClick={() => {
+                        setSelectedVendorId(vendor.id);
+                        handleOpenDialog();
+                      }}
+                      disabled={vendor.isActive}
+                    >
+                      Activate
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table> */}
+          <PaginationNumberedList
+            totalArray={totalVendors}
+            arrayPerPage={limit}
+            currentPage={offset}
+            paginate={paginate}
+          />
+        </>
+      )}
+
+      <VendorActivaion
+        openDialog={openDialog}
+        selectedVendorId={selectedVendorId}
+        handleOpenDialog={handleOpenDialog}
+      />
     </main>
   );
 };

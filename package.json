@@ -13,6 +13,8 @@
     "@hookform/resolvers": "^2.8.2",
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.23.0",
+    "connected-react-router": "^6.9.1",
+    "query-string": "^7.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.17.5",

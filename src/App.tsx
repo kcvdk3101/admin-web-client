@@ -38,7 +38,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/admin/dashboard" component={Dashboard} />
             <Route exact path="/admin/categories" component={Categories} />
-            <Route exact path="/admin/vendors" component={Vendors} />
+            <Route path="/admin/vendors" component={Vendors} />
             <Route exact path="/admin/coupon" component={CouponComponent} />
             <Route exact path="/admin/analysis" component={Analysis} />
             <Redirect from="/" to="/admin/dashboard" />

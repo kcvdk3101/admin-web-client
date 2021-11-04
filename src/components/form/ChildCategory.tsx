@@ -6,8 +6,6 @@ import * as yup from "yup";
 import axiosClient from "../../api/axiosClient";
 import { useAppDispatch } from "../../app/hooks";
 import { addChildCategory } from "../../features/categories/categoriesSlice";
-import { API_BASE_URL } from "../../helpers/configs";
-// import { Configs } from "../../helpers/configs";
 import ButtonsAction from "../common/ButtonsAction";
 import VerticalImageInput from "../common/VerticalImageInput";
 import VerticalLabelInput from "../common/VerticalLabelInput";
@@ -47,6 +45,8 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   });
   const dispatch = useAppDispatch();
 
+  const url = import.meta.env.VITE_API_BASE_URL;
+
   const [imageChild, setImageChild] = useState<File>();
   const [arrayParentName, setArrayParentName] = useState<ParentNameProps[]>([]);
   const [parentName, setParentName] = useState("");
@@ -58,8 +58,8 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   useEffect(() => {
     (async function () {
       try {
-        const response = await axiosClient.get<any, []>(
-          `${API_BASE_URL}/categories/name`
+        const response = await axiosClient.get<string, []>(
+          `${url}/categories/name`
         );
         setArrayParentName(response);
       } catch (error) {}
