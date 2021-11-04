@@ -18,7 +18,7 @@ const VerticalCurrenciesSelect: React.FC<VerticalCurrenciesSelectProps> = ({
   errors,
   handleChangeCouponAttribute,
 }) => {
-  const isCashType = type === "Cash";
+  const isCashType = type === "cash";
 
   return (
     <>

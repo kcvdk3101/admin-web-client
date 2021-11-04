@@ -88,16 +88,19 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
   };
 
   const onSubmit = handleSubmit((data) => {
+    const amount = data.amount === undefined ? 0 : data.amount;
+    const limit = data.limit === undefined ? 0 : data.limit;
+
     console.log({
       couponName: data.couponName,
       couponType: couponAttribute.couponType,
       description: data.description,
       isUnlimited,
       modifier: data.modifier,
-      amount: data.amount,
+      amount,
       unit: couponAttribute.unit,
       usage: 0,
-      limit: data.limit,
+      limit,
       pointToAchieve: data.pointToAchieve,
       startTime: data.startTime,
       endTime: data.endTime,

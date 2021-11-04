@@ -1,11 +1,14 @@
 import { Vendor } from "../models";
 import axiosClient from "./axiosClient";
 
-const url = "/vendors";
+const url = "/vendors?limit=8&offset=0";
 
 const vendorsApi = {
   getAllVendors() {
-    return axiosClient.get<any, Vendor[]>(url);
+    return axiosClient.get<
+      string,
+      { data: Vendor[]; pagination: { total: number } }
+    >(url);
   },
 };
 

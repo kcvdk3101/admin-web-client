@@ -14,8 +14,8 @@ const initialState: VendorsSliceState = {
 export const getAllVendors = createAsyncThunk(
   "vendors/getAllVendors",
   async () => {
-    const categories = await vendorsApi.getAllVendors();
-    return categories;
+    const { data } = await vendorsApi.getAllVendors();
+    return data;
   }
 );
 
@@ -28,7 +28,6 @@ export const activateVendorById = createAsyncThunk(
         active: true,
       }
     );
-    console.log(activatedVendor);
     return activatedVendor;
   }
 );

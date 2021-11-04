@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import PaginationNumberedList from "../../components/common/PaginationNumberedList";
-import NewCoupon from "../../components/form/NewCoupon/NewCouponManagement";
+import NewCouponManagement from "../../components/form/NewCoupon/NewCouponManagement";
 import { mockCoupons } from "../../db/mockCoupons";
 import { Coupon } from "../../models";
 import CardCouponView from "./CardCouponView";
@@ -125,7 +125,7 @@ const CouponComponent: React.FC = () => {
         totalArray={totalArray}
         paginate={paginate}
       />
-      <NewCoupon
+      <NewCouponManagement
         openCouponForm={openCouponForm}
         handleOpenCouponForm={handleOpenCouponForm}
       />
