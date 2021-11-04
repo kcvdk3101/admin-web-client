@@ -76,18 +76,17 @@ const Vendors: React.FC = () => {
   };
 
   const paginate = (pageNumber: number) => {
-    set0ffset(pageNumber - 1);
+    // set0ffset(pageNumber - 1);
     dispatch(getAllVendors(pageNumber - 1));
   };
 
   return (
     <main className="main-each-page">
       {fetchingVendor ? (
-        <h1>Loading</h1>
+        <VendorsSkeleton n={limit} />
       ) : (
         <>
-          <VendorsSkeleton />
-          {/* <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
+          <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
             <TableHeader />
             <tbody className="bg-white divide-y divide-gray-200">
               {vendors.map((vendor) => (
@@ -136,7 +135,7 @@ const Vendors: React.FC = () => {
                 </tr>
               ))}
             </tbody>
-          </table> */}
+          </table>
           <PaginationNumberedList
             totalArray={totalVendors}
             arrayPerPage={limit}
