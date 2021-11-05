@@ -2,17 +2,19 @@ import { Image } from "..";
 
 export interface Coupon {
   id: string;
+  code: string;
   couponName: string;
-  couponType: string;
   description?: string;
-  isUnlimited: boolean;
+  couponType: string;
+  isUnlimited?: boolean;
   modifier: number;
   amount: number;
   unit: string;
   usage: number;
   limit: number;
   pointToAchieve: number;
+  isActive: boolean;
   startTime: Date | string;
   endTime: Date | string;
-  image: Image[];
+  images: Image[];
 }

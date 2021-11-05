@@ -16,7 +16,6 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
   inputName,
   register,
   errors,
-  handleChangeCouponAttribute,
 }) => {
   return (
     <div className={`col-span-${cols}`}>
@@ -30,6 +29,7 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
         type="date"
         id={inputName}
         name={inputName}
+        min={Utilities.disablePastDay()}
         className="mt-2 p-3 w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md"
         {...register(`${inputName}`)}
       />

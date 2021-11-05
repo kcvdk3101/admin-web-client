@@ -7,6 +7,18 @@ export class Utilities {
     return number.toLocaleString("it-IT");
   }
 
+  static disablePastDay() {
+    var dtToday = new Date();
+
+    var month = (dtToday.getMonth() + 1) as any;
+    var day = dtToday.getDate() as any;
+    var year = dtToday.getFullYear();
+    if (month < 10) month = "0" + month.toString();
+    if (day < 10) day = "0" + day.toString();
+
+    return year + "-" + month + "-" + day;
+  }
+
   static fillCouponInformation(
     data: any,
     couponAttribute: any,

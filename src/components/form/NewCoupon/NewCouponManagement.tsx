@@ -1,13 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { Utilities } from "../../../helpers/utils";
-import ButtonsAction from "../../common/ButtonsAction";
-import VerticalCurrenciesSelect from "../../common/VerticalCurrenciesSelect";
-import VerticalDateTimeInput from "../../common/VerticalDateTimeInput";
-import VerticalImageInput from "../../common/VerticalImageInput";
-import VerticalLabelInput from "../../common/VerticalLabelInput";
 import NewCouponForm from "./NewCouponForm";
 
 type FormValues = {
@@ -33,10 +27,16 @@ const NewCouponFormSchema = yup.object({
     .string()
     .min(1, "Please enter more than 1 character")
     .required("This field is required"),
-  limit: yup.number().positive(),
-  modifier: yup.number().positive(),
+  limit: yup.number().positive().integer("Must be a number"),
+  modifier: yup.number().positive().integer("Must be a number"),
   amount: yup.number().positive(),
-  pointToAchieve: yup.number().positive().required("This field is required"),
+  pointToAchieve: yup
+    .number()
+    .positive()
+    .integer("Must be a number")
+    .min(1, "Minimum point is 1")
+    .max(100, "Maximum point is 100")
+    .required("This field is required"),
   startTime: yup
     .date()
     .min(
@@ -102,8 +102,8 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
       usage: 0,
       limit,
       pointToAchieve: data.pointToAchieve,
-      startTime: data.startTime,
-      endTime: data.endTime,
+      startTime: data.startTime.toLocaleString(),
+      endTime: data.endTime.toLocaleString(),
       files: image,
     });
   });

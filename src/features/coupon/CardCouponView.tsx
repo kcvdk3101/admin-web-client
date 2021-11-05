@@ -2,36 +2,42 @@ import React from "react";
 import { Utilities } from "../../helpers/utils";
 import { Coupon } from "../../models";
 
-interface CardCouponViewProps extends Coupon {
+interface CardCouponViewProps {
+  coupon: Coupon;
   handleDeleteCoupon: (id: string) => void;
   handleEditCoupon?: () => void;
 }
 
 const CardCouponView: React.FC<CardCouponViewProps> = ({
-  id,
-  couponName,
-  couponType,
-  modifier,
-  isUnlimited,
-  amount,
-  unit,
-  usage,
-  limit,
-  pointToAchieve,
-  startTime,
-  endTime,
-  image,
+  coupon,
   handleDeleteCoupon,
   handleEditCoupon,
 }) => {
+  const {
+    id,
+    code,
+    couponName,
+    couponType,
+    modifier,
+    isUnlimited,
+    amount,
+    unit,
+    usage,
+    limit,
+    pointToAchieve,
+    startTime,
+    endTime,
+    images,
+  } = coupon;
+
   return (
     <div className="rounded animate-fade-in-down">
       <img
-        src={image[0].url}
+        src={images && images[0].url}
         alt="random imgee"
         className="w-full object-cover object-center rounded-lg shadow-md"
       />
-      <div className="relative px-2 -mt-16">
+      <div className="relative px-2 -mt-32">
         <div className="bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out">
           <div className="w-full flex justify-between items-center">
             <p className="text-xs uppercase truncate">{couponName}</p>
@@ -48,10 +54,13 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               {couponType === "cash" ? unit : "%"}
             </span>
           </h4>
-          <p className="mt-1 text-xs lg:text-base text-gray-400">
-            This coupon card changes {pointToAchieve} points
-          </p>
-          <div className="flex justify-between items-center mt-4">
+          <div className="flex justify-between items-center mt-2">
+            <p className="text-xs lg:text-base text-gray-400">
+              Point: {pointToAchieve}
+            </p>
+            <p className="text-xs lg:text-base text-gray-400">Code: {code}</p>
+          </div>
+          <div className="flex justify-between items-center mt-2">
             {isUnlimited ? (
               <div className="flex justify-center items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
                 <svg
@@ -84,7 +93,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
                 className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md"
                 onClick={() => handleDeleteCoupon(id)}
               >
-                Delete
+                Disable
               </button>
             </div>
           </div>

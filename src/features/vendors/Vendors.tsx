@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import queryString from "query-string";
-import PaginationNumberedList from "../../components/common/PaginationNumberedList";
+import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
 import VendorActivaion from "../../components/form/VendorActivaion";
 import { Utilities } from "../../helpers/utils";
 import { getAllVendors } from "./vendorsSlice";

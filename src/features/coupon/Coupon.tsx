@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import PaginationNumberedList from "../../components/common/PaginationNumberedList";
+import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
 import NewCouponManagement from "../../components/form/NewCoupon/NewCouponManagement";
 import { mockCoupons } from "../../db/mockCoupons";
 import { Coupon } from "../../models";
@@ -80,11 +80,11 @@ const CouponComponent: React.FC = () => {
   return (
     <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600">
       <SortCouponNavigation
-        handleOpenDropdown={handleOpenDropdown}
+        openDropdown={openDropdown}
         typeOfCoupon={typeOfCoupon}
         handleChangeUnit={handleChangeUnit}
-        openDropdown={openDropdown}
         handleChangeType={handleChangeType}
+        handleOpenDropdown={handleOpenDropdown}
         handleOpenCouponForm={handleOpenCouponForm}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 animate-fade-in-down">
@@ -100,19 +100,7 @@ const CouponComponent: React.FC = () => {
           ).map((coupon, index) => (
             <CardCouponView
               key={index}
-              id={coupon.id}
-              couponName={coupon.couponName}
-              couponType={coupon.couponType}
-              modifier={coupon.modifier}
-              amount={coupon.amount}
-              isUnlimited={coupon.isUnlimited}
-              unit={coupon.unit}
-              usage={coupon.usage}
-              limit={coupon.limit}
-              pointToAchieve={coupon.pointToAchieve}
-              startTime={coupon.startTime}
-              endTime={coupon.endTime}
-              image={coupon.image}
+              coupon={coupon}
               handleDeleteCoupon={handleDeleteCoupon}
               handleEditCoupon={handleEditCoupon}
             />

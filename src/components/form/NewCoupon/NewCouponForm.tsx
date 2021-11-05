@@ -156,13 +156,13 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
           Coupon type
         </label>
         <select
-          className="mt-2 py-2.5 px-1 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md"
+          className="mt-2 py-2.5 px-1 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md capitalize"
           name="couponType"
           id="couponType"
           onChange={handleChangeCouponAttribute}
         >
           {["percentage", "cash"].map((t, index) => (
-            <option className="capitalize" key={index} value={t}>
+            <option key={index} value={t}>
               {t}
             </option>
           ))}
