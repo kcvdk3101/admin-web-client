@@ -51,10 +51,6 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   const [arrayParentName, setArrayParentName] = useState<ParentNameProps[]>([]);
   const [parentName, setParentName] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setParentName(event.target.value);
-  };
-
   useEffect(() => {
     (async function () {
       try {
@@ -67,6 +63,10 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
       }
     })();
   }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setParentName(event.target.value);
+  };
 
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -90,6 +90,7 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
       throw error;
     }
   };
+
   return (
     <div
       className={

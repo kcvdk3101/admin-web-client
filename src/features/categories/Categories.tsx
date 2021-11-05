@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ChildCategory from "../../components/form/ChildCategory";
 import ParentCategory from "../../components/form/ParentCategory";
 import { getAllCategories } from "./categoriesSlice";
-import CategorySkeleton from "./CategorySkeleton";
 import FirstDepth from "./FirstDepth";
 import SecondDepth from "./SecondDepth";
 import ThirdDepth from "./ThirdDepth";
@@ -64,26 +64,28 @@ const Categories: React.FC = () => {
     dispatch(getAllCategories());
   }, []);
 
-  console.log(categories);
-
   return (
     <main className="main-each-page">
       <ButtonGroup
         handleParentCategoryForm={handleParentCategoryForm}
         handleChildCategoryForm={handleChildCategoryForm}
       />
-      <section className="flex w-full h-screen md:h-full">
-        <FirstDepth
-          categories={categories}
-          fectchingCategories={fectchingCategories}
-          handleSelectSecondCategory={handleSelectSecondCategory}
-        />
-        <SecondDepth
-          secondCategory={secondCategory}
-          handleSelectThirdCategory={handleSelectThirdCategory}
-        />
-        <ThirdDepth thirdCategory={thirdCategory} />
-      </section>
+      {fectchingCategories ? (
+        <LoadingSpinner />
+      ) : (
+        <section className="flex w-full h-screen md:h-full">
+          <FirstDepth
+            categories={categories}
+            fectchingCategories={fectchingCategories}
+            handleSelectSecondCategory={handleSelectSecondCategory}
+          />
+          <SecondDepth
+            secondCategory={secondCategory}
+            handleSelectThirdCategory={handleSelectThirdCategory}
+          />
+          <ThirdDepth thirdCategory={thirdCategory} />
+        </section>
+      )}
       <ParentCategory
         openParentCategoryForm={openParentCategoryForm}
         handleParentCategoryForm={handleParentCategoryForm}

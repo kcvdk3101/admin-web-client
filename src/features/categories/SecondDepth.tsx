@@ -12,19 +12,19 @@ const SecondDepth: React.FC<SecondDepthProps> = ({
 }) => {
   return (
     <div className="category-second-depth">
-      <p className="px-2 text-center font-bold text-lg md:text-xl dark:text-green-600">
+      <p className="flex-shrink-0 truncate px-2 text-center font-bold text-xs sm:text-base md:text-lg lg:text-xl dark:text-green-600">
         Second Depth
       </p>
-      <div className="overflow-x-hidden overflow-y-auto h-screen px-3">
+      <div className="flex-1 overflow-x-hidden overflow-y-auto h-screen px-0 sm:px-1 md:px-2 lg:px-3">
         {secondCategory?.children?.map((category) => (
           <p
             key={category.id}
             className="category-card motion-safe:transform-none"
             onClick={() => handleSelectThirdCategory(category.id)}
           >
-            {category.name}
+            <p className="flex-1 truncate">{category.name}</p>
             <svg
-              className="h-6 w-6"
+              className="flex-shrink-0 h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

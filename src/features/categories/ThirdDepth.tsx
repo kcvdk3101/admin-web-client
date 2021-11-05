@@ -8,18 +8,18 @@ interface ThirdDepthProps {
 const ThirdDepth: React.FC<ThirdDepthProps> = ({ thirdCategory }) => {
   return (
     <div className="category-third-depth">
-      <p className="text-center font-bold text-lg md:text-xl dark:text-green-600">
+      <p className="text-center font-bold text-xs sm:text-base md:text-lg lg:text-xl dark:text-green-600">
         Third Depth
       </p>
-      <div className="overflow-x-hidden overflow-y-auto h-screen px-3">
+      <div className="overflow-x-hidden overflow-y-auto h-screen px-0 md:px-1 lg:px-3">
         {thirdCategory?.children?.map((category) => (
           <p
             key={category.id}
             className="category-card motion-safe:transform-none"
           >
-            {category.name}
+            <p className="flex-1 truncate">{category.name}</p>
             <svg
-              className="h-6 w-6"
+              className="flex-shrink-0 h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
