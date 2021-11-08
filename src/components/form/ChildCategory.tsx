@@ -45,8 +45,6 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   });
   const dispatch = useAppDispatch();
 
-  const url = import.meta.env.VITE_API_BASE_URL;
-
   const [imageChild, setImageChild] = useState<File>();
   const [arrayParentName, setArrayParentName] = useState<ParentNameProps[]>([]);
   const [parentName, setParentName] = useState("");
@@ -55,14 +53,14 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
     (async function () {
       try {
         const response = await axiosClient.get<string, []>(
-          `${url}/categories/name`
+          `${import.meta.env.VITE_API_BASE_URL}/categories/name`
         );
         setArrayParentName(response);
       } catch (error) {
         throw error;
       }
     })();
-  }, []);
+  }, [arrayParentName]);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setParentName(event.target.value);

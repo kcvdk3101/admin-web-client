@@ -73,7 +73,7 @@ const Categories: React.FC = () => {
       {fectchingCategories ? (
         <LoadingSpinner />
       ) : (
-        <section className="flex w-full h-screen md:h-full">
+        <div className="flex w-full h-screen md:h-full">
           <FirstDepth
             categories={categories}
             fectchingCategories={fectchingCategories}
@@ -84,7 +84,7 @@ const Categories: React.FC = () => {
             handleSelectThirdCategory={handleSelectThirdCategory}
           />
           <ThirdDepth thirdCategory={thirdCategory} />
-        </section>
+        </div>
       )}
       <ParentCategory
         openParentCategoryForm={openParentCategoryForm}
