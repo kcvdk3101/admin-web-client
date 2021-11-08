@@ -8,7 +8,7 @@ import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import Analysis from "./features/analysis/Analysis";
 import Categories from "./features/categories/Categories";
-import CouponComponent from "./features/coupon/Coupon";
+import Coupons from "./features/coupon/Coupons";
 import Dashboard from "./features/dashboard/Dashboard";
 import Vendors from "./features/vendors/Vendors";
 
@@ -39,7 +39,7 @@ const App: React.FC = () => {
             <Route exact path="/admin/dashboard" component={Dashboard} />
             <Route exact path="/admin/categories" component={Categories} />
             <Route path="/admin/vendors" component={Vendors} />
-            <Route exact path="/admin/coupon" component={CouponComponent} />
+            <Route exact path="/admin/coupons" component={Coupons} />
             <Route exact path="/admin/analysis" component={Analysis} />
             <Redirect from="/" to="/admin/dashboard" />
             <Route path="*" component={NotFound} />

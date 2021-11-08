@@ -26,7 +26,6 @@ const PaginationNumberedList: React.FC<PaginationNumberedListProps> = ({
         <ul className="flex pl-0 rounded list-none flex-wrap">
           <li>
             {pageNumbers.map((number, index) => {
-              // console.log(number);
               return (
                 <button
                   key={index}

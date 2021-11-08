@@ -10,7 +10,7 @@ export const sidebarItems = [
     label: "Categories",
   },
   {
-    path: "coupon",
+    path: "coupons?limit=6&offset=0",
     label: "Discount",
   },
   {

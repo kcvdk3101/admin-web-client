@@ -35,9 +35,9 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
       <img
         src={images && images[0].url}
         alt="random imgee"
-        className="w-full object-cover object-center rounded-lg shadow-md"
+        className="w-full object-cover object-center max-h-60 rounded-lg shadow-md bg-white"
       />
-      <div className="relative px-2 -mt-32">
+      <div className="relative px-2 -mt-20">
         <div className="bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out">
           <div className="w-full flex justify-between items-center">
             <p className="text-xs uppercase truncate">{couponName}</p>

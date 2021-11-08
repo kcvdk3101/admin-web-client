@@ -6,10 +6,10 @@ import { Vendor } from "../../models";
 export interface VendorsSliceState {
   fetchingVendor: boolean;
   vendors: Vendor[];
-  pagination: VendorPagination;
+  pagination: VendorsPagination;
 }
 
-export interface VendorPagination {
+export interface VendorsPagination {
   total: number;
 }
 
@@ -53,7 +53,7 @@ export const vendorsSlice = createSlice({
       getAllVendors.fulfilled,
       (
         state,
-        action: PayloadAction<{ data: Vendor[]; pagination: VendorPagination }>
+        action: PayloadAction<{ data: Vendor[]; pagination: VendorsPagination }>
       ) => {
         state.fetchingVendor = false;
         state.vendors = action.payload.data;
