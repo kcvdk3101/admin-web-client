@@ -5,7 +5,7 @@ import { Coupon } from "../../models";
 interface CardCouponViewProps {
   coupon: Coupon;
   handleDeleteCoupon: (id: string) => void;
-  handleEditCoupon?: () => void;
+  handleEditCoupon: (coupon: Coupon) => void;
 }
 
 const CardCouponView: React.FC<CardCouponViewProps> = ({
@@ -19,7 +19,6 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
     couponName,
     couponType,
     modifier,
-    isUnlimited,
     amount,
     unit,
     usage,
@@ -40,7 +39,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
       <div className="relative px-2 -mt-20">
         <div className="bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out">
           <div className="w-full flex justify-between items-center">
-            <p className="text-xs uppercase truncate">{couponName}</p>
+            <p className="text-xs lg:text-base text-gray-400">Code: {code}</p>
             <p className="flex-shrink-0 text-xs uppercase text-gray-700">
               {Utilities.convertDateString(startTime)} -{" "}
               {Utilities.convertDateString(endTime)}
@@ -55,13 +54,15 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             </span>
           </h4>
           <div className="flex justify-between items-center mt-2">
-            <p className="text-xs lg:text-base text-gray-400">
+            <p className="flex-1 text-xs lg:text-base uppercase truncate">
+              {couponName}
+            </p>
+            <p className="flex-shrink-0 text-xs lg:text-base ml-5 text-gray-400">
               Point: {pointToAchieve}
             </p>
-            <p className="text-xs lg:text-base text-gray-400">Code: {code}</p>
           </div>
-          <div className="flex justify-between items-center mt-2">
-            {isUnlimited ? (
+          <div className="flex justify-between items-center mt-5">
+            {limit === 0 ? (
               <div className="flex justify-center items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +86,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             <div>
               <button
                 className="py-1 px-3 rounded text-sm md:text-base transition duration-150 text-gray-700 hover:bg-yellow-500 hover:text-white hover:shadow-md"
-                onClick={handleEditCoupon}
+                onClick={() => handleEditCoupon(coupon)}
               >
                 Edit
               </button>

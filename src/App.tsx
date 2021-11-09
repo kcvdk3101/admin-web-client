@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingProgress from "./components/common/LoadingProgress";
 import NotFound from "./components/common/NotFound";
+import EditCouponManagement from "./components/form/EditCoupon/EditCouponManagement";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import Analysis from "./features/analysis/Analysis";
@@ -40,6 +41,11 @@ const App: React.FC = () => {
             <Route exact path="/admin/categories" component={Categories} />
             <Route path="/admin/vendors" component={Vendors} />
             <Route exact path="/admin/coupons" component={Coupons} />
+            <Route
+              exact
+              path="/admin/coupons/edit"
+              component={EditCouponManagement}
+            />
             <Route exact path="/admin/analysis" component={Analysis} />
             <Redirect from="/" to="/admin/dashboard" />
             <Route path="*" component={NotFound} />

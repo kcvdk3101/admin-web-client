@@ -6,7 +6,6 @@ export interface Coupon {
   couponName: string;
   description?: string;
   couponType: string;
-  isUnlimited?: boolean;
   modifier: number;
   amount: number;
   unit: string;

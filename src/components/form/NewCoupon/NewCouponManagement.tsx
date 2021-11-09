@@ -116,7 +116,7 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
           : "hidden"
       }`}
     >
-      <div className="relative mt-80 mx-auto max-w-5xl w-1/2 rounded-lg shadow-lg flex flex-col bg-white">
+      <div className="fixed left-1/2 top-0 transform -translate-x-1/2 w-1/2 rounded-lg shadow-lg flex flex-col bg-white">
         <div className="flex justify-between">
           <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
             Coupon Form

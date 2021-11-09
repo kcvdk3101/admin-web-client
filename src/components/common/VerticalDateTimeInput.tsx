@@ -5,6 +5,7 @@ interface VerticalDateTimeInputProps {
   cols: number;
   label: string;
   inputName: string;
+  defaultValue?: Date | string;
   register: any;
   errors: any;
   handleChangeCouponAttribute?: (e: any) => void;
@@ -16,6 +17,7 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
   inputName,
   register,
   errors,
+  defaultValue,
 }) => {
   return (
     <div className={`col-span-${cols}`}>
@@ -30,6 +32,7 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
         id={inputName}
         name={inputName}
         min={Utilities.disablePastDay()}
+        defaultValue={defaultValue}
         className="mt-2 p-3 w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md"
         {...register(`${inputName}`)}
       />

@@ -1,39 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { Coupon } from "../../../models";
 import ButtonsAction from "../../common/ButtonsAction";
-import VerticalCouponSelectType from "../../common/VerticalCouponSelectType";
 import VerticalCurrenciesSelect from "../../common/VerticalCurrenciesSelect";
 import VerticalDateTimeInput from "../../common/VerticalDateTimeInput";
 import VerticalImageInput from "../../common/VerticalImageInput";
 import VerticalLabelInput from "../../common/VerticalLabelInput";
 import VerticalTextareaInput from "../../common/VerticalTextareaInput";
 
-interface NewCouponFormProps {
-  image: File | undefined;
+interface EditCouponFormProps {
+  coupon: Coupon;
+  // image: File | undefined;
   errors: any;
   onSubmit: () => void;
   register: any;
-  isUnlimited: boolean;
-  onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  couponAttribute: any;
-  handleOpenCouponForm: () => void;
-  handleChangeUnlimited: () => void;
-  handleChangeCouponAttribute: (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  // isUnlimited: boolean;
+  // onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // couponAttribute: any;
+  // handleOpenCouponForm: () => void;
+  // handleChangeUnlimited: () => void;
+  // handleChangeCouponAttribute: (
+  //   e: React.ChangeEvent<HTMLSelectElement>
+  // ) => void;
 }
 
-const NewCouponForm: React.FC<NewCouponFormProps> = ({
-  image,
+const EditCouponForm: React.FC<EditCouponFormProps> = ({
+  coupon,
+  // image,
   errors,
   onSubmit,
   register,
-  isUnlimited,
-  onChangeImage,
-  couponAttribute,
-  handleOpenCouponForm,
-  handleChangeUnlimited,
-  handleChangeCouponAttribute,
+  // isUnlimited,
+  // onChangeImage,
+  // couponAttribute,
+  // handleOpenCouponForm,
+  // handleChangeUnlimited,
+  // handleChangeCouponAttribute,
 }) => {
+  const [isUnlimited, setIsUnlimited] = useState(coupon.limit === 0);
+
+  const handleChangeUnlimited = () => {
+    setIsUnlimited(!isUnlimited);
+  };
+
   return (
     <form className="grid grid-cols-6 gap-3 p-6" onSubmit={onSubmit}>
       <VerticalLabelInput
@@ -41,6 +49,7 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
         label="Coupon Name"
         inputName="couponName"
         type="text"
+        defaultValue={coupon.couponName}
         register={register}
         errors={errors}
       />
@@ -104,6 +113,7 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
         cols={6}
         inputName="description"
         label="Description"
+        defaultValue={coupon.description}
         register={register}
         errors={errors}
       />
@@ -112,6 +122,7 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
         cols={3}
         label="Start time"
         inputName="startTime"
+        defaultValue={coupon.startTime.toString()}
         register={register}
         errors={errors}
       />
@@ -119,31 +130,48 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
         cols={3}
         label="End time"
         inputName="endTime"
+        defaultValue={coupon.endTime}
         register={register}
         errors={errors}
       />
 
-      <p className="col-span-6 text-base md:text-lg font-semibold">
+      <p className="col-span-6 text-base md:text-lg font-semibold ">
         Coupon Details
       </p>
 
       <VerticalLabelInput
-        cols={3}
+        cols={6}
         label="Point to achieve"
         inputName="pointToAchieve"
         type="number"
+        defaultValue={coupon.pointToAchieve}
         register={register}
         errors={errors}
       />
 
+      {/* 
       <div className="col-span-3"></div>
 
-      <VerticalCouponSelectType
-        cols={3}
-        label="Coupon Type"
-        inputName="couponType"
-        handleChangeCouponAttribute={handleChangeCouponAttribute}
-      />
+      <div className="col-span-3">
+        <label
+          htmlFor="couponType"
+          className="block text-sm sm:text-base font-medium text-gray-700"
+        >
+          Coupon type
+        </label>
+        <select
+          className="mt-2 py-2.5 px-1 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md capitalize"
+          name="couponType"
+          id="couponType"
+          onChange={handleChangeCouponAttribute}
+        >
+          {["percentage", "cash"].map((t, index) => (
+            <option key={index} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="col-span-3">
         {couponAttribute.couponType === "percentage" ? (
@@ -182,9 +210,9 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
         cols={6}
         title="Create"
         handleAction={handleOpenCouponForm}
-      />
+      /> */}
     </form>
   );
 };
 
-export default NewCouponForm;
+export default EditCouponForm;
