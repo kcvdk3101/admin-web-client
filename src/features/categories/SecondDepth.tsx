@@ -1,5 +1,6 @@
 import React from "react";
-import { Category } from "../../models";
+import { Utilities } from "../../helpers/utils";
+import { Category, ChilrenCategory } from "../../models";
 
 interface SecondDepthProps {
   secondCategory: Category | undefined;
@@ -17,7 +18,7 @@ const SecondDepth: React.FC<SecondDepthProps> = ({
       </p>
       <div className="flex-1 overflow-x-hidden overflow-y-auto h-screen px-0 sm:px-1 md:px-2 lg:px-3">
         {secondCategory?.children?.map((category) => (
-          <p
+          <div
             key={category.id}
             className="category-card motion-safe:transform-none"
             onClick={() => handleSelectThirdCategory(category.id)}
@@ -36,7 +37,7 @@ const SecondDepth: React.FC<SecondDepthProps> = ({
                 d="M13 7l5 5m0 0l-5 5m5-5H6"
               />
             </svg>
-          </p>
+          </div>
         ))}
       </div>
     </div>

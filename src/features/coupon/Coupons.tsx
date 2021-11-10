@@ -90,8 +90,11 @@ const Coupons: React.FC = () => {
     <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600 w-full">
       <div className="my-5">
         <button
-          className="py-1.5 px-3 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500"
+          className={`${
+            fetchingCoupons && "cursor-not-allowed"
+          } my-5 py-1.5 px-3 rounded transition duration-150 bg-blue-500 text-sm md:text-base lg:text-lg text-white hover:shadow-md dark:bg-green-500`}
           onClick={handleOpenCouponForm}
+          disabled={fetchingCoupons}
         >
           Add new
         </button>

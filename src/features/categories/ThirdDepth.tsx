@@ -13,7 +13,7 @@ const ThirdDepth: React.FC<ThirdDepthProps> = ({ thirdCategory }) => {
       </p>
       <div className="overflow-x-hidden overflow-y-auto h-screen px-0 md:px-1 lg:px-3">
         {thirdCategory?.children?.map((category) => (
-          <p
+          <div
             key={category.id}
             className="category-card motion-safe:transform-none"
           >
@@ -31,7 +31,7 @@ const ThirdDepth: React.FC<ThirdDepthProps> = ({ thirdCategory }) => {
                 d="M13 7l5 5m0 0l-5 5m5-5H6"
               />
             </svg>
-          </p>
+          </div>
         ))}
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { Category, ChilrenCategory } from "../../models";
+
 export class Utilities {
   static convertDateString(date: string | Date) {
     return `${new Date(date).toLocaleDateString()}`;
@@ -17,6 +19,18 @@ export class Utilities {
     if (day < 10) day = "0" + day.toString();
 
     return year + "-" + month + "-" + day;
+  }
+
+  static sortByAlphabet(array: Array<Category>) {
+    return [...array].sort(function compare(a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   static fillCouponInformation(

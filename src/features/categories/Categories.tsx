@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ChildCategory from "../../components/form/ChildCategory";
 import ParentCategory from "../../components/form/ParentCategory";
+import { Utilities } from "../../helpers/utils";
 import { getAllCategories } from "./categoriesSlice";
 import FirstDepth from "./FirstDepth";
 import SecondDepth from "./SecondDepth";
@@ -62,7 +63,7 @@ const Categories: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className="main-each-page">

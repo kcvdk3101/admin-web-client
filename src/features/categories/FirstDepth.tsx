@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import { Utilities } from "../../helpers/utils";
 import { Category } from "../../models";
 import CategorySkeleton from "./CategorySkeleton";
 
@@ -23,8 +23,8 @@ const FirstDepth: React.FC<FirstDepthProps> = ({
         <CategorySkeleton n={categories.length} />
       ) : (
         <div className="flex-1 overflow-x-hidden overflow-y-auto h-screen px-0 sm:px-1 md:px-2 lg:px-3">
-          {categories.map((category) => (
-            <p
+          {Utilities.sortByAlphabet(categories).map((category) => (
+            <div
               key={category.id}
               className="category-card motion-safe:transform-none"
               onClick={() => handleSelectSecondCategory(category.id)}
@@ -43,7 +43,7 @@ const FirstDepth: React.FC<FirstDepthProps> = ({
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
-            </p>
+            </div>
           ))}
         </div>
       )}

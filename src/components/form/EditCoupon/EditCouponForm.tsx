@@ -36,6 +36,11 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
   // handleChangeUnlimited,
   // handleChangeCouponAttribute,
 }) => {
+  console.log(coupon.startTime.toString());
+  var someDate = new Date();
+  var numberOfDaysToAdd = 3;
+  var date = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+
   const [isUnlimited, setIsUnlimited] = useState(coupon.limit === 0);
 
   const handleChangeUnlimited = () => {
@@ -130,7 +135,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         cols={3}
         label="End time"
         inputName="endTime"
-        defaultValue={coupon.endTime}
+        defaultValue={coupon.endTime.toString()}
         register={register}
         errors={errors}
       />
@@ -149,66 +154,20 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      {/* 
-      <div className="col-span-3"></div>
-
-      <div className="col-span-3">
-        <label
-          htmlFor="couponType"
-          className="block text-sm sm:text-base font-medium text-gray-700"
-        >
-          Coupon type
-        </label>
-        <select
-          className="mt-2 py-2.5 px-1 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md capitalize"
-          name="couponType"
-          id="couponType"
-          onChange={handleChangeCouponAttribute}
-        >
-          {["percentage", "cash"].map((t, index) => (
-            <option key={index} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="col-span-3">
-        {couponAttribute.couponType === "percentage" ? (
-          <VerticalLabelInput
-            cols={3}
-            label="Percentage"
-            inputName="modifier"
-            type="number"
-            register={register}
-            errors={errors}
-          />
-        ) : (
-          <VerticalCurrenciesSelect
-            label="Cash"
-            inputName="unit"
-            register={register}
-            errors={errors}
-            type={couponAttribute.couponType}
-            handleChangeCouponAttribute={handleChangeCouponAttribute}
-          />
-        )}
-      </div>
-
-      <VerticalImageInput
+      {/* <VerticalImageInput
         cols={6}
-        image={image}
+        // image={coupon.images[0]}
         label="Choose image"
         inputName="files"
         type="file"
         widthImage="3/5"
         register={register}
-        onChangeImage={onChangeImage}
-      />
+        // onChangeImage={onChangeImage}
+      /> */}
 
-      <ButtonsAction
+      {/* <ButtonsAction
         cols={6}
-        title="Create"
+        title="Update"
         handleAction={handleOpenCouponForm}
       /> */}
     </form>

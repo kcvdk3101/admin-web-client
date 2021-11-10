@@ -8,7 +8,7 @@ interface VerticalImageInputProps {
   inputName: string;
   type: string;
   register: any;
-  onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeImage?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const VerticalImageInput: React.FC<VerticalImageInputProps> = ({

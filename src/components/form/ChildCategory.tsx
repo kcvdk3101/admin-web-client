@@ -50,17 +50,26 @@ const ChildCategory: React.FC<ChildCategoryProps> = ({
   const [parentName, setParentName] = useState("");
 
   useEffect(() => {
+    let unmounted = false;
     (async function () {
       try {
         const response = await axiosClient.get<string, []>(
           `${import.meta.env.VITE_API_BASE_URL}/categories/name`
         );
-        setArrayParentName(response);
+        if (!unmounted) {
+          setArrayParentName(response);
+        }
       } catch (error) {
-        throw error;
+        if (!unmounted) {
+          setArrayParentName([]);
+          throw error;
+        }
       }
     })();
-  }, [arrayParentName]);
+    return () => {
+      unmounted = true;
+    };
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setParentName(event.target.value);
