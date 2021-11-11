@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
       <div className="bg-blue-600 text-gray-100 flex justify-between md:hidden dark:bg-gray-700">
         <Link
           to="/admin/dashboard"
-          className="block p-4 text-white font-bold dark:text-green-500"
+          className="block p-4 md:ml-0 text-sm sm:text-base md:text-xl text-white font-bold dark:text-green-500"
         >
           eShop Administration
         </Link>
@@ -48,9 +48,10 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
       <div className={toggle ? "sidebar-md" : "sidebar"}>
         <Link
           to="/admin/dashboard"
-          className="text-white flex items-center space-x-2 px-4 dark:text-green-500"
+          className="flex items-center space-x-2 px-4  text-white dark:text-green-500"
+          onClick={handleToggle}
         >
-          <span className="text-lg  md:text-xl font-extrabold">
+          <span className="text-base md:text-xl font-extrabold">
             eShop Administration
           </span>
         </Link>
@@ -77,10 +78,12 @@ const Sidebar: React.FC<SidebarProps> = ({ handleDarkMode }) => {
                 className="sr-only"
                 onClick={handleDarkMode}
               />
-              <div className="block bg-white w-14 h-6 rounded-full"></div>
-              <div className="dot absolute left-1 top-1 bg-blue-500 w-6 h-4 rounded-full transition"></div>
+              <div className="block bg-white w-12 md:w-14 h-6 rounded-full"></div>
+              <div className="dot absolute left-1 top-1 bg-blue-500 w-5 h-4 md:w-6 rounded-full transition"></div>
             </div>
-            <div className="ml-3 text-white font-medium">Dark mode</div>
+            <div className="ml-3 text-white font-medium text-sm sm:text-base">
+              Dark mode
+            </div>
           </label>
         </nav>
       </div>

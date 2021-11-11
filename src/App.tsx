@@ -15,52 +15,46 @@ import Dashboard from "./features/dashboard/Dashboard";
 import Vendors from "./features/vendors/Vendors";
 
 const App: React.FC = () => {
-  const { isLoading } = useAuth0();
   const [isDark, setIsDark] = useState(false);
 
   const handleDarkMode = () => {
     setIsDark(!isDark);
   };
 
-  console.log(isLoading);
-
   return (
     <>
       <Switch>
         <Route exact path="/" component={Login} />
-        <div
-          className={
-            isDark
-              ? "relative min-h-screen md:flex dark"
-              : "relative min-h-screen md:flex"
-          }
-        >
-          {isLoading ? (
-            <LoadingProgress />
-          ) : (
+        <>
+          <div className={isDark ? "main dark" : "main"}>
             <>
               <Sidebar handleDarkMode={handleDarkMode} />
-              <Route exact path="/admin/dashboard" component={Dashboard} />
-              <ProtectedRoute
-                exact
-                path="/admin/categories"
-                component={Categories}
-              />
-              <ProtectedRoute path="/admin/coupons" component={Coupons} />
-              <ProtectedRoute path="/admin/vendors" component={Vendors} />
-              <ProtectedRoute
-                exact
-                path="/admin/coupons/edit"
-                component={EditCouponManagement}
-              />
-              <ProtectedRoute
-                exact
-                path="/admin/analysis"
-                component={Analysis}
-              />
+              <Switch>
+                <ProtectedRoute
+                  exact
+                  path="/admin/dashboard"
+                  component={Dashboard}
+                />
+                <ProtectedRoute
+                  exact
+                  path="/admin/categories"
+                  component={Categories}
+                />
+                <ProtectedRoute path="/admin/coupons" component={Coupons} />
+                <ProtectedRoute path="/admin/vendors" component={Vendors} />
+                <Route
+                  path="/admin/coupons/edit"
+                  component={EditCouponManagement}
+                />
+                <ProtectedRoute
+                  exact
+                  path="/admin/analysis"
+                  component={Analysis}
+                />
+              </Switch>
             </>
-          )}
-        </div>
+          </div>
+        </>
         <Route path="*" exact component={NotFound} />
         <ToastContainer
           position="top-right"

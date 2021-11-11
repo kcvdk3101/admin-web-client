@@ -51,31 +51,34 @@ const EditCouponFormSchema = yup.object({
 });
 
 const EditCouponManagement: React.FC<EditCouponManagementProps> = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(EditCouponFormSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<FormValues>({
+  //   resolver: yupResolver(EditCouponFormSchema),
+  // });
 
-  const history = useHistory() as any;
+  const history = useHistory();
+  console.log(history.location.state);
 
-  const onSubmit = handleSubmit((data) => {});
+  // const onSubmit = handleSubmit((data) => {
+  //   console.log("object");
+  // });
 
   return (
     <div className="w-full animate-fade-in-down">
       <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
         Edit Coupon
       </h3>
-      <div className="w-1/2">
+      {/* <div className="w-1/2">
         <EditCouponForm
           coupon={history.location.state.coupon}
           onSubmit={onSubmit}
           register={register}
           errors={errors}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

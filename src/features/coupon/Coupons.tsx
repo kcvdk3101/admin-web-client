@@ -77,6 +77,7 @@ const Coupons: React.FC = () => {
   };
 
   function handleEditCoupon(coupon: Coupon) {
+    console.log(coupon);
     history.push({
       pathname: "/admin/coupons/edit",
       state: {
@@ -87,8 +88,8 @@ const Coupons: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col p-5 md:p-7 lg:p-10 dark:bg-gray-600 w-full">
-      <div className="my-5">
+    <div className="flex flex-col p-5 dark:bg-gray-600 w-full">
+      <div>
         <button
           className={`${
             fetchingCoupons && "cursor-not-allowed"
@@ -112,7 +113,7 @@ const Coupons: React.FC = () => {
       ) : coupons.length === 0 ? (
         <h1 className="text-xl dark:text-white">Result is empty</h1>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 animate-fade-in-down">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 animate-fade-in-down">
           {coupons.map((coupon, index) => (
             <CardCouponView
               key={index}
