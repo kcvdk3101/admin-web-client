@@ -19,7 +19,11 @@ type FormValues = {
   files: File | FileList;
 };
 
-interface EditCouponManagementProps {}
+interface EditCouponManagementProps {
+  coupon: Coupon | undefined;
+  openEditCouponForm: boolean;
+  handleOpenEditCouponForm: () => void;
+}
 
 const EditCouponFormSchema = yup.object({
   couponName: yup.string().required("This field is required"),
@@ -50,7 +54,11 @@ const EditCouponFormSchema = yup.object({
   files: yup.mixed().required("This field is required"),
 });
 
-const EditCouponManagement: React.FC<EditCouponManagementProps> = () => {
+const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
+  coupon,
+  openEditCouponForm,
+  handleOpenEditCouponForm,
+}) => {
   // const {
   //   register,
   //   handleSubmit,
@@ -59,26 +67,39 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = () => {
   //   resolver: yupResolver(EditCouponFormSchema),
   // });
 
-  const history = useHistory();
-  console.log(history.location.state);
-
   // const onSubmit = handleSubmit((data) => {
   //   console.log("object");
   // });
 
   return (
-    <div className="w-full animate-fade-in-down">
-      <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
-        Edit Coupon
-      </h3>
-      {/* <div className="w-1/2">
-        <EditCouponForm
-          coupon={history.location.state.coupon}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-        />
-      </div> */}
+    <div
+      className={`overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center ${
+        openEditCouponForm
+          ? "backdrop-filter backdrop-blur-sm flex animate-fade-in-down"
+          : "hidden"
+      }`}
+    >
+      <div className="fixed left-1/2 top-0 transform -translate-x-1/2 w-1/2 rounded-lg shadow-lg flex flex-col bg-white">
+        <div className="flex justify-between">
+          <h3 className="text-xl md:text-2xl font-semibold pl-5 pt-5">
+            Edit Coupon Form
+          </h3>
+          <button
+            className="px-5 pt-5"
+            type="button"
+            onClick={handleOpenEditCouponForm}
+          >
+            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+        {/* <EditCouponForm coupon={coupon} /> */}
+      </div>
     </div>
   );
 };

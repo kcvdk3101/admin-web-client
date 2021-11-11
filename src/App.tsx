@@ -42,7 +42,7 @@ const App: React.FC = () => {
                 />
                 <ProtectedRoute path="/admin/coupons" component={Coupons} />
                 <ProtectedRoute path="/admin/vendors" component={Vendors} />
-                <Route
+                <ProtectedRoute
                   path="/admin/coupons/edit"
                   component={EditCouponManagement}
                 />
@@ -53,20 +53,20 @@ const App: React.FC = () => {
                 />
               </Switch>
             </>
+            <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         </>
         <Route path="*" exact component={NotFound} />
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </Switch>
     </>
   );

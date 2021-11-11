@@ -8,11 +8,11 @@ import VerticalLabelInput from "../../common/VerticalLabelInput";
 import VerticalTextareaInput from "../../common/VerticalTextareaInput";
 
 interface EditCouponFormProps {
-  coupon: Coupon;
+  coupon: Coupon | undefined;
   // image: File | undefined;
-  errors: any;
-  onSubmit: () => void;
-  register: any;
+  errors?: any;
+  onSubmit?: () => void;
+  register?: any;
   // isUnlimited: boolean;
   // onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   // couponAttribute: any;
@@ -36,12 +36,12 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
   // handleChangeUnlimited,
   // handleChangeCouponAttribute,
 }) => {
-  console.log(coupon.startTime.toString());
+  console.log(coupon?.startTime.toString());
   var someDate = new Date();
   var numberOfDaysToAdd = 3;
   var date = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
-  const [isUnlimited, setIsUnlimited] = useState(coupon.limit === 0);
+  const [isUnlimited, setIsUnlimited] = useState(coupon?.limit === 0);
 
   const handleChangeUnlimited = () => {
     setIsUnlimited(!isUnlimited);
@@ -54,7 +54,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         label="Coupon Name"
         inputName="couponName"
         type="text"
-        defaultValue={coupon.couponName}
+        defaultValue={coupon?.couponName}
         register={register}
         errors={errors}
       />
@@ -118,7 +118,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         cols={6}
         inputName="description"
         label="Description"
-        defaultValue={coupon.description}
+        defaultValue={coupon?.description}
         register={register}
         errors={errors}
       />
@@ -127,7 +127,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         cols={3}
         label="Start time"
         inputName="startTime"
-        defaultValue={coupon.startTime.toString()}
+        defaultValue={coupon?.startTime.toString()}
         register={register}
         errors={errors}
       />
@@ -135,7 +135,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         cols={3}
         label="End time"
         inputName="endTime"
-        defaultValue={coupon.endTime.toString()}
+        defaultValue={coupon?.endTime.toString()}
         register={register}
         errors={errors}
       />
@@ -149,7 +149,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         label="Point to achieve"
         inputName="pointToAchieve"
         type="number"
-        defaultValue={coupon.pointToAchieve}
+        defaultValue={coupon?.pointToAchieve}
         register={register}
         errors={errors}
       />

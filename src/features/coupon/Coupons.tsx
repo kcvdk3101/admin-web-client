@@ -30,6 +30,7 @@ const Coupons: React.FC = () => {
 
   const [openCouponForm, setOpenCouponForm] = useState<boolean>(false);
   const [openEditCouponForm, setOpenEditCouponForm] = useState<boolean>(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon>();
   // const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   // const [typeOfCoupon, setTypeOfCoupon] = useState<string>("");
   // const [unitOfCoupon, setUnitOfCoupon] = useState<string>("");
@@ -55,6 +56,15 @@ const Coupons: React.FC = () => {
     setOpenEditCouponForm(!openEditCouponForm);
   };
 
+  const handleDeleteCoupon = (id: string) => {
+    toast.success(`Coupon deleted ${id}!`);
+  };
+
+  function handleEditCoupon(coupon: Coupon) {
+    setSelectedCoupon(coupon);
+    handleOpenEditCouponForm();
+  }
+
   // const handleOpenDropdown = () => {
   //   setOpenDropdown(!openDropdown);
   // };
@@ -71,21 +81,6 @@ const Coupons: React.FC = () => {
   //   setUnitOfCoupon(e.target.value);
   //   setCurrentPage(1);
   // }
-
-  const handleDeleteCoupon = (id: string) => {
-    toast.success(`Coupon deleted ${id}!`);
-  };
-
-  function handleEditCoupon(coupon: Coupon) {
-    console.log(coupon);
-    history.push({
-      pathname: "/admin/coupons/edit",
-      state: {
-        coupon,
-      },
-    });
-    // toast.success("Coupon edit!");
-  }
 
   return (
     <div className="flex flex-col p-5 dark:bg-gray-600 w-full">
@@ -133,6 +128,11 @@ const Coupons: React.FC = () => {
       <NewCouponManagement
         openCouponForm={openCouponForm}
         handleOpenCouponForm={handleOpenCouponForm}
+      />
+      <EditCouponManagement
+        coupon={selectedCoupon}
+        openEditCouponForm={openEditCouponForm}
+        handleOpenEditCouponForm={handleOpenEditCouponForm}
       />
     </div>
   );
