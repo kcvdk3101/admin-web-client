@@ -59,17 +59,17 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
   openEditCouponForm,
   handleOpenEditCouponForm,
 }) => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<FormValues>({
-  //   resolver: yupResolver(EditCouponFormSchema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(EditCouponFormSchema),
+  });
 
-  // const onSubmit = handleSubmit((data) => {
-  //   console.log("object");
-  // });
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
     <div
@@ -98,7 +98,13 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
             </svg>
           </button>
         </div>
-        {/* <EditCouponForm coupon={coupon} /> */}
+        <EditCouponForm
+          coupon={coupon}
+          register={register}
+          errors={errors}
+          onSubmit={onSubmit}
+          handleOpenEditCouponForm={handleOpenEditCouponForm}
+        />
       </div>
     </div>
   );

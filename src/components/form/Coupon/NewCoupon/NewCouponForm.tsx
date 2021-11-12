@@ -1,11 +1,11 @@
 import React from "react";
-import ButtonsAction from "../../common/ButtonsAction";
-import VerticalCouponSelectType from "../../common/VerticalCouponSelectType";
-import VerticalCurrenciesSelect from "../../common/VerticalCurrenciesSelect";
-import VerticalDateTimeInput from "../../common/VerticalDateTimeInput";
-import VerticalImageInput from "../../common/VerticalImageInput";
-import VerticalLabelInput from "../../common/VerticalLabelInput";
-import VerticalTextareaInput from "../../common/VerticalTextareaInput";
+import ButtonsAction from "../../../common/ButtonsAction";
+import VerticalCouponSelectType from "../../../common/VerticalCouponSelectType";
+import VerticalCurrenciesSelect from "../../../common/VerticalCurrenciesSelect";
+import VerticalDateTimeInput from "../../../common/VerticalDateTimeInput";
+import VerticalImageInput from "../../../common/VerticalImageInput";
+import VerticalLabelInput from "../../../common/VerticalLabelInput";
+import VerticalTextareaInput from "../../../common/VerticalTextareaInput";
 
 interface NewCouponFormProps {
   image: File | undefined;

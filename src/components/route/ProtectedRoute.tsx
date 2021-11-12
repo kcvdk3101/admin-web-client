@@ -5,14 +5,14 @@ import { Redirect, Route, RouteProps } from "react-router";
 interface ProtectedRouteProps extends RouteProps {}
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  // children,
+  children,
   ...props
 }) => {
   const { isAuthenticated } = useAuth0();
 
-  if (!isAuthenticated) return <Redirect to="/" />;
+  if (!isAuthenticated) return <Redirect to="/login" />;
 
-  return <Route {...props}></Route>;
+  return <Route {...props}>{children}</Route>;
 };
 
 export default ProtectedRoute;

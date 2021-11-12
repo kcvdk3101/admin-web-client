@@ -26,6 +26,14 @@ export const getAllCoupons = createAsyncThunk(
   }
 );
 
+export const deleteCouponById = createAsyncThunk(
+  "coupons/deleteCouponById",
+  async (id: string) => {
+    const coupon = await couponsApi.deleteCouponById(id);
+    return coupon;
+  }
+);
+
 export const couponsSlice = createSlice({
   name: "coupons",
   initialState,
@@ -46,6 +54,22 @@ export const couponsSlice = createSlice({
       }
     );
     builder.addCase(getAllCoupons.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
+    builder.addCase(deleteCouponById.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(
+      deleteCouponById.fulfilled,
+      (state, action: PayloadAction<Coupon>) => {
+        state.fetchingCoupons = false;
+        state.coupons = [
+          ...state.coupons.filter((coupon) => coupon.id !== action.payload.id),
+        ];
+      }
+    );
+    builder.addCase(deleteCouponById.rejected, (state, action) => {
       state.fetchingCoupons = false;
     });
   },

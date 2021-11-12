@@ -10,13 +10,12 @@ import VerticalTextareaInput from "../../common/VerticalTextareaInput";
 interface EditCouponFormProps {
   coupon: Coupon | undefined;
   // image: File | undefined;
-  errors?: any;
-  onSubmit?: () => void;
-  register?: any;
-  // isUnlimited: boolean;
+  errors: any;
+  onSubmit: () => void;
+  register: any;
+  handleOpenEditCouponForm: () => void;
   // onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   // couponAttribute: any;
-  // handleOpenCouponForm: () => void;
   // handleChangeUnlimited: () => void;
   // handleChangeCouponAttribute: (
   //   e: React.ChangeEvent<HTMLSelectElement>
@@ -25,18 +24,15 @@ interface EditCouponFormProps {
 
 const EditCouponForm: React.FC<EditCouponFormProps> = ({
   coupon,
-  // image,
   errors,
   onSubmit,
   register,
-  // isUnlimited,
+  handleOpenEditCouponForm,
   // onChangeImage,
   // couponAttribute,
-  // handleOpenCouponForm,
   // handleChangeUnlimited,
   // handleChangeCouponAttribute,
 }) => {
-  console.log(coupon?.startTime.toString());
   var someDate = new Date();
   var numberOfDaysToAdd = 3;
   var date = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
@@ -103,6 +99,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
             type="number"
             id="limit"
             min="0"
+            defaultValue={coupon?.limit}
             className={`${
               !isUnlimited ? "animate-fade-in-opacity" : "hidden"
             } mt-2 p-3 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md`}
@@ -152,6 +149,56 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         defaultValue={coupon?.pointToAchieve}
         register={register}
         errors={errors}
+      />
+
+      <div className="col-span-6">
+        <input
+          id="files"
+          className="hidden"
+          accept="image/*"
+          type="file"
+          {...register("files")}
+          // onChange={onChangeImage}
+        />
+        {coupon?.images ? (
+          <label
+            htmlFor="files"
+            className="cursor-pointer text-xs sm:text-sm md:text-base"
+          >
+            Choose image
+            <img
+              src={coupon.images[0].url}
+              alt="Image"
+              className="shadow-md mt-2 w-3/5"
+            />
+          </label>
+        ) : (
+          <label
+            htmlFor="files"
+            className="cursor-pointer flex flex-col items-center w-28 md:w-32 lg:w-36 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-xs sm:text-sm md:text-base"
+          >
+            <svg
+              className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+            Choose image
+          </label>
+        )}
+      </div>
+
+      <ButtonsAction
+        cols={6}
+        title="Update"
+        handleAction={handleOpenEditCouponForm}
       />
 
       {/* <VerticalImageInput

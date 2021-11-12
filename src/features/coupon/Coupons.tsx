@@ -4,13 +4,14 @@ import { useHistory, useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import EditCouponManagement from "../../components/form/EditCoupon/EditCouponManagement";
-import NewCouponManagement from "../../components/form/NewCoupon/NewCouponManagement";
+import NewCouponManagement from "../../components/form/Coupon/NewCoupon/NewCouponManagement";
 import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
 import { Coupon } from "../../models";
 import CardCouponView from "./CardCouponView";
 import CouponsSkeleton from "./CouponsSkeleton";
-import { getAllCoupons } from "./couponsSlice";
+import { deleteCouponById, getAllCoupons } from "./couponsSlice";
 import SortCouponNavigation from "./SortCouponNavigation";
+import DeleteCoupon from "../../components/form/Coupon/DeleteCoupon/DeleteCoupon";
 
 const Coupons: React.FC = () => {
   const history = useHistory();
@@ -30,6 +31,8 @@ const Coupons: React.FC = () => {
 
   const [openCouponForm, setOpenCouponForm] = useState<boolean>(false);
   const [openEditCouponForm, setOpenEditCouponForm] = useState<boolean>(false);
+  const [openDeleteCouponForm, setOpenDeleteCouponForm] =
+    useState<boolean>(false);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon>();
   // const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   // const [typeOfCoupon, setTypeOfCoupon] = useState<string>("");
@@ -56,13 +59,18 @@ const Coupons: React.FC = () => {
     setOpenEditCouponForm(!openEditCouponForm);
   };
 
-  const handleDeleteCoupon = (id: string) => {
-    toast.success(`Coupon deleted ${id}!`);
+  const handleOpenDeleteCouponForm = () => {
+    setOpenDeleteCouponForm(!openDeleteCouponForm);
   };
 
   function handleEditCoupon(coupon: Coupon) {
     setSelectedCoupon(coupon);
     handleOpenEditCouponForm();
+  }
+
+  function handleDeleteCoupon(coupon: Coupon) {
+    setSelectedCoupon(coupon);
+    handleOpenDeleteCouponForm();
   }
 
   // const handleOpenDropdown = () => {
@@ -133,6 +141,11 @@ const Coupons: React.FC = () => {
         coupon={selectedCoupon}
         openEditCouponForm={openEditCouponForm}
         handleOpenEditCouponForm={handleOpenEditCouponForm}
+      />
+      <DeleteCoupon
+        coupon={selectedCoupon}
+        openDialog={openDeleteCouponForm}
+        handleOpenDeleteCouponForm={handleOpenDeleteCouponForm}
       />
     </div>
   );

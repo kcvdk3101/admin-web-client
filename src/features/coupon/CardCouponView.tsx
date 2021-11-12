@@ -5,7 +5,7 @@ import { Coupon } from "../../models";
 
 interface CardCouponViewProps {
   coupon: Coupon;
-  handleDeleteCoupon: (id: string) => void;
+  handleDeleteCoupon: (coupon: Coupon) => void;
   handleEditCoupon: (coupon: Coupon) => void;
 }
 
@@ -62,9 +62,9 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               Point: {pointToAchieve}
             </p>
           </div>
-          <div className="flex justify-between items-center mt-5">
+          <div className="mt-3">
             {limit === 0 ? (
-              <div className="flex justify-center items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
+              <div className="flex justify-start items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
                 <svg
                   className="h-3 w-3 md:h-5 md:w-5"
                   viewBox="0 0 20 20"
@@ -76,29 +76,35 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="ml-1 md:ml-2 text-xs md:text-sm lg:text-base">
+                <span className="ml-1 md:ml-2 text-xs md:text-sm lg:text-base">
                   Unlimited usage
-                </p>
+                </span>
               </div>
             ) : (
               <p className="text-xs md:text-sm lg:text-base text-blue-700 dark:text-green-400 ">
                 {usage}/{limit} card been used
               </p>
             )}
-            <div className="flex">
-              <button
-                className="btn-edit-coupon"
-                onClick={() => handleEditCoupon(coupon)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn-delete-coupon"
-                onClick={() => handleDeleteCoupon(id)}
-              >
-                Disable
-              </button>
-            </div>
+          </div>
+          <div className="flex justify-end items-center mt-3 mx-auto">
+            <button
+              className="btn-disable-coupon"
+              // onClick={() => handleEditCoupon(coupon)}
+            >
+              Disable
+            </button>
+            <button
+              className="btn-edit-coupon"
+              onClick={() => handleEditCoupon(coupon)}
+            >
+              Edit
+            </button>
+            <button
+              className="btn-delete-coupon"
+              onClick={() => handleDeleteCoupon(coupon)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
