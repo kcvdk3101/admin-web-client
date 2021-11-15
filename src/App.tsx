@@ -4,7 +4,6 @@ import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingProgress from "./components/common/LoadingProgress";
 import NotFound from "./components/common/NotFound";
-import EditCouponManagement from "./components/form/Coupon/EditCoupon/EditCouponManagement";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import ProtectedRoute from "./components/route/ProtectedRoute";
@@ -28,57 +27,64 @@ const App: React.FC = () => {
         <LoadingProgress />
       ) : (
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return <Redirect to="/login" />;
-            }}
-          />
-          <Route exact path="/login" component={Login} />
-          <>
-            <div className={isDark ? "main dark" : "main"}>
+          <Route exact path="/" component={Login} />
+          <ProtectedRoute
+            path="/admin"
+            render={(props) => (
               <>
-                <Sidebar handleDarkMode={handleDarkMode} />
-                <Switch>
-                  <ProtectedRoute
-                    exact
-                    path="/admin/dashboard"
-                    component={Dashboard}
-                  />
-                  <ProtectedRoute
-                    exact
-                    path="/admin/categories"
-                    component={Categories}
-                  />
-                  <ProtectedRoute path="/admin/coupons" component={Coupons} />
-                  <ProtectedRoute path="/admin/vendors" component={Vendors} />
-                  <ProtectedRoute
-                    path="/admin/coupons/edit"
-                    component={EditCouponManagement}
-                  />
-                  <ProtectedRoute
-                    exact
-                    path="/admin/analysis"
-                    component={Analysis}
-                  />
-                  <Route path="*" exact component={NotFound} />
-                </Switch>
+                <div className={isDark ? "main dark" : "main"}>
+                  <Sidebar handleDarkMode={handleDarkMode} />
+                  <Switch>
+                    <ProtectedRoute
+                      exact
+                      path="/admin/dashboard"
+                      component={Dashboard}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path="/admin/categories"
+                      component={Categories}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path="/admin/coupons"
+                      component={Coupons}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path="/admin/vendors"
+                      component={Vendors}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path="/admin/analysis"
+                      component={Analysis}
+                    />
+                    <Route path="*" component={NotFound} />
+                  </Switch>
+                </div>
               </>
-              <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
+            )}
+          />
+          <Route path="*" render={() => <Redirect to="/" />} />
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          {/* <>
+            <div className={isDark ? "main dark" : "main"}>
+              <Sidebar handleDarkMode={handleDarkMode} />
+              <Switch></Switch>
+              
             </div>
-          </>
-          <Route path="*" exact component={NotFound} />
+          </> */}
         </Switch>
       )}
     </>
