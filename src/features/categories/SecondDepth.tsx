@@ -12,7 +12,7 @@ const SecondDepth: React.FC<SecondDepthProps> = ({
   handleSelectThirdCategory,
 }) => {
   return (
-    <div className="category-second-depth">
+    <div className="category-depth category-second-depth">
       <p className="flex-shrink-0 truncate px-2 text-center font-bold text-xs sm:text-base md:text-lg lg:text-xl dark:text-green-600">
         Second Depth
       </p>

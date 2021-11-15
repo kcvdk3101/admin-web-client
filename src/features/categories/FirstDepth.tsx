@@ -15,7 +15,7 @@ const FirstDepth: React.FC<FirstDepthProps> = ({
   handleSelectSecondCategory,
 }) => {
   return (
-    <div className="category-first-depth">
+    <div className="category-depth category-first-depth">
       <p className="flex-shrink-0 px-1 text-center font-bold text-xs sm:text-base md:text-lg lg:text-xl dark:text-green-600">
         First Depth
       </p>

@@ -17,12 +17,15 @@ const ButtonGroup: React.FC<{
     <div className="flex justify-start w-full mb-4 font-bold text-2xl md:text-4xl dark:text-white dark:font-bold">
       <button
         type="button"
-        className="btn-add"
+        className="btn-add-category"
         onClick={handleParentCategoryForm}
       >
         Add parent category
       </button>
-      <button className="btn-add ml-2" onClick={handleChildCategoryForm}>
+      <button
+        className="btn-add-category ml-2"
+        onClick={handleChildCategoryForm}
+      >
         Add child category
       </button>
     </div>

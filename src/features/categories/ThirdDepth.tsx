@@ -7,7 +7,7 @@ interface ThirdDepthProps {
 
 const ThirdDepth: React.FC<ThirdDepthProps> = ({ thirdCategory }) => {
   return (
-    <div className="category-third-depth">
+    <div className="category-depth category-third-depth">
       <p className="text-center font-bold text-xs sm:text-base md:text-lg lg:text-xl dark:text-green-600">
         Third Depth
       </p>
