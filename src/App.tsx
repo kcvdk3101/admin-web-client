@@ -14,7 +14,7 @@ import Dashboard from "./features/dashboard/Dashboard";
 import Vendors from "./features/vendors/Vendors";
 
 const App: React.FC = () => {
-  const { isLoading } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
   const [isDark, setIsDark] = useState(false);
 
   const handleDarkMode = () => {
@@ -27,10 +27,10 @@ const App: React.FC = () => {
         <LoadingProgress />
       ) : (
         <Switch>
-          <Route exact path="/" component={Login} />
+          {!isAuthenticated && <Route exact path="/" component={Login} />}
           <ProtectedRoute
             path="/admin"
-            render={(props) => (
+            render={() => (
               <>
                 <div className={isDark ? "main dark" : "main"}>
                   <Sidebar handleDarkMode={handleDarkMode} />
