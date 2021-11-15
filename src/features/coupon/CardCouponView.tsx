@@ -7,15 +7,18 @@ interface CardCouponViewProps {
   coupon: Coupon;
   handleDeleteCoupon: (coupon: Coupon) => void;
   handleEditCoupon: (coupon: Coupon) => void;
+  handleUpdateStatusCoupon: (id: string) => void;
 }
 
 const CardCouponView: React.FC<CardCouponViewProps> = ({
   coupon,
   handleDeleteCoupon,
   handleEditCoupon,
+  handleUpdateStatusCoupon,
 }) => {
   const {
     id,
+    isActive,
     code,
     couponName,
     couponType,
@@ -30,23 +33,33 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
     images,
   } = coupon;
 
+  const blurComponent = isActive && "filter blur-xs";
+
   return (
     <div className="rounded animate-fade-in-down">
       <img
         src={images && images[0].url}
-        alt="random imgee"
-        className="w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white"
+        alt="random image"
+        className={`w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white ${
+          isActive ? "opacity-80" : "opacity-100"
+        }`}
       />
       <div className="relative px-2 -mt-20">
-        <div className="bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out">
-          <div className="w-full flex justify-between items-center">
+        <div
+          className={`bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out`}
+        >
+          <div
+            className={`"w-full flex justify-between items-center ${blurComponent}`}
+          >
             <p className="text-xs sm:text-sm text-gray-400">Code: {code}</p>
             <p className="flex-shrink-0 text-xs uppercase text-gray-700">
               {Utilities.convertDateString(startTime)} -{" "}
               {Utilities.convertDateString(endTime)}
             </p>
           </div>
-          <h4 className="mt-1 text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold uppercase truncate text-blue-600 dark:text-green-500">
+          <h4
+            className={`${blurComponent} mt-1 text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold uppercase truncate text-blue-600 dark:text-green-500`}
+          >
             {couponType === "cash"
               ? Utilities.convertToCurrency(amount)
               : modifier}
@@ -54,7 +67,9 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               {couponType === "cash" ? unit : "%"}
             </span>
           </h4>
-          <div className="flex justify-between items-center mt-2">
+          <div
+            className={`${blurComponent} flex justify-between items-center mt-2`}
+          >
             <p className="flex-1 text-xs lg:text-base uppercase truncate">
               {couponName}
             </p>
@@ -62,7 +77,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               Point: {pointToAchieve}
             </p>
           </div>
-          <div className="mt-3">
+          <div className={`${blurComponent} mt-3`}>
             {limit === 0 ? (
               <div className="flex justify-start items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
                 <svg
@@ -86,25 +101,57 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               </p>
             )}
           </div>
-          <div className="flex justify-end items-center mt-3 mx-auto">
+          <div className="relative flex justify-between items-center mt-3 w-full">
             <button
-              className="btn-disable-coupon"
-              // onClick={() => handleEditCoupon(coupon)}
+              className={`btn-coupon-card px-3 ${
+                isActive
+                  ? "hover:bg-blue-500 dark:hover:bg-green-500"
+                  : "hover:bg-gray-500"
+              }`}
+              onClick={() => handleUpdateStatusCoupon(id)}
             >
-              Disable
+              {isActive ? "Enable" : "Disable"}
             </button>
-            <button
-              className="btn-edit-coupon"
-              onClick={() => handleEditCoupon(coupon)}
-            >
-              Edit
-            </button>
-            <button
-              className="btn-delete-coupon"
-              onClick={() => handleDeleteCoupon(coupon)}
-            >
-              Delete
-            </button>
+            <div className="flex">
+              <button
+                className={`btn-coupon-card ${
+                  isActive
+                    ? "hover:bg-gray-500 cursor-not-allowed"
+                    : "hover:bg-yellow-500"
+                }`}
+                disabled={isActive}
+                onClick={() => handleEditCoupon(coupon)}
+              >
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+              </button>
+              <button
+                className={`btn-coupon-card ${
+                  isActive
+                    ? "hover:bg-gray-500 cursor-not-allowed"
+                    : "hover:bg-red-500"
+                }`}
+                onClick={() => handleDeleteCoupon(coupon)}
+                disabled={isActive}
+              >
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>

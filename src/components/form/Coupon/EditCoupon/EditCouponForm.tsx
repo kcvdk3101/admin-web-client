@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Coupon } from "../../../models";
-import ButtonsAction from "../../common/ButtonsAction";
-import VerticalCurrenciesSelect from "../../common/VerticalCurrenciesSelect";
-import VerticalDateTimeInput from "../../common/VerticalDateTimeInput";
-import VerticalImageInput from "../../common/VerticalImageInput";
-import VerticalLabelInput from "../../common/VerticalLabelInput";
-import VerticalTextareaInput from "../../common/VerticalTextareaInput";
+import { Coupon } from "../../../../models";
+import ButtonsAction from "../../../common/ButtonsAction";
+import VerticalCurrenciesSelect from "../../../common/VerticalCurrenciesSelect";
+import VerticalDateTimeInput from "../../../common/VerticalDateTimeInput";
+import VerticalImageInput from "../../../common/VerticalImageInput";
+import VerticalLabelInput from "../../../common/VerticalLabelInput";
+import VerticalTextareaInput from "../../../common/VerticalTextareaInput";
 
 interface EditCouponFormProps {
   coupon: Coupon | undefined;

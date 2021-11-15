@@ -3,15 +3,20 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import EditCouponManagement from "../../components/form/EditCoupon/EditCouponManagement";
+import EditCouponManagement from "../../components/form/Coupon/EditCoupon/EditCouponManagement";
 import NewCouponManagement from "../../components/form/Coupon/NewCoupon/NewCouponManagement";
 import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
 import { Coupon } from "../../models";
 import CardCouponView from "./CardCouponView";
 import CouponsSkeleton from "./CouponsSkeleton";
-import { deleteCouponById, getAllCoupons } from "./couponsSlice";
+import {
+  deleteCouponById,
+  getAllCoupons,
+  updateStatusCoupon,
+} from "./couponsSlice";
 import SortCouponNavigation from "./SortCouponNavigation";
 import DeleteCoupon from "../../components/form/Coupon/DeleteCoupon/DeleteCoupon";
+import { ExecException } from "child_process";
 
 const Coupons: React.FC = () => {
   const history = useHistory();
@@ -40,7 +45,7 @@ const Coupons: React.FC = () => {
   // const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getAllCoupons(0));
+    dispatch(getAllCoupons(offset));
   }, []);
 
   const paginate = (pageNumber: number) => {
@@ -71,6 +76,15 @@ const Coupons: React.FC = () => {
   function handleDeleteCoupon(coupon: Coupon) {
     setSelectedCoupon(coupon);
     handleOpenDeleteCouponForm();
+  }
+
+  async function handleUpdateStatusCoupon(id: string) {
+    try {
+      dispatch(updateStatusCoupon(id));
+      toast.success("Disable");
+    } catch (error) {
+      toast.error(error as ExecException);
+    }
   }
 
   // const handleOpenDropdown = () => {
@@ -123,6 +137,7 @@ const Coupons: React.FC = () => {
               coupon={coupon}
               handleDeleteCoupon={handleDeleteCoupon}
               handleEditCoupon={handleEditCoupon}
+              handleUpdateStatusCoupon={handleUpdateStatusCoupon}
             />
           ))}
         </div>

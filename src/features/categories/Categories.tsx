@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import ChildCategory from "../../components/form/ChildCategory";
-import ParentCategory from "../../components/form/ParentCategory";
+import ChildCategory from "../../components/form/Category/ChildCategory/ChildCategory";
+import ParentCategory from "../../components/form/Category/ParentCategory/ParentCategory";
 import { Utilities } from "../../helpers/utils";
 import { getAllCategories } from "./categoriesSlice";
 import FirstDepth from "./FirstDepth";

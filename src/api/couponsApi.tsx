@@ -11,7 +11,7 @@ const couponsApi = {
   },
 
   addNewCoupon(data: FormData) {
-    return axiosClient.post<string, Coupon>(url, data);
+    return axiosClient.post<string, Coupon>(`${url}`, data);
   },
 
   deleteCouponById(id: string) {
@@ -19,7 +19,7 @@ const couponsApi = {
   },
 
   updateCouponStatus(id: string) {
-    return axiosClient.patch<string>(`${url}/status?id=${id}`);
+    return axiosClient.patch<string, Coupon>(`${url}/status?id=${id}`);
   },
 
   updateCouponInformation(id: string, information: any) {

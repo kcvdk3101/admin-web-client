@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingProgress from "./components/common/LoadingProgress";
 import NotFound from "./components/common/NotFound";
-import EditCouponManagement from "./components/form/EditCoupon/EditCouponManagement";
+import EditCouponManagement from "./components/form/Coupon/EditCoupon/EditCouponManagement";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import ProtectedRoute from "./components/route/ProtectedRoute";

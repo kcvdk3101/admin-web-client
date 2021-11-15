@@ -60,6 +60,9 @@ module.exports = {
         'fade-out-down': 'fade-out-down 0.5s ease-out',
         'fade-in-up': 'fade-in-up 0.5s ease-out',
         'fade-out-up': 'fade-out-up 0.5s ease-out'
+      },
+      blur: {
+        xs: '2px',
       }
     },
   },

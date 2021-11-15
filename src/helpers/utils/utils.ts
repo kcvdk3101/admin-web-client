@@ -39,15 +39,18 @@ export class Utilities {
     isUnlimited: boolean,
     image: File | undefined
   ) {
+    const amount = data.amount === undefined ? 0 : data.amount;
+    const limit = data.limit === undefined ? 0 : data.limit;
+
     const formData = new FormData();
     formData.append("couponName", data.couponName);
     formData.append("couponType", couponAttribute.couponType);
     formData.append("description", data.description);
     formData.append("isUnlimited", JSON.stringify(isUnlimited));
     formData.append("modifier", data.modifier);
-    formData.append("amount", data.amount);
+    formData.append("amount", amount);
     formData.append("unit", couponAttribute.unit);
-    formData.append("limit", data.limit);
+    formData.append("limit", limit);
     formData.append("pointToAchieve", data.pointToAchieve);
     formData.append("startTime", data.startTime);
     formData.append("endTime", data.endTime);

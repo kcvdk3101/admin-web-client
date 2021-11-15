@@ -3,11 +3,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAppDispatch } from "../../app/hooks";
-import { addParentCategory } from "../../features/categories/categoriesSlice";
-import VerticalLabelInput from "../common/VerticalLabelInput";
-import VerticalImageInput from "../common/VerticalImageInput";
-import ButtonsAction from "../common/ButtonsAction";
+import { useAppDispatch } from "../../../../app/hooks";
+import { addParentCategory } from "../../../../features/categories/categoriesSlice";
+import VerticalLabelInput from "../../../common/VerticalLabelInput";
+import VerticalImageInput from "../../../common/VerticalImageInput";
+import ButtonsAction from "../../../common/ButtonsAction";
 
 type FormValues = {
   name: string;

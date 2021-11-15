@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import queryString from "query-string";
 import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
-import VendorActivaion from "../../components/form/VendorActivaion";
+import VendorActivaion from "../../components/form/Vendor/VendorActivaion";
 import { Utilities } from "../../helpers/utils";
 import { getAllVendors } from "./vendorsSlice";
 import VendorsSkeleton from "./VendorsSkeleton";

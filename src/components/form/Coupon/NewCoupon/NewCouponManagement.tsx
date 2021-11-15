@@ -1,7 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ExecException } from "child_process";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import * as yup from "yup";
+import { useAppDispatch } from "../../../../app/hooks";
+import { addNewCoupon } from "../../../../features/coupon/couponsSlice";
 import NewCouponForm from "./NewCouponForm";
 
 type FormValues = {
@@ -61,6 +66,8 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
   } = useForm<FormValues>({
     resolver: yupResolver(NewCouponFormSchema),
   });
+  const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const [image, setImage] = useState<File>();
   const [isUnlimited, setIsUnlimited] = useState<boolean>(true);
@@ -91,21 +98,41 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
     const amount = data.amount === undefined ? 0 : data.amount;
     const limit = data.limit === undefined ? 0 : data.limit;
 
-    console.log({
-      couponName: data.couponName,
-      couponType: couponAttribute.couponType,
-      description: data.description,
-      isUnlimited,
-      modifier: data.modifier,
-      amount,
-      unit: couponAttribute.unit,
-      usage: 0,
-      limit,
-      pointToAchieve: data.pointToAchieve,
-      startTime: data.startTime.toLocaleString(),
-      endTime: data.endTime.toLocaleString(),
-      files: image,
-    });
+    const formData = new FormData();
+    formData.append("couponName", data.couponName);
+    formData.append("couponType", couponAttribute.couponType);
+    formData.append("description", data.description);
+    formData.append("isUnlimited", JSON.stringify(isUnlimited));
+    formData.append("modifier", JSON.stringify(data.modifier));
+    formData.append("amount", JSON.stringify(amount));
+    formData.append("unit", couponAttribute.unit);
+    formData.append("limit", JSON.stringify(limit));
+    formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
+    formData.append(
+      "startTime",
+      JSON.stringify(data.startTime.toLocaleString())
+    );
+    formData.append("endTime", JSON.stringify(data.endTime.toLocaleString()));
+    formData.append("files", image as Blob);
+
+    console.log(formData.get("startTime"));
+    console.log(formData.get("endTime"));
+    console.log(formData.get("isUnlimited"));
+    console.log(formData.get("modifier"));
+    console.log(formData.get("amount"));
+    console.log(formData.get("limit"));
+
+    try {
+      // dispatch(addNewCoupon(formData));
+      // handleOpenCouponForm();
+      // dispatch(getAllCoupons(0));
+      // history.push({
+      //   pathname: "/admin/coupons?limit=6&offset=0",
+      // });
+      // toast.success("Add succeed");
+    } catch (error) {
+      toast.error(error as ExecException);
+    }
   });
 
   return (

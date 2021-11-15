@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../app/hooks";
-import { activateVendorById } from "../../features/vendors/vendorsSlice";
+import { useAppDispatch } from "../../../app/hooks";
+import { activateVendorById } from "../../../features/vendors/vendorsSlice";
 
 export interface Props {
   openDialog: boolean;

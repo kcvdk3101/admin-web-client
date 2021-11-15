@@ -24,12 +24,7 @@ const DeleteCoupon: React.FC<DeleteCouponProps> = ({
 
   async function deleteCoupon(id: string) {
     try {
-      history.push({
-        pathname: "/admin/coupons",
-        search: `?limit=6&offset=0`,
-      });
       dispatch(deleteCouponById(id));
-      dispatch(getAllCoupons(0));
       toast.success(`Coupon deleted ${id}!`);
     } catch (error) {
       throw error;

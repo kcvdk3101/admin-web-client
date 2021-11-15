@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 import couponsApi from "../../api/couponsApi";
 import { Coupon } from "../../models";
 
@@ -23,6 +24,23 @@ export const getAllCoupons = createAsyncThunk(
   async (offset: number) => {
     const coupons = await couponsApi.getAllCoupons(offset);
     return { ...coupons };
+  }
+);
+
+export const addNewCoupon = createAsyncThunk(
+  "coupons/addNewCoupon",
+  async (data: FormData) => {
+    const coupon = await couponsApi.addNewCoupon(data);
+    console.log(coupon);
+    // return { ...coupon };
+  }
+);
+
+export const updateStatusCoupon = createAsyncThunk(
+  "coupons/updateStatusCoupon",
+  async (id: string) => {
+    const response = await couponsApi.updateCouponStatus(id);
+    return { ...response };
   }
 );
 
@@ -72,6 +90,26 @@ export const couponsSlice = createSlice({
     builder.addCase(deleteCouponById.rejected, (state, action) => {
       state.fetchingCoupons = false;
     });
+
+    builder.addCase(addNewCoupon.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(addNewCoupon.fulfilled, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+    builder.addCase(addNewCoupon.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
+    builder.addCase(
+      updateStatusCoupon.fulfilled,
+      (state, action: PayloadAction<Coupon>) => {
+        const coupon = state.coupons.findIndex(
+          (coupon) => coupon.id === action.payload.id
+        );
+        state.coupons[coupon].isActive = action.payload.isActive;
+      }
+    );
   },
 });
 

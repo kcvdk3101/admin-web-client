@@ -3,12 +3,12 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import axiosClient from "../../api/axiosClient";
-import { useAppDispatch } from "../../app/hooks";
-import { addChildCategory } from "../../features/categories/categoriesSlice";
-import ButtonsAction from "../common/ButtonsAction";
-import VerticalImageInput from "../common/VerticalImageInput";
-import VerticalLabelInput from "../common/VerticalLabelInput";
+import axiosClient from "../../../../api/axiosClient";
+import { useAppDispatch } from "../../../../app/hooks";
+import { addChildCategory } from "../../../../features/categories/categoriesSlice";
+import ButtonsAction from "../../../common/ButtonsAction";
+import VerticalImageInput from "../../../common/VerticalImageInput";
+import VerticalLabelInput from "../../../common/VerticalLabelInput";
 
 type FormValues = {
   name: string;

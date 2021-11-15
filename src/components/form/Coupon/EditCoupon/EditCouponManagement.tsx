@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
-import { Coupon } from "../../../models";
+import { Coupon } from "../../../../models";
 import * as yup from "yup";
 import EditCouponForm from "./EditCouponForm";
 

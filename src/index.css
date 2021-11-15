@@ -72,16 +72,8 @@ input:checked ~ .dot {
     @apply grid grid-cols-6 gap-2 sm:gap-4 md:gap-6 p-3 md:px-4 md:py-3 lg:px-5 lg:py-5;
   }
 
-  .btn-edit-coupon {
-    @apply py-1 px-2 md:px-3 rounded text-xs md:text-sm transition duration-150 text-gray-700 hover:bg-yellow-500 hover:text-white hover:shadow-md;
-  }
-
-  .btn-disable-coupon {
-    @apply py-1 px-2 md:px-3 rounded text-xs md:text-sm transition duration-150 text-gray-700 hover:bg-gray-500 hover:text-white hover:shadow-md;
-  }
-
-  .btn-delete-coupon {
-    @apply py-1 px-2 md:px-3 rounded text-xs md:text-sm transition duration-150 text-gray-700 hover:bg-red-500 hover:text-white hover:shadow-md;
+  .btn-coupon-card {
+    @apply p-2 rounded-full text-xs md:text-sm transition duration-150 text-gray-700 hover:text-white hover:shadow-md;
   }
 
   .btn-close-form {

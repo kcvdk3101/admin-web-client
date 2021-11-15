@@ -35,6 +35,7 @@ const VerticalLabelInput: React.FC<VerticalLabelInputProps> = ({
         id={inputName}
         className="mt-2 p-2 block w-full shadow-sm text-sm sm:text-base border border-gray-500 rounded-md animate-fade-in-down"
         type={type}
+        min="0"
         defaultValue={defaultValue}
         {...register(`${inputName}`)}
       />
