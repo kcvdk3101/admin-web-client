@@ -1,11 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../app/hooks";
-import {
-  deleteCouponById,
-  getAllCoupons,
-} from "../../../../features/coupon/couponsSlice";
+import { deleteCouponById } from "../../../../features/coupon/couponsSlice";
 import { Coupon } from "../../../../models";
 
 interface DeleteCouponProps {
@@ -19,7 +15,6 @@ const DeleteCoupon: React.FC<DeleteCouponProps> = ({
   openDialog,
   handleOpenDeleteCouponForm,
 }) => {
-  const history = useHistory();
   const dispatch = useAppDispatch();
 
   async function deleteCoupon(id: string) {
@@ -27,7 +22,7 @@ const DeleteCoupon: React.FC<DeleteCouponProps> = ({
       dispatch(deleteCouponById(id));
       toast.success(`Coupon deleted ${id}!`);
     } catch (error) {
-      throw error;
+      toast.error(error as Error);
     } finally {
       handleOpenDeleteCouponForm();
     }
