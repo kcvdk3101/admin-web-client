@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import couponsApi from "../../api/couponsApi";
 import { Coupon } from "../../models";
 
@@ -27,12 +26,21 @@ export const getAllCoupons = createAsyncThunk(
   }
 );
 
+export const getAllCouponsByCouponType = createAsyncThunk(
+  "coupons/getAllCouponsByCouponType",
+  async ({ offset, couponType }: { offset: number; couponType: string }) => {
+    const couponsFilteredByCouponType =
+      await couponsApi.getAllCouponsByCouponType(offset, couponType);
+    return couponsFilteredByCouponType;
+  }
+);
+
 export const addNewCoupon = createAsyncThunk(
   "coupons/addNewCoupon",
   async (data: FormData) => {
     const coupon = await couponsApi.addNewCoupon(data);
     console.log(coupon);
-    // return { ...coupon };
+    return { ...coupon };
   }
 );
 
@@ -57,6 +65,7 @@ export const couponsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // Get all coupons
     builder.addCase(getAllCoupons.pending, (state, action) => {
       state.fetchingCoupons = true;
     });
@@ -75,6 +84,26 @@ export const couponsSlice = createSlice({
       state.fetchingCoupons = false;
     });
 
+    // Get coupons by couponType
+    builder.addCase(getAllCouponsByCouponType.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(
+      getAllCouponsByCouponType.fulfilled,
+      (
+        state,
+        action: PayloadAction<{ data: Coupon[]; pagination: CouponsPagination }>
+      ) => {
+        state.fetchingCoupons = false;
+        state.coupons = action.payload.data;
+        state.pagination.total = action.payload.pagination.total;
+      }
+    );
+    builder.addCase(getAllCouponsByCouponType.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
+    // Delete coupon by id
     builder.addCase(deleteCouponById.pending, (state, action) => {
       state.fetchingCoupons = true;
     });
@@ -91,6 +120,7 @@ export const couponsSlice = createSlice({
       state.fetchingCoupons = false;
     });
 
+    // Add new coupon
     builder.addCase(addNewCoupon.pending, (state, action) => {
       state.fetchingCoupons = true;
     });
@@ -101,6 +131,7 @@ export const couponsSlice = createSlice({
       state.fetchingCoupons = false;
     });
 
+    // Update activation of coupon
     builder.addCase(
       updateStatusCoupon.fulfilled,
       (state, action: PayloadAction<Coupon>) => {

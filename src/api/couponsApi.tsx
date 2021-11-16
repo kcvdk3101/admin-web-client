@@ -10,6 +10,12 @@ const couponsApi = {
     );
   },
 
+  getAllCouponsByCouponType(offset: number, couponType: string) {
+    return axiosClient.get<string, { data: Coupon[]; pagination: any }>(
+      `${url}/all/type?limit=6&offset=${offset}&couponType=${couponType}`
+    );
+  },
+
   addNewCoupon(data: FormData) {
     return axiosClient.post<string, Coupon>(`${url}`, data);
   },

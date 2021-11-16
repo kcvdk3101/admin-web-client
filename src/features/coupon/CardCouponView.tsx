@@ -40,8 +40,8 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
       <img
         src={images && images[0].url}
         alt="random image"
-        className={`w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white ${
-          isActive ? "opacity-80" : "opacity-100"
+        className={`w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white transition-opacity ${
+          isActive ? "opacity-50" : "opacity-100"
         }`}
       />
       <div className="relative px-2 -mt-20">
@@ -103,10 +103,10 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
           </div>
           <div className="relative flex justify-between items-center mt-3 w-full">
             <button
-              className={`btn-coupon-card px-3 ${
+              className={`btn-coupon-card px-3 py-1 ${
                 isActive
-                  ? "hover:bg-blue-500 dark:hover:bg-green-500"
-                  : "hover:bg-gray-500"
+                  ? "text-white bg-blue-500 dark:bg-green-500"
+                  : "hover:bg-blue-500 text-blue-500 border border-blue-500 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-500 dark:hover:text-white"
               }`}
               onClick={() => handleUpdateStatusCoupon(id)}
             >

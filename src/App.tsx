@@ -78,13 +78,6 @@ const App: React.FC = () => {
             draggable
             pauseOnHover
           />
-          {/* <>
-            <div className={isDark ? "main dark" : "main"}>
-              <Sidebar handleDarkMode={handleDarkMode} />
-              <Switch></Switch>
-              
-            </div>
-          </> */}
         </Switch>
       )}
     </>
