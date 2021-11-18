@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axiosClient from "../../api/axiosClient";
-import vendorsApi from "../../api/vendorsApi";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Vendor } from "../../models";
+import { activateVendorById, getAllVendors } from "./vendorsThunk";
 
 export interface VendorsSliceState {
   fetchingVendor: boolean;
@@ -18,27 +17,6 @@ const initialState: VendorsSliceState = {
   fetchingVendor: false,
   pagination: { total: 0 },
 };
-
-export const getAllVendors = createAsyncThunk(
-  "vendors/getAllVendors",
-  async (offset: number) => {
-    const response = await vendorsApi.getAllVendors(offset);
-    return { ...response };
-  }
-);
-
-export const activateVendorById = createAsyncThunk(
-  "vendors/activateVendorById",
-  async (id: string) => {
-    const activatedVendor = await axiosClient.patch<any, Vendor>(
-      `/vendors/${id}`,
-      {
-        active: true,
-      }
-    );
-    return activatedVendor;
-  }
-);
 
 export const vendorsSlice = createSlice({
   name: "vendors",

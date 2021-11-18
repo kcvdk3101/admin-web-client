@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import categoriesApi from "../../api/categoriesApi";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Category, ChilrenCategory } from "../../models";
+import {
+  addChildCategory,
+  addParentCategory,
+  getAllCategories,
+} from "./categoriesThunk";
 
 export interface CategoriesSliceState {
   categories: Category[];
@@ -11,30 +15,6 @@ export const initialState: CategoriesSliceState = {
   categories: [],
   fetchingCategories: false,
 };
-
-export const getAllCategories = createAsyncThunk(
-  "categories/getAllCategories",
-  async () => {
-    const categories = await categoriesApi.getAllCategories();
-    return categories;
-  }
-);
-
-export const addParentCategory = createAsyncThunk(
-  "categories/addParent",
-  async (data: FormData) => {
-    const parentCategory = await categoriesApi.addParent(data);
-    return parentCategory;
-  }
-);
-
-export const addChildCategory = createAsyncThunk(
-  "categories/addChild",
-  async (data: FormData) => {
-    const childCategory = await categoriesApi.addChild(data);
-    return childCategory;
-  }
-);
 
 export const categoriesSlice = createSlice({
   name: "categories",
