@@ -16,7 +16,7 @@ import {
   getAllCoupons,
   getAllCouponsByCouponType,
   updateStatusCoupon,
-} from "./couponsSlice";
+} from "./couponsThunk";
 import SortCouponByType from "./SortCouponByType";
 
 const Coupons: React.FC = () => {

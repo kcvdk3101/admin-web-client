@@ -5,7 +5,7 @@ import queryString from "query-string";
 import PaginationNumberedList from "../../components/pagination/PaginationNumberedList";
 import VendorActivaion from "../../components/form/Vendor/VendorActivaion";
 import { Utilities } from "../../helpers/utils";
-import { getAllVendors } from "./vendorsSlice";
+import { getAllVendors } from "./vendorsThunk";
 import VendorsSkeleton from "./VendorsSkeleton";
 
 const TableHeader = () => {

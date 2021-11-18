@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../app/hooks";
-import { activateVendorById } from "../../../features/vendors/vendorsSlice";
+import { activateVendorById } from "../../../features/vendors/vendorsThunk";
 
 export interface Props {
   openDialog: boolean;
@@ -21,7 +21,7 @@ const VendorActivaion: React.FC<Props> = ({
       dispatch(activateVendorById(selectedVendorId));
       toast.success("Succeed");
     } catch (error) {
-      throw error;
+      toast.error(error as Error);
     } finally {
       handleOpenDialog();
     }

@@ -1,12 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ExecException } from "child_process";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch } from "../../../../app/hooks";
-import { addNewCoupon } from "../../../../features/coupon/couponsSlice";
+import {
+  addNewCoupon,
+  getAllCoupons,
+} from "../../../../features/coupon/couponsThunk";
 import NewCouponForm from "./NewCouponForm";
 
 type FormValues = {
@@ -102,17 +104,14 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
     formData.append("couponName", data.couponName);
     formData.append("couponType", couponAttribute.couponType);
     formData.append("description", data.description);
-    formData.append("isUnlimited", JSON.stringify(isUnlimited));
-    formData.append("modifier", JSON.stringify(data.modifier));
-    formData.append("amount", JSON.stringify(amount));
+    formData.append("isUnlimited", isUnlimited as any);
+    formData.append("modifier", data.modifier as any);
+    formData.append("amount", amount as any);
     formData.append("unit", couponAttribute.unit);
-    formData.append("limit", JSON.stringify(limit));
-    formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
-    formData.append(
-      "startTime",
-      JSON.stringify(data.startTime.toLocaleString())
-    );
-    formData.append("endTime", JSON.stringify(data.endTime.toLocaleString()));
+    formData.append("limit", limit as any);
+    formData.append("pointToAchieve", data.pointToAchieve as any);
+    formData.append("startTime", data.startTime.toLocaleString() as any);
+    formData.append("endTime", data.endTime.toLocaleString() as any);
     formData.append("files", image as Blob);
 
     console.log(formData.get("startTime"));
@@ -123,15 +122,16 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
     console.log(formData.get("limit"));
 
     try {
-      // dispatch(addNewCoupon(formData));
-      // handleOpenCouponForm();
-      // dispatch(getAllCoupons(0));
-      // history.push({
-      //   pathname: "/admin/coupons?limit=6&offset=0",
-      // });
-      // toast.success("Add succeed");
+      dispatch(addNewCoupon(formData));
+      handleOpenCouponForm();
+      dispatch(getAllCoupons(0));
+      history.push({
+        pathname: "/admin/coupons",
+        search: "?limit=6&offset=0",
+      });
+      toast.success("Add succeed");
     } catch (error) {
-      toast.error(error as ExecException);
+      toast.error(error as Error);
     }
   });
 

@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { useAppDispatch } from "../../app/hooks";
 import { typesOfCoupon } from "../../constant";
 
-interface SortCouponByTypeProps {
-  // handleChangeType: (type: string) => void;
-}
+interface SortCouponByTypeProps {}
 
 const SortCouponByType: React.FC<SortCouponByTypeProps> = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
 
@@ -38,7 +34,7 @@ const SortCouponByType: React.FC<SortCouponByTypeProps> = () => {
         type="button"
         onClick={handleOpenDropdown}
       >
-        Sort
+        Sort by
       </button>
       <div
         className={`${

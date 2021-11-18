@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import axiosClient from "../../../../api/axiosClient";
 import { useAppDispatch } from "../../../../app/hooks";
-import { addChildCategory } from "../../../../features/categories/categoriesSlice";
+import { addChildCategory } from "../../../../features/categories/categoriesThunk";
 import ButtonsAction from "../../../common/ButtonsAction";
 import VerticalImageInput from "../../../common/VerticalImageInput";
 import VerticalLabelInput from "../../../common/VerticalLabelInput";

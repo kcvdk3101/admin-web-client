@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../app/hooks";
-import { deleteCouponById } from "../../../../features/coupon/couponsSlice";
+import { deleteCouponById } from "../../../../features/coupon/couponsThunk";
 import { Coupon } from "../../../../models";
 
 interface DeleteCouponProps {

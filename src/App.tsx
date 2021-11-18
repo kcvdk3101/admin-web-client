@@ -7,7 +7,6 @@ import NotFound from "./components/common/NotFound";
 import Sidebar from "./components/layout/Sidebar";
 import Login from "./components/login/Login";
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import Analysis from "./features/analysis/Analysis";
 import Categories from "./features/categories/Categories";
 import Coupons from "./features/coupon/Coupons";
 import Dashboard from "./features/dashboard/Dashboard";
@@ -54,11 +53,6 @@ const App: React.FC = () => {
                       exact
                       path="/admin/vendors"
                       component={Vendors}
-                    />
-                    <ProtectedRoute
-                      exact
-                      path="/admin/analysis"
-                      component={Analysis}
                     />
                     <Route path="*" component={NotFound} />
                   </Switch>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAppDispatch } from "../../../../app/hooks";
-import { addParentCategory } from "../../../../features/categories/categoriesSlice";
+import { addParentCategory } from "../../../../features/categories/categoriesThunk";
 import VerticalLabelInput from "../../../common/VerticalLabelInput";
 import VerticalImageInput from "../../../common/VerticalImageInput";
 import ButtonsAction from "../../../common/ButtonsAction";

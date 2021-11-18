@@ -120,7 +120,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      <VerticalDateTimeInput
+      {/* <VerticalDateTimeInput
         cols={3}
         label="Start time"
         inputName="startTime"
@@ -135,7 +135,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         defaultValue={coupon?.endTime.toString()}
         register={register}
         errors={errors}
-      />
+      /> */}
 
       <p className="col-span-6 text-base md:text-lg font-semibold ">
         Coupon Details

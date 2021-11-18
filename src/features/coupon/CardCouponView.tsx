@@ -1,5 +1,4 @@
 import React from "react";
-import { toast } from "react-toastify";
 import { Utilities } from "../../helpers/utils";
 import { Coupon } from "../../models";
 

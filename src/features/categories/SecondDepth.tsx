@@ -1,6 +1,5 @@
 import React from "react";
-import { Utilities } from "../../helpers/utils";
-import { Category, ChilrenCategory } from "../../models";
+import { Category } from "../../models";
 
 interface SecondDepthProps {
   secondCategory: Category | undefined;
