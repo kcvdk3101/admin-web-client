@@ -151,7 +151,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      <div className="col-span-6">
+      {/* <div className="col-span-6">
         <input
           id="files"
           className="hidden"
@@ -193,7 +193,7 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
             Choose image
           </label>
         )}
-      </div>
+      </div> */}
 
       <ButtonsAction
         cols={6}
