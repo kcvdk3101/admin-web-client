@@ -9,40 +9,25 @@ import VerticalTextareaInput from "../../../common/VerticalTextareaInput";
 
 interface EditCouponFormProps {
   coupon: Coupon | undefined;
-  // image: File | undefined;
+  isUnlimited: boolean;
+  reset: any;
   errors: any;
   onSubmit: () => void;
   register: any;
+  handleChangeUnlimited: () => void;
   handleOpenEditCouponForm: () => void;
-  // onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // couponAttribute: any;
-  // handleChangeUnlimited: () => void;
-  // handleChangeCouponAttribute: (
-  //   e: React.ChangeEvent<HTMLSelectElement>
-  // ) => void;
 }
 
 const EditCouponForm: React.FC<EditCouponFormProps> = ({
   coupon,
+  isUnlimited,
+  reset,
   errors,
   onSubmit,
   register,
+  handleChangeUnlimited,
   handleOpenEditCouponForm,
-  // onChangeImage,
-  // couponAttribute,
-  // handleChangeUnlimited,
-  // handleChangeCouponAttribute,
 }) => {
-  var someDate = new Date();
-  var numberOfDaysToAdd = 3;
-  var date = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
-
-  const [isUnlimited, setIsUnlimited] = useState(coupon?.limit === 0);
-
-  const handleChangeUnlimited = () => {
-    setIsUnlimited(!isUnlimited);
-  };
-
   return (
     <form className="grid grid-cols-6 gap-3 p-6" onSubmit={onSubmit}>
       <VerticalLabelInput
@@ -50,7 +35,6 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         label="Coupon Name"
         inputName="couponName"
         type="text"
-        defaultValue={coupon?.couponName}
         register={register}
         errors={errors}
       />
@@ -98,8 +82,8 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
           <input
             type="number"
             id="limit"
-            min="0"
-            defaultValue={coupon?.limit}
+            min="1"
+            defaultValue={1}
             className={`${
               !isUnlimited ? "animate-fade-in-opacity" : "hidden"
             } mt-2 p-3 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md`}
@@ -115,7 +99,6 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         cols={6}
         inputName="description"
         label="Description"
-        defaultValue={coupon?.description}
         register={register}
         errors={errors}
       />
@@ -129,15 +112,33 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         label="Point to achieve"
         inputName="pointToAchieve"
         type="number"
-        defaultValue={coupon?.pointToAchieve}
         register={register}
         errors={errors}
       />
 
+      {/* <div className="col-span-6 ml-auto">
+        <button
+          className="btn-close-form"
+          type="button"
+          onClick={() => {
+            handleOpenEditCouponForm();
+            reset();
+          }}
+        >
+          Close
+        </button>
+        <button className="btn-action-form" type="submit">
+          Update
+        </button>
+      </div> */}
+
       <ButtonsAction
         cols={6}
         title="Update"
-        handleAction={handleOpenEditCouponForm}
+        handleAction={() => {
+          handleOpenEditCouponForm();
+          reset();
+        }}
       />
     </form>
   );

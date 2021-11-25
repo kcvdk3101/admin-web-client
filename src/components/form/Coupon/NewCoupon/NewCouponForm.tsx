@@ -88,7 +88,8 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
           <input
             type="number"
             id="limit"
-            min="0"
+            min="1"
+            defaultValue={1}
             className={`${
               !isUnlimited ? "animate-fade-in-opacity" : "hidden"
             } mt-2 p-3 block w-full shadow-sm sm:text-sm border border-gray-500 rounded-md`}

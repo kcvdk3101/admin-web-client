@@ -18,6 +18,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
   const {
     id,
     isActive,
+    description,
     code,
     couponName,
     couponType,
@@ -36,14 +37,14 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
 
   return (
     <div className="rounded animate-fade-in-down">
-      <img
+      {/* <img
         src={images && images[0].url}
         alt="random image"
         className={`w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white transition-opacity ${
           isActive ? "opacity-50" : "opacity-100"
         }`}
-      />
-      <div className="relative px-2 -mt-20">
+      /> */}
+      <div className="relative px-2">
         <div
           className={`bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out`}
         >
@@ -76,7 +77,12 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               Point: {pointToAchieve}
             </p>
           </div>
-          <div className={`${blurComponent} mt-3`}>
+          <p
+            className={`${blurComponent} py-2 truncate text-lg md:text-xl lg:text-2xl xl:text-3xl text-blue-800 dark:text-green-800`}
+          >
+            {description}
+          </p>
+          <div className={`${blurComponent}`}>
             {limit === 0 ? (
               <div className="flex justify-start items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">
                 <svg

@@ -44,12 +44,18 @@ const Coupons: React.FC = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon>();
 
   useEffect(() => {
-    (function () {
-      if (couponType)
-        return dispatch(getAllCouponsByCouponType({ offset: 0, couponType }));
-      dispatch(getAllCoupons(offset));
+    (async function () {
+      try {
+        if (couponType)
+          return await dispatch(
+            getAllCouponsByCouponType({ offset: 0, couponType })
+          );
+        await dispatch(getAllCoupons(offset));
+      } catch (error) {
+        toast.error(error as Error);
+      }
     })();
-  }, [couponType]);
+  }, [dispatch]);
 
   const paginate = (pageNumber: number) => {
     if (couponType) {

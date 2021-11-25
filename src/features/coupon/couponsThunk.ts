@@ -1,6 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import couponsApi from "../../api/couponsApi";
 
+type UpdateCouponInformation = {
+  couponName: string;
+  description: string;
+  isUnlimited: boolean;
+  limit: number;
+  usage: number;
+  pointToAchieve: number;
+};
+
 export const getAllCoupons = createAsyncThunk(
   "coupons/getAllCoupons",
   async (offset: number) => {
@@ -22,6 +31,22 @@ export const addNewCoupon = createAsyncThunk(
   "coupons/addNewCoupon",
   async (data: FormData) => {
     await couponsApi.addNewCoupon(data);
+  }
+);
+
+export const updateCouponInformation = createAsyncThunk(
+  "coupons/updateCouponInformation",
+  async ({
+    id,
+    data,
+  }: {
+    id: string | undefined;
+    data: UpdateCouponInformation;
+  }) => {
+    console.log(data);
+    await couponsApi.updateCouponInformation(id, data);
+    // console.log(response);
+    // return { ...response };
   }
 );
 

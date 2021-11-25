@@ -40,8 +40,13 @@ const NewCouponFormSchema = yup.object({
     .typeError("You must specify a number")
     .positive()
     .integer("Must be a number"),
-  modifier: yup.number().positive().integer("Must be a number").min(0),
-  amount: yup.number().positive(),
+  modifier: yup
+    .number()
+    .typeError("You must specify a number")
+    .positive()
+    .integer("Must be a number")
+    .min(0),
+  amount: yup.number().typeError("You must specify a number").positive(),
   pointToAchieve: yup
     .number()
     .typeError("You must specify a number")
@@ -104,33 +109,10 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
     setImage(e.target.files[0]);
   };
 
-  const onSubmit = handleSubmit((data) => {
-    // const amount = data.amount === undefined ? 0 : data.amount;
-    // const limit = data.limit === undefined ? 0 : data.limit;
-
-    // const formData = new FormData();
-    // formData.append("couponName", data.couponName);
-    // formData.append("couponType", couponAttribute.couponType);
-    // formData.append("description", data.description);
-    // formData.append("isUnlimited", JSON.stringify(isUnlimited));
-    // formData.append("usage", JSON.stringify(0));
-    // formData.append("modifier", JSON.stringify(data.modifier));
-    // formData.append("amount", JSON.stringify(amount));
-    // formData.append("unit", couponAttribute.unit);
-    // formData.append("limit", JSON.stringify(limit));
-    // formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
-    // formData.append(
-    //   "startTime",
-    //   Utilities.formatDate(data.startTime.toLocaleString())
-    // );
-    // formData.append(
-    //   "endTime",
-    //   Utilities.formatDate(data.endTime.toLocaleString())
-    // );
-    // formData.append("files", image as Blob);
-
+  const onSubmit = handleSubmit(async (data) => {
+    handleOpenCouponForm();
     try {
-      dispatch(
+      await dispatch(
         addNewCoupon(
           Utilities.fillCouponInformation(
             data,
@@ -140,8 +122,7 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
           )
         )
       );
-      dispatch(getAllCoupons(0));
-      handleOpenCouponForm();
+      await dispatch(getAllCoupons(0));
       toast.success("Add succeed");
       history.push({
         pathname: "/admin/coupons",

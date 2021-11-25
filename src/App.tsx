@@ -33,11 +33,6 @@ const App: React.FC = () => {
                 <div className={isDark ? "main dark" : "main"}>
                   <Sidebar handleDarkMode={handleDarkMode} />
                   <Switch>
-                    {/* <ProtectedRoute
-                      exact
-                      path="/admin/dashboard"
-                      component={Dashboard}
-                    /> */}
                     <ProtectedRoute
                       exact
                       path="/admin/categories"

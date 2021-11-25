@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
-import { Coupon } from "../../../../models";
+import { toast } from "react-toastify";
 import * as yup from "yup";
+import { useAppDispatch } from "../../../../app/hooks";
+import { updateCouponInformation } from "../../../../features/coupon/couponsThunk";
+import { Coupon } from "../../../../models";
 import EditCouponForm from "./EditCouponForm";
 
 type FormValues = {
@@ -31,27 +33,25 @@ const EditCouponFormSchema = yup.object({
     .string()
     .min(1, "Please enter more than 1 character")
     .required("This field is required"),
-  limit: yup.number().positive().integer("Must be a number"),
-  modifier: yup.number().positive().integer("Must be a number"),
-  amount: yup.number().positive(),
+  limit: yup
+    .number()
+    .typeError("You must specify a number")
+    .positive()
+    .integer("Must be a number"),
+  modifier: yup
+    .number()
+    .typeError("You must specify a number")
+    .positive()
+    .integer("Must be a number"),
+  amount: yup.number().typeError("You must specify a number").positive(),
   pointToAchieve: yup
     .number()
+    .typeError("You must specify a number")
     .positive()
     .integer("Must be a number")
     .min(1, "Minimum point is 1")
-    .max(100, "Maximum point is 100")
+    .max(1000, "Maximum point is 1000")
     .required("This field is required"),
-  startTime: yup
-    .date()
-    .min(
-      new Date().toLocaleDateString(),
-      `Must be later than ${new Date().toLocaleDateString()}`
-    )
-    .required("Start time cannot be empty"),
-  endTime: yup
-    .date()
-    .min(yup.ref("startTime"), "End date can't be before start date"),
-  files: yup.mixed().required("This field is required"),
 });
 
 const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
@@ -62,13 +62,48 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(EditCouponFormSchema),
   });
+  const dispatch = useAppDispatch();
+  const [isUnlimited, setIsUnlimited] = useState(true);
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const handleChangeUnlimited = () => {
+    setIsUnlimited(!isUnlimited);
+  };
+
+  const onSubmit = handleSubmit(async (data) => {
+    const limit = data.limit === undefined ? 0 : data.limit;
+    const updateInformation = {
+      couponName: data.couponName,
+      description: data.description,
+      isUnlimited,
+      limit,
+      usage: 0,
+      pointToAchieve: data.pointToAchieve,
+    };
+    handleOpenEditCouponForm();
+
+    try {
+      await dispatch(
+        updateCouponInformation({
+          id: coupon?.id,
+          data: {
+            couponName: data.couponName,
+            description: data.description,
+            isUnlimited,
+            limit,
+            usage: 0,
+            pointToAchieve: data.pointToAchieve,
+          },
+        })
+      );
+    } catch (error) {
+      toast.error(error as Error);
+    }
+    // reset();
   });
 
   return (
@@ -99,10 +134,13 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
           </button>
         </div>
         <EditCouponForm
+          isUnlimited={isUnlimited}
           coupon={coupon}
+          reset={reset}
           register={register}
           errors={errors}
           onSubmit={onSubmit}
+          handleChangeUnlimited={handleChangeUnlimited}
           handleOpenEditCouponForm={handleOpenEditCouponForm}
         />
       </div>

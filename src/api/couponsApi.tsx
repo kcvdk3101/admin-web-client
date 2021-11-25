@@ -19,17 +19,17 @@ const couponsApi = {
   addNewCoupon(data: FormData) {
     return axiosClient.post<string, Coupon>(`${url}`, data);
   },
-
-  deleteCouponById(id: string) {
-    return axiosClient.delete<string, Coupon>(`${url}/remove?id=${id}`);
+  updateCouponInformation(id: string | undefined, information: any) {
+    console.log(information);
+    return axiosClient.patch<string, any>(`${url}?id=${id}`, information);
   },
 
   updateCouponStatus(id: string) {
     return axiosClient.patch<string, Coupon>(`${url}/status?id=${id}`);
   },
 
-  updateCouponInformation(id: string, information: any) {
-    return axiosClient.patch<string, any>(`${url}?id=${id}`, information);
+  deleteCouponById(id: string) {
+    return axiosClient.delete<string, Coupon>(`${url}/remove?id=${id}`);
   },
 };
 

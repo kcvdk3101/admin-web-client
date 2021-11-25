@@ -51,7 +51,7 @@ const VerticalCurrenciesSelect: React.FC<VerticalCurrenciesSelectProps> = ({
           ))}
         </select>
         {isCashType && errors.amount && (
-          <p className="text-red-500">{errors.amount.message}</p>
+          <p className="col-span-4 text-red-500">{errors.amount.message}</p>
         )}
       </div>
     </>

@@ -13,6 +13,7 @@ export const addParentCategory = createAsyncThunk(
   "categories/addParent",
   async (data: FormData) => {
     const parentCategory = await categoriesApi.addParent(data);
+    console.log(parentCategory);
     return parentCategory;
   }
 );
@@ -21,6 +22,7 @@ export const addChildCategory = createAsyncThunk(
   "categories/addChild",
   async (data: FormData) => {
     const childCategory = await categoriesApi.addChild(data);
+    console.log(childCategory);
     return childCategory;
   }
 );
