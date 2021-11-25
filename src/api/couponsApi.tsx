@@ -20,7 +20,6 @@ const couponsApi = {
     return axiosClient.post<string, Coupon>(`${url}`, data);
   },
   updateCouponInformation(id: string | undefined, information: any) {
-    console.log(information);
     return axiosClient.patch<string, any>(`${url}?id=${id}`, information);
   },
 

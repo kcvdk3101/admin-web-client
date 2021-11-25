@@ -76,13 +76,15 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
 
   const onSubmit = handleSubmit(async (data) => {
     const limit = data.limit === undefined ? 0 : data.limit;
+    const convertIsUnlimited = isUnlimited.toString();
+
     const updateInformation = {
-      couponName: data.couponName,
-      description: data.description,
-      isUnlimited,
-      limit,
-      usage: 0,
-      pointToAchieve: data.pointToAchieve,
+      couponName: "Kien",
+      description: "Kien Des",
+      couponType: "percentage",
+      isUnlimited: "true", // boolean
+      limit: 100, // number
+      pointToAchieve: 100, // number
     };
     handleOpenEditCouponForm();
 
@@ -90,14 +92,7 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
       await dispatch(
         updateCouponInformation({
           id: coupon?.id,
-          data: {
-            couponName: data.couponName,
-            description: data.description,
-            isUnlimited,
-            limit,
-            usage: 0,
-            pointToAchieve: data.pointToAchieve,
-          },
+          data: updateInformation,
         })
       );
     } catch (error) {

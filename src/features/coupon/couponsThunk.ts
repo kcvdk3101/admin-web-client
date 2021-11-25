@@ -4,9 +4,9 @@ import couponsApi from "../../api/couponsApi";
 type UpdateCouponInformation = {
   couponName: string;
   description: string;
-  isUnlimited: boolean;
+  isUnlimited: string;
+  couponType: string | undefined;
   limit: number;
-  usage: number;
   pointToAchieve: number;
 };
 
@@ -43,9 +43,8 @@ export const updateCouponInformation = createAsyncThunk(
     id: string | undefined;
     data: UpdateCouponInformation;
   }) => {
-    console.log(data);
-    await couponsApi.updateCouponInformation(id, data);
-    // console.log(response);
+    const response = await couponsApi.updateCouponInformation(id, data);
+    console.log(response);
     // return { ...response };
   }
 );

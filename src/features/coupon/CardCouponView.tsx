@@ -78,7 +78,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
             </p>
           </div>
           <p
-            className={`${blurComponent} py-2 truncate text-lg md:text-xl lg:text-2xl xl:text-3xl text-blue-800 dark:text-green-800`}
+            className={`${blurComponent} py-2 truncate text-base md:text-lg lg:text-xl xl:text-2xl text-blue-800 dark:text-green-800`}
           >
             {description}
           </p>
