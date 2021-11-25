@@ -120,23 +120,6 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      {/* <VerticalDateTimeInput
-        cols={3}
-        label="Start time"
-        inputName="startTime"
-        defaultValue={coupon?.startTime.toString()}
-        register={register}
-        errors={errors}
-      />
-      <VerticalDateTimeInput
-        cols={3}
-        label="End time"
-        inputName="endTime"
-        defaultValue={coupon?.endTime.toString()}
-        register={register}
-        errors={errors}
-      /> */}
-
       <p className="col-span-6 text-base md:text-lg font-semibold ">
         Coupon Details
       </p>
@@ -151,72 +134,11 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      {/* <div className="col-span-6">
-        <input
-          id="files"
-          className="hidden"
-          accept="image/*"
-          type="file"
-          {...register("files")}
-          // onChange={onChangeImage}
-        />
-        {coupon?.images ? (
-          <label
-            htmlFor="files"
-            className="cursor-pointer text-xs sm:text-sm md:text-base"
-          >
-            Choose image
-            <img
-              src={coupon.images[0].url}
-              alt="Image"
-              className="shadow-md mt-2 w-3/5"
-            />
-          </label>
-        ) : (
-          <label
-            htmlFor="files"
-            className="cursor-pointer flex flex-col items-center w-28 md:w-32 lg:w-36 hover:bg-blue-400 hover:text-white rounded p-2 transition duration-75 dark:hover:bg-green-400 text-xs sm:text-sm md:text-base"
-          >
-            <svg
-              className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
-            </svg>
-            Choose image
-          </label>
-        )}
-      </div> */}
-
       <ButtonsAction
         cols={6}
         title="Update"
         handleAction={handleOpenEditCouponForm}
       />
-
-      {/* <VerticalImageInput
-        cols={6}
-        // image={coupon.images[0]}
-        label="Choose image"
-        inputName="files"
-        type="file"
-        widthImage="3/5"
-        register={register}
-        // onChangeImage={onChangeImage}
-      /> */}
-
-      {/* <ButtonsAction
-        cols={6}
-        title="Update"
-        handleAction={handleOpenCouponForm}
-      /> */}
     </form>
   );
 };

@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router";
-import { ToastContainer } from "react-toastify";
 import LoadingProgress from "./components/common/LoadingProgress";
 import NotFound from "./components/common/NotFound";
 import Sidebar from "./components/layout/Sidebar";
@@ -34,11 +33,11 @@ const App: React.FC = () => {
                 <div className={isDark ? "main dark" : "main"}>
                   <Sidebar handleDarkMode={handleDarkMode} />
                   <Switch>
-                    <ProtectedRoute
+                    {/* <ProtectedRoute
                       exact
                       path="/admin/dashboard"
                       component={Dashboard}
-                    />
+                    /> */}
                     <ProtectedRoute
                       exact
                       path="/admin/categories"
@@ -61,17 +60,6 @@ const App: React.FC = () => {
             )}
           />
           <Route path="*" render={() => <Redirect to="/" />} />
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
         </Switch>
       )}
     </>

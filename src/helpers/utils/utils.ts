@@ -9,6 +9,13 @@ export class Utilities {
     return number.toLocaleString("it-IT");
   }
 
+  static formatDate(data: string) {
+    const splitDate = data.split(",");
+    const date = splitDate[0].replaceAll("/", "-");
+    const time = splitDate[1].slice(0, splitDate[1].length - 3).trim();
+    return `${date} ${time}`;
+  }
+
   static disablePastDay() {
     var dtToday = new Date();
 
@@ -47,13 +54,20 @@ export class Utilities {
     formData.append("couponType", couponAttribute.couponType);
     formData.append("description", data.description);
     formData.append("isUnlimited", JSON.stringify(isUnlimited));
-    formData.append("modifier", data.modifier);
-    formData.append("amount", amount);
+    formData.append("usage", JSON.stringify(0));
+    formData.append("modifier", JSON.stringify(data.modifier));
+    formData.append("amount", JSON.stringify(amount));
     formData.append("unit", couponAttribute.unit);
-    formData.append("limit", limit);
-    formData.append("pointToAchieve", data.pointToAchieve);
-    formData.append("startTime", data.startTime);
-    formData.append("endTime", data.endTime);
+    formData.append("limit", JSON.stringify(limit));
+    formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
+    formData.append(
+      "startTime",
+      Utilities.formatDate(data.startTime.toLocaleString())
+    );
+    formData.append(
+      "endTime",
+      Utilities.formatDate(data.endTime.toLocaleString())
+    );
     formData.append("files", image as Blob);
 
     return formData;

@@ -21,9 +21,7 @@ export const getAllCouponsByCouponType = createAsyncThunk(
 export const addNewCoupon = createAsyncThunk(
   "coupons/addNewCoupon",
   async (data: FormData) => {
-    const coupon = await couponsApi.addNewCoupon(data);
-    console.log(coupon);
-    return { ...coupon };
+    await couponsApi.addNewCoupon(data);
   }
 );
 

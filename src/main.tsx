@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./helpers/configs";
+import { ToastContainer } from "react-toastify";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,17 @@ ReactDOM.render(
           redirectUri={window.location.origin}
         >
           <App />
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Auth0Provider>
       </BrowserRouter>
     </Provider>

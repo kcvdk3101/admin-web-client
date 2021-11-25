@@ -28,7 +28,7 @@ const VerticalDateTimeInput: React.FC<VerticalDateTimeInputProps> = ({
         {label}
       </label>
       <input
-        type="datetime-local"
+        type="date"
         id={inputName}
         name={inputName}
         defaultValue={defaultValue}

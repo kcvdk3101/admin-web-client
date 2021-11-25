@@ -89,7 +89,7 @@ const Vendors: React.FC = () => {
         <VendorsSkeleton n={limit} />
       ) : (
         <>
-          <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down">
+          <table className="w-full divide-y divide-gray-200 round shadow-md animate-fade-in-down ml-auto md:ml-0 overflow-x-scroll md:overflow-x-hidden">
             <TableHeader />
             <tbody className="bg-white divide-y divide-gray-200">
               {vendors.map((vendor) => (

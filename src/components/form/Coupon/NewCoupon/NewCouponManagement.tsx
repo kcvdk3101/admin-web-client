@@ -9,6 +9,7 @@ import {
   addNewCoupon,
   getAllCoupons,
 } from "../../../../features/coupon/couponsThunk";
+import { Utilities } from "../../../../helpers/utils";
 import NewCouponForm from "./NewCouponForm";
 
 type FormValues = {
@@ -34,25 +35,32 @@ const NewCouponFormSchema = yup.object({
     .string()
     .min(1, "Please enter more than 1 character")
     .required("This field is required"),
-  limit: yup.number().positive().integer("Must be a number"),
-  modifier: yup.number().positive().integer("Must be a number"),
+  limit: yup
+    .number()
+    .typeError("You must specify a number")
+    .positive()
+    .integer("Must be a number"),
+  modifier: yup.number().positive().integer("Must be a number").min(0),
   amount: yup.number().positive(),
   pointToAchieve: yup
     .number()
+    .typeError("You must specify a number")
     .positive()
     .integer("Must be a number")
     .min(1, "Minimum point is 1")
-    .max(100, "Maximum point is 100")
+    .max(1000, "Maximum point is 1000")
     .required("This field is required"),
   startTime: yup
     .date()
+    .typeError("You must specify date")
     .min(
-      new Date().toLocaleDateString(),
+      new Date().toLocaleString(),
       `Must be later than ${new Date().toLocaleDateString()}`
     )
     .required("Start time cannot be empty"),
   endTime: yup
     .date()
+    .typeError("You must specify date")
     .min(yup.ref("startTime"), "End date can't be before start date"),
   files: yup.mixed().required("This field is required"),
 });
@@ -75,7 +83,7 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
   const [isUnlimited, setIsUnlimited] = useState<boolean>(true);
   const [couponAttribute, setCouponAttribute] = useState({
     couponType: "percentage",
-    unit: "",
+    unit: "AED",
   });
 
   const handleChangeUnlimited = () => {
@@ -97,39 +105,48 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
   };
 
   const onSubmit = handleSubmit((data) => {
-    const amount = data.amount === undefined ? 0 : data.amount;
-    const limit = data.limit === undefined ? 0 : data.limit;
+    // const amount = data.amount === undefined ? 0 : data.amount;
+    // const limit = data.limit === undefined ? 0 : data.limit;
 
-    const formData = new FormData();
-    formData.append("couponName", data.couponName);
-    formData.append("couponType", couponAttribute.couponType);
-    formData.append("description", data.description);
-    formData.append("isUnlimited", isUnlimited as any);
-    formData.append("modifier", data.modifier as any);
-    formData.append("amount", amount as any);
-    formData.append("unit", couponAttribute.unit);
-    formData.append("limit", limit as any);
-    formData.append("pointToAchieve", data.pointToAchieve as any);
-    formData.append("startTime", data.startTime.toLocaleString() as any);
-    formData.append("endTime", data.endTime.toLocaleString() as any);
-    formData.append("files", image as Blob);
-
-    console.log(formData.get("startTime"));
-    console.log(formData.get("endTime"));
-    console.log(formData.get("isUnlimited"));
-    console.log(formData.get("modifier"));
-    console.log(formData.get("amount"));
-    console.log(formData.get("limit"));
+    // const formData = new FormData();
+    // formData.append("couponName", data.couponName);
+    // formData.append("couponType", couponAttribute.couponType);
+    // formData.append("description", data.description);
+    // formData.append("isUnlimited", JSON.stringify(isUnlimited));
+    // formData.append("usage", JSON.stringify(0));
+    // formData.append("modifier", JSON.stringify(data.modifier));
+    // formData.append("amount", JSON.stringify(amount));
+    // formData.append("unit", couponAttribute.unit);
+    // formData.append("limit", JSON.stringify(limit));
+    // formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
+    // formData.append(
+    //   "startTime",
+    //   Utilities.formatDate(data.startTime.toLocaleString())
+    // );
+    // formData.append(
+    //   "endTime",
+    //   Utilities.formatDate(data.endTime.toLocaleString())
+    // );
+    // formData.append("files", image as Blob);
 
     try {
-      dispatch(addNewCoupon(formData));
-      handleOpenCouponForm();
+      dispatch(
+        addNewCoupon(
+          Utilities.fillCouponInformation(
+            data,
+            couponAttribute,
+            isUnlimited,
+            image
+          )
+        )
+      );
       dispatch(getAllCoupons(0));
+      handleOpenCouponForm();
+      toast.success("Add succeed");
       history.push({
         pathname: "/admin/coupons",
         search: "?limit=6&offset=0",
       });
-      toast.success("Add succeed");
     } catch (error) {
       toast.error(error as Error);
     }

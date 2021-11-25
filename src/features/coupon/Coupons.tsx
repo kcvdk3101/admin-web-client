@@ -96,7 +96,6 @@ const Coupons: React.FC = () => {
   async function handleUpdateStatusCoupon(id: string) {
     try {
       dispatch(updateStatusCoupon(id));
-      toast.success("Disable");
     } catch (error) {
       toast.error(error as Error);
     }

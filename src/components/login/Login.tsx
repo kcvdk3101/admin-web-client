@@ -15,7 +15,7 @@ const Login: React.FC = () => {
           <button
             className="bg-blue-500 w-full py-3 rounded-xl text-sm md:text-base lg:text-xl  text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
             onClick={() =>
-              loginWithPopup().then(() => history.push("/admin/dashboard"))
+              loginWithPopup().then(() => history.push("/admin/categories"))
             }
           >
             Login with Auth0

@@ -20,7 +20,7 @@ const DeleteCoupon: React.FC<DeleteCouponProps> = ({
   async function deleteCoupon(id: string) {
     try {
       dispatch(deleteCouponById(id));
-      toast.success(`Coupon deleted ${id}!`);
+      toast.success("Coupon deleted");
     } catch (error) {
       toast.error(error as Error);
     } finally {
