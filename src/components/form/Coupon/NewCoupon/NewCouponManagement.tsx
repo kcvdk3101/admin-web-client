@@ -5,10 +5,7 @@ import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch } from "../../../../app/hooks";
-import {
-  addNewCoupon,
-  getAllCoupons,
-} from "../../../../features/coupon/couponsThunk";
+import { addNewCoupon } from "../../../../features/coupon/couponsThunk";
 import { Utilities } from "../../../../helpers/utils";
 import NewCouponForm from "./NewCouponForm";
 
@@ -122,7 +119,7 @@ const NewCouponManagement: React.FC<NewCouponManagementProps> = ({
           )
         )
       );
-      await dispatch(getAllCoupons(0));
+      // await dispatch(getAllCoupons(0))
       toast.success("Add succeed");
       history.push({
         pathname: "/admin/coupons",

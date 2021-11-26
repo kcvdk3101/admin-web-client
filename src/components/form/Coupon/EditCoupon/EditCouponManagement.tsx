@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch } from "../../../../app/hooks";
 import { updateCouponInformation } from "../../../../features/coupon/couponsThunk";
+import { Utilities } from "../../../../helpers/utils";
 import { Coupon } from "../../../../models";
 import EditCouponForm from "./EditCouponForm";
 
@@ -38,12 +39,6 @@ const EditCouponFormSchema = yup.object({
     .typeError("You must specify a number")
     .positive()
     .integer("Must be a number"),
-  modifier: yup
-    .number()
-    .typeError("You must specify a number")
-    .positive()
-    .integer("Must be a number"),
-  amount: yup.number().typeError("You must specify a number").positive(),
   pointToAchieve: yup
     .number()
     .typeError("You must specify a number")
@@ -75,30 +70,19 @@ const EditCouponManagement: React.FC<EditCouponManagementProps> = ({
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const limit = data.limit === undefined ? 0 : data.limit;
-    const convertIsUnlimited = isUnlimited.toString();
-
-    const updateInformation = {
-      couponName: "Kien",
-      description: "Kien Des",
-      couponType: "percentage",
-      isUnlimited: "true", // boolean
-      limit: 100, // number
-      pointToAchieve: 100, // number
-    };
-    handleOpenEditCouponForm();
-
     try {
       await dispatch(
         updateCouponInformation({
           id: coupon?.id,
-          data: updateInformation,
+          data: Utilities.updateCouponInformation(isUnlimited, coupon, data),
         })
       );
+      handleOpenEditCouponForm();
+      reset();
+      toast.success("Update succeed!");
     } catch (error) {
       toast.error(error as Error);
     }
-    // reset();
   });
 
   return (

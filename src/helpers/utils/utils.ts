@@ -1,4 +1,5 @@
-import { Category, ChilrenCategory } from "../../models";
+import Coupons from "../../features/coupon/Coupons";
+import { Category, ChilrenCategory, Coupon } from "../../models";
 
 export class Utilities {
   static convertDateString(date: string | Date) {
@@ -17,6 +18,18 @@ export class Utilities {
   }
 
   static disablePastDay() {
+    var dtToday = new Date();
+
+    var month = (dtToday.getMonth() + 1) as any;
+    var day = (dtToday.getDate() + 1) as any;
+    var year = dtToday.getFullYear();
+    if (month < 10) month = "0" + month.toString();
+    if (day < 10) day = "0" + day.toString();
+
+    return year + "-" + month + "-" + day;
+  }
+
+  static disableStartTime() {
     var dtToday = new Date();
 
     var month = (dtToday.getMonth() + 1) as any;
@@ -62,14 +75,36 @@ export class Utilities {
     formData.append("pointToAchieve", JSON.stringify(data.pointToAchieve));
     formData.append(
       "startTime",
-      Utilities.formatDate(data.startTime.toLocaleString())
+      this.formatDate(data.startTime.toLocaleString())
     );
-    formData.append(
-      "endTime",
-      Utilities.formatDate(data.endTime.toLocaleString())
-    );
+    formData.append("endTime", this.formatDate(data.endTime.toLocaleString()));
     formData.append("files", image as Blob);
 
     return formData;
+  }
+
+  static updateCouponInformation(
+    isUnlimited: boolean,
+    coupon: Coupon | undefined,
+    data: any
+  ) {
+    const limit = data.limit === undefined ? 0 : data.limit;
+
+    const updateInformation = {
+      couponName: data.couponName,
+      couponType: coupon?.couponType,
+      description: data.description,
+      modifier: coupon?.modifier,
+      amount: coupon?.amount,
+      unit: coupon?.unit,
+      isUnlimited: isUnlimited.toString(),
+      usage: 0,
+      limit,
+      pointToAchieve: data.pointToAchieve,
+      startTime: coupon?.startTime,
+      endTime: coupon?.endTime,
+    };
+
+    return updateInformation;
   }
 }

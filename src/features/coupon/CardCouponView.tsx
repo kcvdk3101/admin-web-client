@@ -6,7 +6,7 @@ interface CardCouponViewProps {
   coupon: Coupon;
   handleDeleteCoupon: (coupon: Coupon) => void;
   handleEditCoupon: (coupon: Coupon) => void;
-  handleUpdateStatusCoupon: (id: string) => void;
+  handleUpdateStatusCoupon: (id: string | undefined) => void;
 }
 
 const CardCouponView: React.FC<CardCouponViewProps> = ({
@@ -30,20 +30,12 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
     pointToAchieve,
     startTime,
     endTime,
-    images,
   } = coupon;
 
   const blurComponent = isActive && "filter blur-xs";
 
   return (
     <div className="rounded animate-fade-in-down">
-      {/* <img
-        src={images && images[0].url}
-        alt="random image"
-        className={`w-full object-cover object-center max-h-60 h-56 rounded-lg shadow-md bg-white transition-opacity ${
-          isActive ? "opacity-50" : "opacity-100"
-        }`}
-      /> */}
       <div className="relative px-2">
         <div
           className={`bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out`}

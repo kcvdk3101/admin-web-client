@@ -116,22 +116,6 @@ const EditCouponForm: React.FC<EditCouponFormProps> = ({
         errors={errors}
       />
 
-      {/* <div className="col-span-6 ml-auto">
-        <button
-          className="btn-close-form"
-          type="button"
-          onClick={() => {
-            handleOpenEditCouponForm();
-            reset();
-          }}
-        >
-          Close
-        </button>
-        <button className="btn-action-form" type="submit">
-          Update
-        </button>
-      </div> */}
-
       <ButtonsAction
         cols={6}
         title="Update"

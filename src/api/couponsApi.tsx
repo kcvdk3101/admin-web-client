@@ -1,3 +1,5 @@
+import axios from "axios";
+import { API_BASE_URL } from "../helpers/configs";
 import { Coupon } from "../models";
 import axiosClient from "./axiosClient";
 
@@ -20,10 +22,10 @@ const couponsApi = {
     return axiosClient.post<string, Coupon>(`${url}`, data);
   },
   updateCouponInformation(id: string | undefined, information: any) {
-    return axiosClient.patch<string, any>(`${url}?id=${id}`, information);
+    return axios.patch(`${API_BASE_URL}/coupons?id=${id}`, { ...information });
   },
 
-  updateCouponStatus(id: string) {
+  updateCouponStatus(id: string | undefined) {
     return axiosClient.patch<string, Coupon>(`${url}/status?id=${id}`);
   },
 

@@ -153,7 +153,7 @@ const NewCouponForm: React.FC<NewCouponFormProps> = ({
             label="Percentage"
             inputName="modifier"
             type="number"
-            defaultValue={0}
+            defaultValue={1}
             register={register}
             errors={errors}
           />

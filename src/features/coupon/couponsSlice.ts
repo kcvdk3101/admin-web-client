@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import { Coupon } from "../../models";
 import {
   addNewCoupon,
   deleteCouponById,
   getAllCoupons,
   getAllCouponsByCouponType,
+  updateCouponInformation,
   updateStatusCoupon,
 } from "./couponsThunk";
 
@@ -68,6 +68,35 @@ export const couponsSlice = createSlice({
       state.fetchingCoupons = false;
     });
 
+    // Add new coupon
+    builder.addCase(addNewCoupon.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(addNewCoupon.fulfilled, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+    builder.addCase(addNewCoupon.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
+    // Update coupon informaiton
+    builder.addCase(updateCouponInformation.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(
+      updateCouponInformation.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        const indexOfUpdatedCoupon = state.coupons.findIndex(
+          (coupon) => coupon.id === action.payload.id
+        );
+        state.fetchingCoupons = false;
+        state.coupons[indexOfUpdatedCoupon] = action.payload;
+      }
+    );
+    builder.addCase(updateCouponInformation.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
     // Delete coupon by id
     builder.addCase(deleteCouponById.pending, (state, action) => {
       state.fetchingCoupons = true;
@@ -82,17 +111,6 @@ export const couponsSlice = createSlice({
       }
     );
     builder.addCase(deleteCouponById.rejected, (state, action) => {
-      state.fetchingCoupons = false;
-    });
-
-    // Add new coupon
-    builder.addCase(addNewCoupon.pending, (state, action) => {
-      state.fetchingCoupons = true;
-    });
-    builder.addCase(addNewCoupon.fulfilled, (state, action) => {
-      state.fetchingCoupons = false;
-    });
-    builder.addCase(addNewCoupon.rejected, (state, action) => {
       state.fetchingCoupons = false;
     });
 

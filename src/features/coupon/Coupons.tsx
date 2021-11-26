@@ -51,11 +51,13 @@ const Coupons: React.FC = () => {
             getAllCouponsByCouponType({ offset: 0, couponType })
           );
         await dispatch(getAllCoupons(offset));
+
+        console.log("run");
       } catch (error) {
         toast.error(error as Error);
       }
     })();
-  }, [dispatch]);
+  }, [couponType, offset]);
 
   const paginate = (pageNumber: number) => {
     if (couponType) {
@@ -99,7 +101,7 @@ const Coupons: React.FC = () => {
     handleOpenDeleteCouponForm();
   }
 
-  async function handleUpdateStatusCoupon(id: string) {
+  async function handleUpdateStatusCoupon(id: string | undefined) {
     try {
       dispatch(updateStatusCoupon(id));
     } catch (error) {
