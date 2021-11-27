@@ -66,6 +66,18 @@ const Coupons: React.FC = () => {
   }, [couponName, couponType, offset]);
 
   const paginate = (pageNumber: number) => {
+    if (couponName) {
+      history.push({
+        pathname: "/admin/coupons",
+        search: `?limit=${limit}&offset=${
+          pageNumber - 1
+        }&couponName=${couponName}`,
+      });
+      dispatch(
+        getAllCouponsByCouponName({ offset: pageNumber - 1, couponName })
+      );
+      return;
+    }
     if (couponType) {
       history.push({
         pathname: "/admin/coupons",

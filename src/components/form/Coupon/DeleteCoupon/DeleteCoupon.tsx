@@ -56,15 +56,23 @@ const DeleteCoupon: React.FC<DeleteCouponProps> = ({
           <div className="border-0 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
             <div className="flex items-center justify-end p-6">
               <button
-                className="bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 hover:shadow-md outline-none ease-linear transition-all duration-150 dark:bg-gray-50"
+                className={`${
+                  fetchingCoupons ? "cursor-not-allowed" : "hover:shadow-md"
+                } bg-transparent text-gray-500 font-bold uppercase text-xs px-3 py-2 outline-none ease-linear transition-all duration-150 dark:bg-gray-50`}
                 type="button"
+                disabled={fetchingCoupons}
                 onClick={handleOpenDeleteCouponForm}
               >
                 Close
               </button>
               <button
-                className="bg-blue-500 font-bold uppercase text-sm px-4 py-2 ml-2 rounded shadow hover:shadow-md outline-none ease-linear transition-all duration-150 text-white dark:bg-white dark:text-green-500 dark:hover:text-green-600"
+                className={`${
+                  fetchingCoupons
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-blue-500 shadow hover:shadow-md dark:bg-white dark:text-green-500 dark:hover:text-green-600"
+                } font-bold uppercase text-sm px-4 py-2 ml-2 rounded outline-none ease-linear transition-all duration-150 text-white`}
                 type="button"
+                disabled={fetchingCoupons}
                 onClick={() => deleteCoupon(coupon?.id as string)}
               >
                 Delete

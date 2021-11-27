@@ -101,6 +101,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               </p>
             )}
           </div>
+          {/* Enable - Edit Button - Delete Button */}
           <div className="relative flex justify-between items-center mt-3 w-full">
             <button
               className={`btn-coupon-card px-3 py-1 ${
