@@ -2,12 +2,12 @@ import Coupons from "../../features/coupon/Coupons";
 import { Category, ChilrenCategory, Coupon } from "../../models";
 
 export class Utilities {
-  static convertDateString(date: string | Date) {
-    return `${new Date(date).toLocaleDateString()}`;
+  static convertDateString(date: string | Date | undefined) {
+    return `${new Date(date as Date).toLocaleDateString()}`;
   }
 
-  static convertToCurrency(number: number) {
-    return number.toLocaleString("it-IT");
+  static convertToCurrency(number: number | undefined) {
+    return Number(number).toLocaleString("it-IT");
   }
 
   static formatDate(data: string) {
@@ -83,11 +83,7 @@ export class Utilities {
     return formData;
   }
 
-  static updateCouponInformation(
-    isUnlimited: boolean,
-    coupon: Coupon | undefined,
-    data: any
-  ) {
+  static updateCouponInformation(isUnlimited: boolean, coupon: any, data: any) {
     const limit = data.limit === undefined ? 0 : data.limit;
 
     const updateInformation = {

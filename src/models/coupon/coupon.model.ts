@@ -7,13 +7,13 @@ export interface Coupon {
   description?: string;
   couponType?: string;
   modifier?: number;
-  amount?: number;
+  amount: number;
   unit?: string;
   usage?: number;
   limit?: number;
   pointToAchieve?: number;
   isActive?: boolean;
-  startTime?: Date | string;
-  endTime?: Date | string;
+  startTime: Date | string;
+  endTime: Date | string;
   images?: Image[];
 }

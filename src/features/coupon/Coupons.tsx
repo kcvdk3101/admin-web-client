@@ -14,9 +14,11 @@ import CardCouponView from "./CardCouponView";
 import CouponsSkeleton from "./CouponsSkeleton";
 import {
   getAllCoupons,
+  getAllCouponsByCouponName,
   getAllCouponsByCouponType,
   updateStatusCoupon,
 } from "./couponsThunk";
+import SearchCouponButton from "./SearchCouponButton";
 import SortCouponByType from "./SortCouponByType";
 
 const Coupons: React.FC = () => {
@@ -27,6 +29,8 @@ const Coupons: React.FC = () => {
   const offset = paginationQuery.offset ? +paginationQuery.offset : 0;
   const couponType =
     paginationQuery.couponType && (paginationQuery.couponType as string);
+  const couponName =
+    paginationQuery.couponName && (paginationQuery.couponName as string);
 
   const dispatch = useAppDispatch();
   const fetchingCoupons = useAppSelector(
@@ -46,18 +50,20 @@ const Coupons: React.FC = () => {
   useEffect(() => {
     (async function () {
       try {
+        if (couponName)
+          return await dispatch(
+            getAllCouponsByCouponName({ offset: 0, couponName })
+          );
         if (couponType)
           return await dispatch(
             getAllCouponsByCouponType({ offset: 0, couponType })
           );
         await dispatch(getAllCoupons(offset));
-
-        console.log("run");
       } catch (error) {
         toast.error(error as Error);
       }
     })();
-  }, [couponType, offset]);
+  }, [couponName, couponType, offset]);
 
   const paginate = (pageNumber: number) => {
     if (couponType) {
@@ -79,17 +85,17 @@ const Coupons: React.FC = () => {
     dispatch(getAllCoupons(pageNumber - 1));
   };
 
-  const handleOpenCouponForm = () => {
+  function handleOpenCouponForm() {
     setOpenCouponForm(!openCouponForm);
-  };
+  }
 
-  const handleOpenEditCouponForm = () => {
+  function handleOpenEditCouponForm() {
     setOpenEditCouponForm(!openEditCouponForm);
-  };
+  }
 
-  const handleOpenDeleteCouponForm = () => {
+  function handleOpenDeleteCouponForm() {
     setOpenDeleteCouponForm(!openDeleteCouponForm);
-  };
+  }
 
   function handleEditCoupon(coupon: Coupon) {
     setSelectedCoupon(coupon);
@@ -115,7 +121,10 @@ const Coupons: React.FC = () => {
         fetchingCoupons={fetchingCoupons}
         handleOpenCouponForm={handleOpenCouponForm}
       />
-      <SortCouponByType />
+      <div className="my-3 text-gray-600 flex items-center">
+        <SearchCouponButton />
+        <SortCouponByType />
+      </div>
       {fetchingCoupons ? (
         <CouponsSkeleton n={limit} />
       ) : coupons.length === 0 ? (
@@ -149,6 +158,7 @@ const Coupons: React.FC = () => {
         handleOpenEditCouponForm={handleOpenEditCouponForm}
       />
       <DeleteCoupon
+        fetchingCoupons={fetchingCoupons}
         coupon={selectedCoupon}
         openDialog={openDeleteCouponForm}
         handleOpenDeleteCouponForm={handleOpenDeleteCouponForm}

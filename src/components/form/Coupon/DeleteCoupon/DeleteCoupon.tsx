@@ -1,25 +1,36 @@
+import queryString from "query-string";
 import React from "react";
+import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../../app/hooks";
-import { deleteCouponById } from "../../../../features/coupon/couponsThunk";
+import {
+  deleteCouponById,
+  getAllCoupons,
+} from "../../../../features/coupon/couponsThunk";
 import { Coupon } from "../../../../models";
 
 interface DeleteCouponProps {
+  fetchingCoupons: boolean;
   coupon: Coupon | undefined;
   openDialog: boolean;
   handleOpenDeleteCouponForm: () => void;
 }
 
 const DeleteCoupon: React.FC<DeleteCouponProps> = ({
+  fetchingCoupons,
   coupon,
   openDialog,
   handleOpenDeleteCouponForm,
 }) => {
   const dispatch = useAppDispatch();
+  const { search } = useLocation();
+  let paginationQuery = queryString.parse(search);
+  const offset = paginationQuery.offset ? +paginationQuery.offset : 0;
 
   async function deleteCoupon(id: string) {
     try {
-      dispatch(deleteCouponById(id));
+      await dispatch(deleteCouponById(id));
+      await dispatch(getAllCoupons(offset));
       toast.success("Coupon deleted");
     } catch (error) {
       toast.error(error as Error);

@@ -28,9 +28,9 @@ const SortCouponByType: React.FC<SortCouponByTypeProps> = () => {
     });
   }
   return (
-    <div className="relative my-3">
+    <div className="relative ml-3">
       <button
-        className="text-blue-500 text-xs md:text-base xl:text-lg font-semibold dark:text-green-500"
+        className="text-blue-500 text-xs md:text-base font-bold dark:text-green-500"
         type="button"
         onClick={handleOpenDropdown}
       >

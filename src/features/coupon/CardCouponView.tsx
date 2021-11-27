@@ -40,6 +40,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
         <div
           className={`bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out`}
         >
+          {/* Code - Start Time - End Time */}
           <div
             className={`"w-full flex justify-between items-center ${blurComponent}`}
           >
@@ -49,6 +50,7 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               {Utilities.convertDateString(endTime)}
             </p>
           </div>
+          {/* Amount - Modifier */}
           <h4
             className={`${blurComponent} mt-1 text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold uppercase truncate text-blue-600 dark:text-green-500`}
           >
@@ -59,21 +61,22 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
               {couponType === "cash" ? unit : "%"}
             </span>
           </h4>
+          {/* Coupon Name - Point to Achieve */}
           <div
             className={`${blurComponent} flex justify-between items-center mt-2`}
           >
-            <p className="flex-1 text-xs lg:text-base uppercase truncate">
-              {couponName}
-            </p>
+            <p className="flex-1 text-xs lg:text-base truncate">{couponName}</p>
             <p className="flex-shrink-0 text-xs lg:text-base ml-5 text-gray-400">
               Point: {pointToAchieve}
             </p>
           </div>
+          {/* Description */}
           <p
             className={`${blurComponent} py-2 truncate text-base md:text-lg lg:text-xl xl:text-2xl text-blue-800 dark:text-green-800`}
           >
             {description}
           </p>
+          {/* Limit */}
           <div className={`${blurComponent}`}>
             {limit === 0 ? (
               <div className="flex justify-start items-center text-xs text-blue-700 dark:text-green-400 lg:text-base ">

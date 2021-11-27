@@ -18,6 +18,12 @@ const couponsApi = {
     );
   },
 
+  getAllCouponsByCouponName(offset: number, couponName: string) {
+    return axiosClient.get<string, { data: Coupon[]; pagination: any }>(
+      `${url}/name/details?couponName=${couponName}&limit=6&offset=${offset}`
+    );
+  },
+
   addNewCoupon(data: FormData) {
     return axiosClient.post<string, Coupon>(`${url}`, data);
   },

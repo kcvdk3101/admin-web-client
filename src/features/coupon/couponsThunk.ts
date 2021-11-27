@@ -19,6 +19,15 @@ export const getAllCouponsByCouponType = createAsyncThunk(
   }
 );
 
+export const getAllCouponsByCouponName = createAsyncThunk(
+  "coupons/getAllCouponsByCouponName",
+  async ({ offset, couponName }: { offset: number; couponName: string }) => {
+    const couponsFilteredByCouponName =
+      await couponsApi.getAllCouponsByCouponName(offset, couponName);
+    return couponsFilteredByCouponName;
+  }
+);
+
 export const addNewCoupon = createAsyncThunk(
   "coupons/addNewCoupon",
   async (data: FormData) => {

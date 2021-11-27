@@ -4,6 +4,7 @@ import {
   addNewCoupon,
   deleteCouponById,
   getAllCoupons,
+  getAllCouponsByCouponName,
   getAllCouponsByCouponType,
   updateCouponInformation,
   updateStatusCoupon,
@@ -65,6 +66,28 @@ export const couponsSlice = createSlice({
       }
     );
     builder.addCase(getAllCouponsByCouponType.rejected, (state, action) => {
+      state.fetchingCoupons = false;
+    });
+
+    // Get coupons by couponName
+    builder.addCase(getAllCouponsByCouponName.pending, (state, action) => {
+      state.fetchingCoupons = true;
+    });
+    builder.addCase(
+      getAllCouponsByCouponName.fulfilled,
+      (
+        state,
+        action: PayloadAction<{
+          data: Coupon[];
+          pagination: CouponsPagination;
+        }>
+      ) => {
+        state.fetchingCoupons = false;
+        state.coupons = action.payload.data;
+        state.pagination.total = action.payload.pagination.total;
+      }
+    );
+    builder.addCase(getAllCouponsByCouponName.rejected, (state, action) => {
       state.fetchingCoupons = false;
     });
 
