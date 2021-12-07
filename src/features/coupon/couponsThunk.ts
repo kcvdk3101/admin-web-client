@@ -6,7 +6,6 @@ export const getAllCoupons = createAsyncThunk(
   "coupons/getAllCoupons",
   async (offset: number) => {
     const coupons = await couponsApi.getAllCoupons(offset);
-    console.log(coupons);
     return coupons;
   }
 );

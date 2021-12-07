@@ -37,13 +37,13 @@ const CardCouponView: React.FC<CardCouponViewProps> = ({
 
   return (
     <div className="rounded animate-fade-in-down">
-      <img
+      {/* <img
         src={images && images[0].url}
         alt="random imgee"
         className="w-full object-cover object-center rounded-lg shadow-md"
-      />
+      /> */}
 
-      <div className="relative px-2 -mt-28">
+      <div className="relative px-2 ">
         <div
           className={`bg-white p-4 rounded-lg shadow-lg transition duration-200 ease-in-out`}
         >

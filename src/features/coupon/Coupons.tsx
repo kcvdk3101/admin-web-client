@@ -37,6 +37,8 @@ const Coupons: React.FC = () => {
     (state) => state.coupons.fetchingCoupons
   );
   const coupons = useAppSelector((state) => state.coupons.coupons);
+
+  console.log(coupons);
   const totalCoupons = useAppSelector(
     (state) => state.coupons.pagination.total
   );
