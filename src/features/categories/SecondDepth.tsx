@@ -23,7 +23,7 @@ const SecondDepth: React.FC<SecondDepthProps> = ({
             onClick={() => handleSelectThirdCategory(category.id)}
           >
             <p className="flex-1 truncate">{category.name}</p>
-            {category.children?.length !== 0 && (
+            {category.children && category.children?.length !== 0 && (
               <svg
                 className="flex-shrink-0 h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6"
                 fill="none"
